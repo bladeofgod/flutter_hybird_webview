@@ -24,6 +24,7 @@
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
         android:label="webview_flutter_example"
+        android:testOnly="true"
         android:usesCleartextTraffic="true" >
         <activity
             android:name="io.flutter.plugins.webviewflutterexample.WebViewTestActivity"

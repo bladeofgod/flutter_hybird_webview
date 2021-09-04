@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lijiaqi.remote_webview">
+
+    <application
+        android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+        <activity android:name="RemoteZygoteActivity"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:process=":remote:web"/>
+    </application>
+
+</manifest>

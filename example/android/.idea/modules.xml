@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-14705501/android.espresso.iml" filepath="$PROJECT_DIR$/.idea/modules/-14705501/android.espresso.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-799940127/android.integration_test.iml" filepath="$PROJECT_DIR$/.idea/modules/-799940127/android.integration_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/remote_webview/android.remote_webview.iml" filepath="$PROJECT_DIR$/.idea/modules/remote_webview/android.remote_webview.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-268335680/android.webview_flutter.iml" filepath="$PROJECT_DIR$/.idea/modules/-268335680/android.webview_flutter.iml" />
     </modules>
   </component>

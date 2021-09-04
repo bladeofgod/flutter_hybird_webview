@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Sat Sep 04 14:47:57 CST 2021
+#Sat Sep 04 15:12:51 CST 2021
 8.base=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
 2.base=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
 0.path=flutter_assets/assets/sample_video.mp4
@@ -7,6 +7,7 @@
 3.base=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
 5.path=flutter_assets/kernel_blob.bin
 9.set=DEX
+13.set=ASSET
 12.baseType=DIRECTORY
 1.path=lib/arm64-v8a/libflutter.so
 9.base=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\transforms\\dexMerger\\debug\\0
@@ -14,8 +15,9 @@
 5.baseType=DIRECTORY
 10.baseType=DIRECTORY
 10.path=flutter_assets/vm_snapshot_data
+13.path=flutter_assets/FontManifest.json
 6.set=ASSET
-count=13
+count=14
 5.set=ASSET
 7.set=ASSET
 7.base=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
@@ -34,15 +36,17 @@ count=13
 6.baseType=DIRECTORY
 0.base=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
 6.base=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
+13.base=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
 3.baseType=DIRECTORY
 8.path=flutter_assets/assets/sample_audio.ogg
 11.path=lib/x86_64/libflutter.so
 4.set=NATIVE_RESOURCE
 0.baseType=DIRECTORY
+13.baseType=DIRECTORY
 8.baseType=DIRECTORY
-12.set=ASSET
+12.set=NATIVE_RESOURCE
 4.path=lib/x86/libflutter.so
-12.base=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
+12.base=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\transforms\\mergeJniLibs\\debug\\0
 7.path=flutter_assets/AssetManifest.json
 1.set=NATIVE_RESOURCE
 2.path=flutter_assets/fonts/MaterialIcons-Regular.otf
@@ -50,6 +54,6 @@ count=13
 10.base=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
 2.set=ASSET
 11.set=NATIVE_RESOURCE
-12.path=flutter_assets/FontManifest.json
+12.path=lib/armeabi-v7a/libflutter.so
 7.baseType=DIRECTORY
 1.baseType=DIRECTORY
