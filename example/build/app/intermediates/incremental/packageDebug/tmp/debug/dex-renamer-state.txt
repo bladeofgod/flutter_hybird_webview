@@ -1,0 +1,4 @@
+#Sat Sep 04 14:47:56 CST 2021
+base.0=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\transforms\\dexMerger\\debug\\0
+renamed.0=classes.dex
+path.0=classes.dex

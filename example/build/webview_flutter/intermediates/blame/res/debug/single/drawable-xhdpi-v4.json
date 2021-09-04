@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "D:\\flutterplugin\\flutter_hybird_webview\\example\\build\\webview_flutter\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\notification_bg_low_pressed.9.png",
+        "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.1.0.aar\\f97c663cf4c9bdc8cd2ca3840f1ac6a3\\res\\drawable-xhdpi-v4\\notification_bg_low_pressed.9.png"
+    },
+    {
+        "merged": "D:\\flutterplugin\\flutter_hybird_webview\\example\\build\\webview_flutter\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\notification_bg_normal.9.png",
+        "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.1.0.aar\\f97c663cf4c9bdc8cd2ca3840f1ac6a3\\res\\drawable-xhdpi-v4\\notification_bg_normal.9.png"
+    },
+    {
+        "merged": "D:\\flutterplugin\\flutter_hybird_webview\\example\\build\\webview_flutter\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\notify_panel_notification_icon_bg.png",
+        "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.1.0.aar\\f97c663cf4c9bdc8cd2ca3840f1ac6a3\\res\\drawable-xhdpi-v4\\notify_panel_notification_icon_bg.png"
+    },
+    {
+        "merged": "D:\\flutterplugin\\flutter_hybird_webview\\example\\build\\webview_flutter\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\notification_bg_normal_pressed.9.png",
+        "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.1.0.aar\\f97c663cf4c9bdc8cd2ca3840f1ac6a3\\res\\drawable-xhdpi-v4\\notification_bg_normal_pressed.9.png"
+    },
+    {
+        "merged": "D:\\flutterplugin\\flutter_hybird_webview\\example\\build\\webview_flutter\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\notification_bg_low_normal.9.png",
+        "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.1.0.aar\\f97c663cf4c9bdc8cd2ca3840f1ac6a3\\res\\drawable-xhdpi-v4\\notification_bg_low_normal.9.png"
+    }
+]
