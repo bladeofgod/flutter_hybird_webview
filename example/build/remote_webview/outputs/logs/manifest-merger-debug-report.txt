@@ -1,0 +1,51 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:2:1-13:12
+INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:2:1-13:12
+INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:2:1-13:12
+INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:2:1-13:12
+INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:2:1-13:12
+INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:2:1-13:12
+INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:2:1-13:12
+	package
+		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:3:5-41
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:2:1-13:12
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:2:1-13:12
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:2:11-69
+application
+ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:5:5-11:19
+	android:theme
+		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:6:9-79
+activity#com.lijiaqi.remote_webview.RemoteZygoteActivity
+ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:7:9-10:44
+	android:process
+		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:10:13-42
+	android:launchMode
+		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:8:13-44
+	android:theme
+		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:9:13-83
+	android:name
+		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml:7:19-54
+uses-sdk
+INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\remote_webview\src\main\AndroidManifest.xml

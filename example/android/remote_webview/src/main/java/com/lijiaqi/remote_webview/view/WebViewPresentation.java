@@ -12,9 +12,11 @@ import android.webkit.WebView;
 import androidx.annotation.NonNull;
 
 
+import com.lijiaqi.remote_webview.interfaces.IMockMethodHandler;
 import com.lijiaqi.remote_webview.interfaces.IMockMethodResult;
 import com.lijiaqi.remote_webview.mock.MockMethodCall;
 import com.lijiaqi.remote_webview.mock.MockMethodChannel;
+import com.lijiaqi.remote_webview.mock.RemoteJavaScriptChannel;
 
 
 import java.util.Collections;
@@ -293,7 +295,9 @@ public class WebViewPresentation extends Presentation implements IMockMethodHand
     private void registerJavaScriptChannelNames(List<String> channelNames) {
         for (String channelName : channelNames) {
             webView.addJavascriptInterface(
-                    new RemoteJavaScriptChannel(methodChannel, channelName, platformThreadHandler), channelName);
+                    new RemoteJavaScriptChannel(methodChannel,
+                            channelName, platformThreadHandler)
+                    , channelName);
         }
     }
 
