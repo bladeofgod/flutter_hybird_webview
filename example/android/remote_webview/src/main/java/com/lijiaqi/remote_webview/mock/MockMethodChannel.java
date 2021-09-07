@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.UiThread;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class MockMethodChannel {
@@ -17,7 +18,7 @@ public class MockMethodChannel {
     }
 
     @UiThread
-    public void invokeMethod(@NonNull String method, @Nullable Map arguments) {
+    public void invokeMethod(@NonNull String method, @Nullable HashMap arguments) {
         
     }
     

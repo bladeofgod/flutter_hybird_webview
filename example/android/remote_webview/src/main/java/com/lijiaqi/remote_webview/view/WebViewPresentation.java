@@ -11,13 +11,14 @@ import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 
-import com.lijiaqi.remote_webview.interfaces.IMockMethodHandler;
+
 import com.lijiaqi.remote_webview.interfaces.IMockMethodResult;
 import com.lijiaqi.remote_webview.mock.MockMethodCall;
 import com.lijiaqi.remote_webview.mock.MockMethodChannel;
-import com.lijiaqi.remote_webview.mock.RemoteJavaScriptChannel;
+
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -107,11 +108,15 @@ public class WebViewPresentation extends Presentation implements IMockMethodHand
     }
 
     private void canGoBack(IMockMethodResult result) {
-        result.success(webView.canGoBack());
+        HashMap<String,String> p = new HashMap<>();
+        p.put("canGoBack",webView.canGoBack()? "true" : "false");
+        result.success(p);
     }
 
     private void canGoForward(IMockMethodResult result) {
-        result.success(webView.canGoForward());
+        HashMap<String,String> p = new HashMap<>();
+        p.put("canGoForward",webView.canGoForward()? "true" : "false");
+        result.success(p);
     }
 
     private void goBack(IMockMethodResult result) {
@@ -134,7 +139,9 @@ public class WebViewPresentation extends Presentation implements IMockMethodHand
     }
 
     private void currentUrl(IMockMethodResult result) {
-        result.success(webView.getUrl());
+        HashMap<String,String> p = new HashMap<>();
+        p.put("canGoForward",webView.getUrl());
+        result.success(p);
     }
 
     @SuppressWarnings("unchecked")
@@ -154,7 +161,9 @@ public class WebViewPresentation extends Presentation implements IMockMethodHand
                 new android.webkit.ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
-                        result.success(value);
+                        HashMap<String,String> p = new HashMap<>();
+                        p.put("evaluateJavaScript",value);
+                        result.success(p);
                     }
                 });
     }
@@ -182,7 +191,9 @@ public class WebViewPresentation extends Presentation implements IMockMethodHand
     }
 
     private void getTitle(IMockMethodResult result) {
-        result.success(webView.getTitle());
+        HashMap<String,String> p = new HashMap<>();
+        p.put("getTitle",webView.getTitle());
+        result.success(p);
     }
 
     private void scrollTo(MockMethodCall methodCall, IMockMethodResult result) {
@@ -205,11 +216,15 @@ public class WebViewPresentation extends Presentation implements IMockMethodHand
     }
 
     private void getScrollX(IMockMethodResult result) {
-        result.success(webView.getScrollX());
+        HashMap<String,String> p = new HashMap<>();
+        p.put("getScrollX",webView.getScrollX() + "");
+        result.success(p);
     }
 
     private void getScrollY(IMockMethodResult result) {
-        result.success(webView.getScrollY());
+        HashMap<String,String> p = new HashMap<>();
+        p.put("getScrollY",webView.getScrollY() + "");
+        result.success(p);
     }
 
     private void applySettings(Map<String, Object> settings) {
