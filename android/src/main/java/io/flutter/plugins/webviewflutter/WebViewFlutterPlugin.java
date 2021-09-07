@@ -4,6 +4,10 @@
 
 package io.flutter.plugins.webviewflutter;
 
+import android.content.Intent;
+
+import com.lijiaqi.remote_webview.service.MethodChannelRemoteService;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.BinaryMessenger;
 
@@ -48,6 +52,12 @@ public class WebViewFlutterPlugin implements FlutterPlugin {
             "plugins.flutter.io/webview",
             new FlutterWebViewFactory(registrar.messenger(), registrar.view()));
     new FlutterCookieManager(registrar.messenger());
+  }
+
+  MethodChannelRemoteService remoteService;
+
+  private void connectRemoteService(FlutterPluginBinding binding) {
+    Intent service = new Intent();
   }
 
   @Override

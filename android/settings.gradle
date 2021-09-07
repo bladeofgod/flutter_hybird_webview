@@ -1,1 +1,2 @@
 rootProject.name = 'webview_flutter'
+include ':remote_webview'

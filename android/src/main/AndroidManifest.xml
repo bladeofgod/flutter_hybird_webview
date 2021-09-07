@@ -1,2 +1,9 @@
-<manifest package="io.flutter.plugins.webviewflutter">
+<manifest package="io.flutter.plugins.webviewflutter"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <application
+        android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+        <service android:name="com.lijiaqi.remote_webview.service.MethodChannelRemoteService"
+                android:process=":remote.web"/>
+
+    </application>
 </manifest>
