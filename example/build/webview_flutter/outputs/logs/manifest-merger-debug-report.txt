@@ -1,14 +1,28 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:1:1-2:12
-INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:1:1-2:12
-INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:1:1-2:12
+ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:1:1-10:12
+INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:1:1-10:12
+INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:1:1-10:12
 	package
 		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:1:11-54
 		INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml
 		INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:1:1-2:12
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:2:5-63
+uses-permission#android.permission.INTERNET
+ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:3:5-67
+	android:name
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:3:22-64
+application
+ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:4:5-9:19
+	android:theme
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:5:9-79
+service#remote_webview.service.MethodChannelRemoteService
+ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:6:9-7:48
+	android:process
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:7:17-46
+	android:name
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:6:18-82
 uses-sdk
 INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml

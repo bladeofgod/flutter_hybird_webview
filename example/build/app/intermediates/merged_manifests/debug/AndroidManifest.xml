@@ -24,6 +24,7 @@
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
         android:label="webview_flutter_example"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
         android:usesCleartextTraffic="true" >
         <activity
             android:name="io.flutter.plugins.webviewflutterexample.WebViewTestActivity"
@@ -62,6 +63,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name="remote_webview.service.MethodChannelRemoteService"
+            android:process=":remote.web" />
+
         <activity
             android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
             android:theme="@android:style/Theme" >

@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "D:\\flutterplugin\\flutter_hybird_webview\\example\\build\\webview_flutter\\intermediates\\res\\merged\\debug\\layout\\custom_dialog.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.1.0.aar\\f97c663cf4c9bdc8cd2ca3840f1ac6a3\\res\\layout\\custom_dialog.xml"
+    },
+    {
+        "merged": "D:\\flutterplugin\\flutter_hybird_webview\\example\\build\\webview_flutter\\intermediates\\res\\merged\\debug\\layout\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.1.0.aar\\f97c663cf4c9bdc8cd2ca3840f1ac6a3\\res\\layout\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "D:\\flutterplugin\\flutter_hybird_webview\\example\\build\\webview_flutter\\intermediates\\res\\merged\\debug\\layout\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.1.0.aar\\f97c663cf4c9bdc8cd2ca3840f1ac6a3\\res\\layout\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "D:\\flutterplugin\\flutter_hybird_webview\\example\\build\\webview_flutter\\intermediates\\res\\merged\\debug\\layout\\notification_action.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.1.0.aar\\f97c663cf4c9bdc8cd2ca3840f1ac6a3\\res\\layout\\notification_action.xml"
+    },
+    {
+        "merged": "D:\\flutterplugin\\flutter_hybird_webview\\example\\build\\webview_flutter\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_time.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.1.0.aar\\f97c663cf4c9bdc8cd2ca3840f1ac6a3\\res\\layout\\notification_template_part_time.xml"
+    },
+    {
+        "merged": "D:\\flutterplugin\\flutter_hybird_webview\\example\\build\\webview_flutter\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_chronometer.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.1.0.aar\\f97c663cf4c9bdc8cd2ca3840f1ac6a3\\res\\layout\\notification_template_part_chronometer.xml"
+    }
+]
