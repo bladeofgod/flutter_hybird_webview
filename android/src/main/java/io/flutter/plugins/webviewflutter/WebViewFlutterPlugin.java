@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.os.RemoteException;
 
 
 import java.util.HashMap;
@@ -17,7 +18,9 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.BinaryMessenger;
 import remote_webview.IRemoteMethodChannelBinder;
 import remote_webview.model.MethodModel;
-import remote_webview.service.MethodChannelRemoteService;
+import remote_webview.service.RemoteServicePresenter;
+import remote_webview.service.RemoteWebService;
+import remote_webview.service.binders.RemoteMethodChannelBinder;
 
 /**
  * Java platform implementation of the webview_flutter plugin.
@@ -62,30 +65,6 @@ public class WebViewFlutterPlugin implements FlutterPlugin {
     new FlutterCookieManager(registrar.messenger());
   }
 
-  IRemoteMethodChannelBinder webViewBinder;
-
-  private void connectRemoteService(FlutterPluginBinding binding) {
-    Intent service = new Intent(binding.getApplicationContext(),MethodChannelRemoteService.class);
-    binding.getApplicationContext().bindService(service,connection, Context.BIND_AUTO_CREATE);
-  }
-
-  private final ServiceConnection connection = new ServiceConnection() {
-    @Override
-    public void onServiceConnected(ComponentName name, IBinder service) {
-      webViewBinder = IRemoteMethodChannelBinder.Stub.asInterface(service);
-      try {
-        webViewBinder.invokeMethod(new MethodModel(1,"test method",new HashMap<>()));
-      }catch (Exception e) {
-        e.printStackTrace();;
-      }
-    }
-
-    @Override
-    public void onServiceDisconnected(ComponentName name) {
-      webViewBinder = null;
-    }
-  };
-
 
   @Override
   public void onAttachedToEngine(FlutterPluginBinding binding) {
@@ -96,7 +75,13 @@ public class WebViewFlutterPlugin implements FlutterPlugin {
             "plugins.flutter.io/webview",
             new FlutterWebViewFactory(messenger, /*containerView=*/ null));
     flutterCookieManager = new FlutterCookieManager(messenger);
-    connectRemoteService(binding);
+    RemoteMethodChannelBinder methodChannelBinder =(RemoteMethodChannelBinder) RemoteServicePresenter.getInstance(binding.getApplicationContext())
+            .queryBinderByCode(RemoteServicePresenter.BINDER_METHOD_CHANNEL);
+    try {
+      methodChannelBinder.invokeMethod(new MethodModel(1, "test", new HashMap()));
+    } catch (RemoteException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override

@@ -65,7 +65,7 @@
         </activity>
 
         <service
-            android:name="remote_webview.service.MethodChannelRemoteService"
+            android:name="remote_webview.service.RemoteWebService"
             android:process=":remote.web" />
 
         <activity

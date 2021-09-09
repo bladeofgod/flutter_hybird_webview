@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 /**
  * working on main process.
- * connect with {@link MethodChannelRemoteService}
+ * connect with {@link RemoteWebService}
  */
 
 public class MethodChannelMainService extends Service {
