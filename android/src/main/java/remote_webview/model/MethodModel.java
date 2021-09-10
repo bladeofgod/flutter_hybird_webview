@@ -15,19 +15,24 @@ public class MethodModel implements Parcelable {
 
     //invoked method's name
     private String methodName;
+    
+    //invoked time-stamp
+    private long invokeTimeStamp;
 
     private HashMap arguments = new HashMap<>();
 
-    public MethodModel(int id, String methodName, HashMap arguments) {
+    public MethodModel(int id, String methodName, HashMap arguments, long invokeTimeStamp) {
         this.id = id;
         this.methodName = methodName;
         this.arguments = arguments;
+        this.invokeTimeStamp = invokeTimeStamp;
     }
 
     protected MethodModel(Parcel in) {
         id = in.readInt();
         methodName = in.readString();
         arguments = in.readHashMap(HashMap.class.getClassLoader());
+        invokeTimeStamp = in.readLong();
     }
 
     @Override
@@ -35,6 +40,7 @@ public class MethodModel implements Parcelable {
         dest.writeInt(id);
         dest.writeString(methodName);
         dest.writeMap(arguments);
+        dest.writeLong(invokeTimeStamp);
     }
 
     @Override
@@ -65,6 +71,8 @@ public class MethodModel implements Parcelable {
     public HashMap getArguments() {
         return arguments;
     }
+    
+    public long getInvokeTimeStamp() {return invokeTimeStamp;}
 
     public void setId(int id) {
         this.id = id;
@@ -77,10 +85,12 @@ public class MethodModel implements Parcelable {
     public void setArguments(HashMap arguments) {
         this.arguments = arguments;
     }
+    
 
     @Override
     public String toString() {
         return "MethodModel{" +
+                "invokeTimeStamp=" + invokeTimeStamp +
                 "id=" + id +
                 ", methodName='" + methodName + '\'' +
                 ", arguments=" + arguments +

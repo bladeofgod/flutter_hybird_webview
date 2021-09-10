@@ -13,8 +13,7 @@ import remote_webview.model.MethodModel;
  */
 public class RemoteMethodChannelBinder extends IRemoteMethodChannelBinder.Stub {
     @Override
-    public String invokeMethod(MethodModel model) throws RemoteException {
+    public void invokeMethod(MethodModel model) throws RemoteException {
         Log.e("remote service", model.toString());
-        return "remote service call back";
     }
 }

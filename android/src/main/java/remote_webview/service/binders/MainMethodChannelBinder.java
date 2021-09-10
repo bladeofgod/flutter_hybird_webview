@@ -14,8 +14,7 @@ import remote_webview.model.MethodModel;
 
 public class MainMethodChannelBinder extends IMainMethodChannelBinder.Stub {
     @Override
-    public String invokeMethod(MethodModel model) throws RemoteException {
+    public void invokeMethod(MethodModel model) throws RemoteException {
         Log.e("main service", model.toString());
-        return "main service call back";
     }
 }

@@ -53,9 +53,8 @@ _arg0 = remote_webview.model.MethodModel.CREATOR.createFromParcel(data);
 else {
 _arg0 = null;
 }
-java.lang.String _result = this.invokeMethod(_arg0);
+this.invokeMethod(_arg0);
 reply.writeNoException();
-reply.writeString(_result);
 return true;
 }
 default:
@@ -79,11 +78,16 @@ public java.lang.String getInterfaceDescriptor()
 {
 return DESCRIPTOR;
 }
-@Override public java.lang.String invokeMethod(remote_webview.model.MethodModel model) throws android.os.RemoteException
+/**
+     * Demonstrates some basic types that you can use as parameters
+     * and return values in AIDL.
+     *///    void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,
+//            double aDouble, String aString);
+
+@Override public void invokeMethod(remote_webview.model.MethodModel model) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
-java.lang.String _result;
 try {
 _data.writeInterfaceToken(DESCRIPTOR);
 if ((model!=null)) {
@@ -95,16 +99,20 @@ _data.writeInt(0);
 }
 mRemote.transact(Stub.TRANSACTION_invokeMethod, _data, _reply, 0);
 _reply.readException();
-_result = _reply.readString();
 }
 finally {
 _reply.recycle();
 _data.recycle();
 }
-return _result;
 }
 }
 static final int TRANSACTION_invokeMethod = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
 }
-public java.lang.String invokeMethod(remote_webview.model.MethodModel model) throws android.os.RemoteException;
+/**
+     * Demonstrates some basic types that you can use as parameters
+     * and return values in AIDL.
+     *///    void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,
+//            double aDouble, String aString);
+
+public void invokeMethod(remote_webview.model.MethodModel model) throws android.os.RemoteException;
 }
