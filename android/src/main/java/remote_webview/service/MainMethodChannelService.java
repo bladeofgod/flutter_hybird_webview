@@ -6,15 +6,17 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
+import remote_webview.service.binders.MainMethodChannelBinder;
+
 /**
  * working on main process.
  * connect with {@link RemoteWebService}
  */
 
-public class MethodChannelMainService extends Service {
+public class MainMethodChannelService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return new MainMethodChannelBinder();
     }
 }

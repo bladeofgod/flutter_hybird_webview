@@ -8,11 +8,9 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
-import remote_webview.service.binders.RemoteMethodChannelBinder;
-
 /**
  * working on child process.
- * connect with {@link MethodChannelMainService}
+ * connect with {@link MainMethodChannelService}
  */
 
 public class RemoteWebService extends Service {
