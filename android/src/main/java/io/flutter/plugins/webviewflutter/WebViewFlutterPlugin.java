@@ -75,19 +75,7 @@ public class WebViewFlutterPlugin implements FlutterPlugin {
             "plugins.flutter.io/webview",
             new FlutterWebViewFactory(messenger, /*containerView=*/ null));
     flutterCookieManager = new FlutterCookieManager(messenger);
-    new Thread(new Runnable() {
-      @Override
-      public void run() {
-        RemoteServicePresenter.getInstance(binding.getApplicationContext());
-//        try {
-//          methodChannelBinder.invokeMethod(new MethodModel(1, "test", new HashMap()));
-//        } catch (RemoteException e) {
-//          e.printStackTrace();
-//        }
-
-      }
-    }).start();
-
+    RemoteServicePresenter.getInstance(binding.getApplicationContext());
   }
 
   @Override

@@ -43,7 +43,12 @@ public class RemoteServicePresenter {
 
     private RemoteServicePresenter(Context context) {
         mAppContext = context.getApplicationContext();
-        connectRemoteService();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                connectRemoteService();
+            }
+        }).start();
     }
 
     /**
