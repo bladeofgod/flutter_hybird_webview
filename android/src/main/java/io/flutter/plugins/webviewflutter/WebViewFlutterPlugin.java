@@ -67,7 +67,7 @@ public class WebViewFlutterPlugin implements FlutterPlugin {
 
 
   @Override
-  public void onAttachedToEngine(FlutterPluginBinding binding) {
+  public void onAttachedToEngine(final FlutterPluginBinding binding) {
     BinaryMessenger messenger = binding.getBinaryMessenger();
     binding
         .getPlatformViewRegistry()
@@ -75,13 +75,19 @@ public class WebViewFlutterPlugin implements FlutterPlugin {
             "plugins.flutter.io/webview",
             new FlutterWebViewFactory(messenger, /*containerView=*/ null));
     flutterCookieManager = new FlutterCookieManager(messenger);
-    RemoteMethodChannelBinder methodChannelBinder =(RemoteMethodChannelBinder) RemoteServicePresenter.getInstance(binding.getApplicationContext())
-            .queryBinderByCode(RemoteServicePresenter.BINDER_METHOD_CHANNEL);
-    try {
-      methodChannelBinder.invokeMethod(new MethodModel(1, "test", new HashMap()));
-    } catch (RemoteException e) {
-      e.printStackTrace();
-    }
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        RemoteServicePresenter.getInstance(binding.getApplicationContext());
+//        try {
+//          methodChannelBinder.invokeMethod(new MethodModel(1, "test", new HashMap()));
+//        } catch (RemoteException e) {
+//          e.printStackTrace();
+//        }
+
+      }
+    }).start();
+
   }
 
   @Override

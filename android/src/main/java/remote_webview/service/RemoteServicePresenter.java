@@ -7,9 +7,12 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 
+import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 
 import remote_webview.IBinderPool;
+import remote_webview.IRemoteMethodChannelBinder;
+import remote_webview.model.MethodModel;
 import remote_webview.service.binders.RemoteMethodChannelBinder;
 
 public class RemoteServicePresenter {
@@ -60,6 +63,22 @@ public class RemoteServicePresenter {
         return binder;
     }
 
+
+    /**
+     * Directly fetch {@link IRemoteMethodChannelBinder} for easy to use.
+     * @return invoke method to control web-view
+     */
+    IRemoteMethodChannelBinder getRemoteChannelBinder() {
+        IRemoteMethodChannelBinder binder = null;
+        try {
+            binder = IRemoteMethodChannelBinder.Stub.asInterface(mBinderPool.queryBinder(BINDER_METHOD_CHANNEL));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return binder;
+    }
+
+
     private synchronized void connectRemoteService() {
         mConnectionBinderPoolCountDownLatch = new CountDownLatch(1);
         Intent service = new Intent(mAppContext, RemoteWebService.class);
@@ -104,7 +123,6 @@ public class RemoteServicePresenter {
 
     public static class BinderPoolImpl extends IBinderPool.Stub{
 
-        //remote context
         private Context context;
 
         public BinderPoolImpl(Context context) {
