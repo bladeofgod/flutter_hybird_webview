@@ -19,13 +19,20 @@ import remote_webview.utils.StringUtil;
 abstract public class BinderCommunicateHub {
 
     /**
-     * Cache webView's method handler.
+     * register webView's method handler.
+     * will remove when web-view disposed.
      *
      * @key surface's id.
      * @value IMockMethodHandler
      *
      */
-    private final SparseArray<IMockMethodHandler> methodHandlerSlot = new SparseArray();
+    private final HashMap<Long,IMockMethodHandler> methodHandlerSlot = new HashMap<>();
+
+    /**
+     * cache a {@link IMockMethodResult} when called {@link #invokeMethodById} temporary.
+     * remove after {@link IMockMethodResult} called.
+     */
+    private final HashMap<Long,ResultCallbackHandler> methodResultCallbackSlog = new HashMap<>();
 
 
     /**
@@ -33,8 +40,8 @@ abstract public class BinderCommunicateHub {
      * @param id    surface's id, to mark texture on main-process and web-view on child-process.
      * @param handler     control web-view.
      */
-    public void plugInMethodHandler(int id, IMockMethodHandler handler) {
-        methodHandlerSlot.append(id,handler);
+    public void plugInMethodHandler(long id, IMockMethodHandler handler) {
+        methodHandlerSlot.put(id,handler);
     }
 
 
@@ -42,18 +49,45 @@ abstract public class BinderCommunicateHub {
      *
      * @param id surface's id
      */
-    public void plugOutMethodHandler(int id) {
+    public void plugOutMethodHandler(long id) {
         methodHandlerSlot.remove(id);
     }
 
+    private void cacheMethodResultCallback(long id,ResultCallbackHandler result) {
+        methodResultCallbackSlog.put(id, result);
+    }
+    
+    private void removeMethodResultCallbackById(long id) {
+        methodResultCallbackSlog.remove(id);
+    }
 
+    private void cacheResultCallback(long id) {
+        cacheMethodResultCallback(id, new ResultCallbackHandler(id));
+    }
+
+
+    /**
+     * IBinder invoke.
+     * @param model
+     */
     public void invokeMethod(MethodModel model) {
         int handlerId = model.getId();
         final MockMethodCall methodCall = new MockMethodCall(model.getMethodName(),model.getArguments());
-        invokeMethodById(handlerId,methodCall);
+        cacheResultCallback(handlerId);
+        try {
+            invokeMethodById(handlerId,methodCall);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void invokeMethodById(int id, MockMethodCall call) {
+
+    /**
+     * invoke web-view
+     * @param id
+     * @param call
+     */
+    public void invokeMethodById(long id, MockMethodCall call) throws NullPointerException {
         methodHandlerSlot.get(id).onMethodCall(call, new IMockMethodResult() {
             @Override
             public void success(@Nullable HashMap var1) {

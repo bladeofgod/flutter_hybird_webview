@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 /**
  * working on child process.
- * connect with {@link MainMethodChannelService}
+ * connect with {@link MainWebService}
  */
 
 public class RemoteWebService extends Service {

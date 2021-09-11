@@ -13,7 +13,7 @@ import remote_webview.service.binders.MainMethodChannelBinder;
  * connect with {@link RemoteWebService}
  */
 
-public class MainMethodChannelService extends Service {
+public class MainWebService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
