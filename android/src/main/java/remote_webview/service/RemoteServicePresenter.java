@@ -14,8 +14,10 @@ import java.util.concurrent.CountDownLatch;
 
 import remote_webview.IBinderPool;
 import remote_webview.IRemoteMethodChannelBinder;
+import remote_webview.IRemoteViewFactoryBinder;
 import remote_webview.model.MethodModel;
 import remote_webview.service.binders.RemoteMethodChannelBinder;
+import remote_webview.service.binders.RemoteViewFactoryBinder;
 
 
 /**
@@ -26,7 +28,10 @@ import remote_webview.service.binders.RemoteMethodChannelBinder;
 
 public class RemoteServicePresenter extends ProcessServicePresenter {
 
-
+    /**
+     * Remote Binder's code
+     */
+    public static final int BINDER_VIEW_FACTORY = 609;
 
     private static volatile RemoteServicePresenter singleton;
 
@@ -64,7 +69,20 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
         return binder;
     }
 
-    
+    /**
+     * Directly fetch {@link IRemoteViewFactoryBinder} for easy to use.
+     * @reture IBinder to create platform-view.
+     */
+    public IRemoteViewFactoryBinder getRemoteViewFactory() {
+        IRemoteViewFactoryBinder binder = null;
+        try {
+            binder = IRemoteViewFactoryBinder.Stub.asInterface(mBinderPool.queryBinder(BINDER_VIEW_FACTORY));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return binder;
+    }
+
 
     public static class RemoteBinderPoolImpl extends IBinderPool.Stub{
 
@@ -80,6 +98,9 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
             switch (binderCode) {
                 case BINDER_METHOD_CHANNEL:
                     binder = new RemoteMethodChannelBinder();
+                    break;
+                case BINDER_VIEW_FACTORY:
+                    binder = new RemoteViewFactoryBinder();
                     break;
             }
             return binder;

@@ -23,10 +23,10 @@ ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManif
 		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:7:17-46
 	android:name
 		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:6:18-72
-service#remote_webview.service.MainMethodChannelService
-ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:8:9-82
+service#remote_webview.service.MainWebService
+ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:8:9-72
 	android:name
-		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:8:18-80
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:8:18-70
 uses-sdk
 INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml

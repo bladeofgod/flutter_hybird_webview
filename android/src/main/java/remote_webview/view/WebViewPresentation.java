@@ -3,19 +3,27 @@ package remote_webview.view;
 import android.annotation.TargetApi;
 import android.app.Presentation;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
+import android.view.Surface;
+import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import remote_webview.RemoteZygoteActivity;
 import remote_webview.interfaces.IMockMethodHandler;
 import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.mock.MockMethodCall;
@@ -25,14 +33,58 @@ import remote_webview.mock.RemoteJavaScriptChannel;
 public class WebViewPresentation extends Presentation implements IMockMethodHandler {
 
     private final MockMethodChannel methodChannel;
-    private final WebView webView;
     private final Handler platformThreadHandler;
+    private final int surfaceId;
+    private WebView webView;
 
-    public WebViewPresentation(Context outerContext, Display display, MockMethodChannel methodChannel, WebView webView) {
+    private final Map<String,String> initialParams = new HashMap<>();
+
+    public WebViewPresentation(Context outerContext, Display display, MockMethodChannel methodChannel
+            , int surfaceId) {
         super(outerContext, display);
+        this.surfaceId = surfaceId;
         this.methodChannel = methodChannel;
-        this.webView = webView;
+        this.webView = createWebView();
         platformThreadHandler = new Handler(outerContext.getMainLooper());
+    }
+
+
+    private WebView createWebView() {
+        WebView webView = new WebView(RemoteZygoteActivity.zygoteActivity);
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                Log.e("webview","onPageStarted  " + url);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                Log.e("webview","onPageFinished  " + url);
+            }
+        });
+        return webView;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void createWithOrders(Map<String, String> orders) {
+        initialParams.putAll(orders);
+        create();
+    }
+
+    public void showWithUrl() {
+        show();
+        webView.loadUrl(initialParams.get("initialUrl"));
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(@NonNull MotionEvent ev) {
+        webView.dispatchTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
