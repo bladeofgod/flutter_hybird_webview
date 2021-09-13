@@ -13,6 +13,11 @@ import remote_webview.IBinderPool;
 
 public abstract class ProcessServicePresenter {
 
+    /**
+     * Binder's code
+     */
+    public static final int BINDER_METHOD_CHANNEL = 109;
+
     private Context mAppContext;
 
     protected IBinderPool mBinderPool;
@@ -27,7 +32,7 @@ public abstract class ProcessServicePresenter {
      * the service.class that will connect
      * @return service.class
      */
-    public abstract Class<Service> getServiceClass();
+    public abstract Class<? extends Service> getServiceClass();
 
 
     /**

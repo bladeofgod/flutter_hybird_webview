@@ -27,6 +27,6 @@ public class RemoteWebService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return new RemoteServicePresenter.BinderPoolImpl(mContext);
+        return new RemoteServicePresenter.RemoteBinderPoolImpl(mContext);
     }
 }

@@ -26,10 +26,7 @@ import remote_webview.service.binders.RemoteMethodChannelBinder;
 
 public class RemoteServicePresenter extends ProcessServicePresenter {
 
-    /**
-     * Binder's code
-     */
-    public static final int BINDER_METHOD_CHANNEL = 109;
+
 
     private static volatile RemoteServicePresenter singleton;
 
@@ -49,10 +46,9 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
     }
 
     @Override
-    public Class<Service> getServiceClass() {
-        return Service.class;
+    public Class<? extends Service> getServiceClass() {
+        return RemoteWebService.class;
     }
-
 
     /**
      * Directly fetch {@link IRemoteMethodChannelBinder} for easy to use.
@@ -70,11 +66,11 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
 
     
 
-    public static class BinderPoolImpl extends IBinderPool.Stub{
+    public static class RemoteBinderPoolImpl extends IBinderPool.Stub{
 
         private Context context;
 
-        public BinderPoolImpl(Context context) {
+        public RemoteBinderPoolImpl(Context context) {
             this.context = context;
         }
 
