@@ -5,10 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.DisplayMetrics;
 import android.view.Surface;
 
+import androidx.annotation.Nullable;
+
 import remote_webview.service.MainServicePresenter;
+import remote_webview.utils.LogUtil;
 import remote_webview.view.WebViewPresentation;
 
 
@@ -19,6 +24,7 @@ public class RemoteZygoteActivity extends Activity {
     public static void startZygoteActivity() {
         Intent intent = new Intent(MainServicePresenter.getInstance().getContext()
                 , RemoteZygoteActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         MainServicePresenter
                 .getInstance()
                 .getContext()
@@ -41,6 +47,11 @@ public class RemoteZygoteActivity extends Activity {
         return new WebViewPresentation(zygoteActivity, vd.getDisplay(), null, id);
     }
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LogUtil.logMsg("RemoteZygoteActivity", "protected onCreate");
+    }
 
     @Override
     protected void finalize() throws Throwable {

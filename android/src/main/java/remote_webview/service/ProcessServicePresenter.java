@@ -25,6 +25,7 @@ public abstract class ProcessServicePresenter {
     private CountDownLatch mConnectionBinderPoolCountDownLatch;
 
     ProcessServicePresenter(){
+        initConnectService();
     }
     
     public void holdContext(Context context) {

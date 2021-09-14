@@ -56,7 +56,6 @@ android {
     }
 }
 
-dependencies {
-    implementation files('D:\\flutter\\flutter2.0\\flutter\\bin\\cache\\artifacts\\engine\\android-arm\\flutter.jar')
-
-}
+//dependencies {
+//    implementation files('D:\\flutter\\flutter2.0\\flutter\\bin\\cache\\artifacts\\engine\\android-arm\\flutter.jar')
+//}

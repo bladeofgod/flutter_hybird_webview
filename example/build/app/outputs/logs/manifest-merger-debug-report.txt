@@ -7,7 +7,7 @@ INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\ma
 MERGED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml:1:1-42:12
 MERGED from [:espresso] D:\flutterplugin\flutter_hybird_webview\example\build\espresso\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [:integration_test] D:\flutterplugin\flutter_hybird_webview\example\build\integration_test\intermediates\library_manifest\debug\AndroidManifest.xml:7:1-12:12
-MERGED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-16:12
+MERGED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-22:12
 MERGED from [androidx.test.ext:truth:1.0.0] C:\Users\Admin\.gradle\caches\transforms-1\files-1.1\truth-1.0.0.aar\f1c5074419fb0b7647975e22b5e22702\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.test:core:1.2.0] C:\Users\Admin\.gradle\caches\transforms-1\files-1.1\core-1.2.0.aar\eebee4a0804424db7d2304c7b16c51fb\AndroidManifest.xml:17:1-50:12
 MERGED from [androidx.test.espresso:espresso-intents:3.1.0] C:\Users\Admin\.gradle\caches\transforms-1\files-1.1\espresso-intents-3.1.0.aar\a7aea7570505fdab2fcbb22ef7154180\AndroidManifest.xml:17:1-24:12
@@ -75,8 +75,8 @@ application
 ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml:4:3-30:17
 MERGED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml:4:3-30:17
 MERGED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml:4:3-30:17
-MERGED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-14:19
-MERGED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-14:19
+MERGED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-20:19
+MERGED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-20:19
 MERGED from [androidx.test:core:1.2.0] C:\Users\Admin\.gradle\caches\transforms-1\files-1.1\core-1.2.0.aar\eebee4a0804424db7d2304c7b16c51fb\AndroidManifest.xml:26:5-48:19
 MERGED from [androidx.test:core:1.2.0] C:\Users\Admin\.gradle\caches\transforms-1\files-1.1\core-1.2.0.aar\eebee4a0804424db7d2304c7b16c51fb\AndroidManifest.xml:26:5-48:19
 MERGED from [androidx.test.espresso:espresso-contrib:3.1.0] C:\Users\Admin\.gradle\caches\transforms-1\files-1.1\espresso-contrib-3.1.0.aar\071880569d3c448caf8974f4b8df3d87\AndroidManifest.xml:24:5-20
@@ -273,16 +273,26 @@ ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\debug
 		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\debug\AndroidManifest.xml:11:13-47
 	android:name
 		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\debug\AndroidManifest.xml:9:13-48
-service#remote_webview.service.RemoteWebService
-ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:10:9-12:45
+activity#remote_webview.RemoteZygoteActivity
+ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:10:9-14:86
 	android:process
-		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-42
+		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-42
+	android:launchMode
+		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-44
+	android:theme
+		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-83
 	android:name
-		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-67
+		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-63
+service#remote_webview.service.RemoteWebService
+ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:16:9-18:45
+	android:process
+		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:18:13-42
+	android:name
+		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:17:13-67
 service#remote_webview.service.MainWebService
-ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:13:9-73
+ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:19:9-73
 	android:name
-		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:13:18-70
+		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:19:18-70
 uses-permission#android.permission.REORDER_TASKS
 ADDED from [androidx.test:core:1.2.0] C:\Users\Admin\.gradle\caches\transforms-1\files-1.1\core-1.2.0.aar\eebee4a0804424db7d2304c7b16c51fb\AndroidManifest.xml:24:5-72
 	android:name

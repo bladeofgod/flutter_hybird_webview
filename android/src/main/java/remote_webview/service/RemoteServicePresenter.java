@@ -20,6 +20,7 @@ import remote_webview.model.MethodModel;
 import remote_webview.service.binders.RemoteMethodChannelBinder;
 import remote_webview.service.binders.RemoteProcessBinder;
 import remote_webview.service.binders.RemoteViewFactoryBinder;
+import remote_webview.utils.LogUtil;
 
 
 /**
@@ -62,7 +63,7 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
 
     @Override
     protected void serviceConnectedCallback() {
-        Log.e("RemoteServicePresenter", "remote serviceConnected");
+        LogUtil.logMsg("RemoteServicePresenter", "remote serviceConnected");
         try {
             getRemoteProcessBinder().initZygoteActivity();
         } catch (RemoteException e) {
@@ -72,7 +73,7 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
 
     @Override
     protected void serviceDisConnectedCallback() {
-        Log.e("RemoteServicePresenter", "remote serviceDisConnected");
+        LogUtil.logMsg("RemoteServicePresenter", "remote serviceDisConnected");
     }
 
     /**

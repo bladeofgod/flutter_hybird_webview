@@ -8,7 +8,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.RemoteException;
 
 
@@ -21,6 +23,7 @@ import remote_webview.model.MethodModel;
 import remote_webview.service.RemoteServicePresenter;
 import remote_webview.service.RemoteWebService;
 import remote_webview.service.binders.RemoteMethodChannelBinder;
+import remote_webview.utils.LogUtil;
 
 /**
  * Java platform implementation of the webview_flutter plugin.
@@ -76,6 +79,18 @@ public class WebViewFlutterPlugin implements FlutterPlugin {
             new FlutterWebViewFactory(messenger, /*containerView=*/ null));
     flutterCookieManager = new FlutterCookieManager(messenger);
     RemoteServicePresenter.getInstance().holdContext(binding.getApplicationContext());
+    //todo test code
+    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+      @Override
+      public void run() {
+        try {
+          int isAlive = RemoteServicePresenter.getInstance().getRemoteProcessBinder().isZygoteActivityAlive();
+          LogUtil.logMsg("RemoteServicePresenter"," is alive "  + isAlive);
+        } catch (RemoteException e) {
+          e.printStackTrace();
+        }
+      }
+    },4000);
   }
 
   @Override
