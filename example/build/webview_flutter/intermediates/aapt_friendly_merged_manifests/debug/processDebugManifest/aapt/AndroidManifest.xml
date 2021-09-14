@@ -10,7 +10,7 @@
         <service
             android:name="remote_webview.service.RemoteWebService"
             android:process=":remote.web" />
-        <service android:name="remote_webview.service.MainMethodChannelService" />
+        <service android:name="remote_webview.service.MainWebService" />
     </application>
 
 </manifest>

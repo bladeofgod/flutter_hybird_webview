@@ -24,23 +24,35 @@ public abstract class ProcessServicePresenter {
 
     private CountDownLatch mConnectionBinderPoolCountDownLatch;
 
-    ProcessServicePresenter(Context context){
+    ProcessServicePresenter(){
+    }
+    
+    public void holdContext(Context context) {
         this.mAppContext = context;
     }
+    
+    public Context getContext() {
+        return mAppContext;
+    }
+    
 
     /**
      * the service.class that will connect
      * @return service.class
      */
-    public abstract Class<? extends Service> getServiceClass();
+    protected abstract Class<? extends Service> getServiceClass();
 
+    
+    protected abstract void serviceConnectedCallback();
+    
+    protected abstract void serviceDisConnectedCallback();
 
     /**
      * connect remote service.
      *
      * it's recommended to connect it in a new thread.
      */
-    public void initConnectService() {
+    protected void initConnectService() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -85,6 +97,7 @@ public abstract class ProcessServicePresenter {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mBinderPool = IBinderPool.Stub.asInterface(service);
+            serviceConnectedCallback();
             try {
                 mBinderPool.asBinder().linkToDeath(mBinderPoolDeathRecipient,0);
             }catch (Exception e) {
@@ -94,7 +107,7 @@ public abstract class ProcessServicePresenter {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-
+            serviceDisConnectedCallback();
         }
     };
 

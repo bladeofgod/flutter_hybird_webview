@@ -29,6 +29,7 @@ import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.mock.MockMethodCall;
 import remote_webview.mock.MockMethodChannel;
 import remote_webview.mock.RemoteJavaScriptChannel;
+import remote_webview.service.hub.RemoteBinderCommHub;
 
 public class WebViewPresentation extends Presentation implements IMockMethodHandler {
 
@@ -46,8 +47,17 @@ public class WebViewPresentation extends Presentation implements IMockMethodHand
         this.methodChannel = methodChannel;
         this.webView = createWebView();
         platformThreadHandler = new Handler(outerContext.getMainLooper());
+
+        plugInHub();
     }
 
+    private void plugInHub() {
+        RemoteBinderCommHub.getInstance().plugInMethodHandler(surfaceId,this);
+    }
+
+    private void plugOutHub() {
+        RemoteBinderCommHub.getInstance().plugOutMethodHandler(surfaceId);
+    }
 
     private WebView createWebView() {
         WebView webView = new WebView(RemoteZygoteActivity.zygoteActivity);

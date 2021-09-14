@@ -4,11 +4,14 @@ import android.app.Service;
 import android.content.Context;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Log;
 
 import remote_webview.IBinderPool;
 import remote_webview.IMainMethodChannelBinder;
+import remote_webview.IMainResultCallbackBinder;
 import remote_webview.IRemoteMethodChannelBinder;
 import remote_webview.service.binders.MainMethodChannelBinder;
+import remote_webview.service.binders.MainResultCallbackBinder;
 
 
 /**
@@ -19,15 +22,15 @@ import remote_webview.service.binders.MainMethodChannelBinder;
 
 public class MainServicePresenter extends ProcessServicePresenter {
 
-    public static final int BINDER_REMOTE_METHOD_CHANNEL = 609;
+    public static final int BINDER_MAIN_RESULT_CALLBACK = 809;
 
     private static volatile MainServicePresenter singleton;
 
-    public static MainServicePresenter getInstance(Context context) {
+    public static MainServicePresenter getInstance() {
         if(singleton == null) {
             synchronized (MainServicePresenter.class) {
                 if(singleton == null) {
-                    singleton = new MainServicePresenter(context);
+                    singleton = new MainServicePresenter();
                 }
             }
         }
@@ -35,23 +38,42 @@ public class MainServicePresenter extends ProcessServicePresenter {
     }
 
     
-    private MainServicePresenter(Context context) {
-        super(context);
+    private MainServicePresenter() {
     }
 
     @Override
-    public Class<? extends Service> getServiceClass() {
+    protected Class<? extends Service> getServiceClass() {
         return MainWebService.class;
+    }
+
+    @Override
+    protected void serviceConnectedCallback() {
+        Log.e("MainServicePresenter", "main serviceConnected");
+    }
+
+    @Override
+    protected void serviceDisConnectedCallback() {
+        Log.e("MainServicePresenter", "main serviceDisConnected");
     }
 
     /**
      * Directly fetch {@link IMainMethodChannelBinder} for easy to use.
      * @return invoke method to order main-app
      */
-    IMainMethodChannelBinder getRemoteChannelBinder() {
+    public IMainMethodChannelBinder getMainChannelBinder() {
         IMainMethodChannelBinder binder = null;
         try {
             binder = IMainMethodChannelBinder.Stub.asInterface(mBinderPool.queryBinder(BINDER_METHOD_CHANNEL));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return binder;
+    }
+
+    public IMainResultCallbackBinder getMainResultCallbackBinder() {
+        IMainResultCallbackBinder binder = null;
+        try {
+            binder = IMainResultCallbackBinder.Stub.asInterface(mBinderPool.queryBinder(BINDER_MAIN_RESULT_CALLBACK));
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,6 +95,9 @@ public class MainServicePresenter extends ProcessServicePresenter {
             switch (binderCode) {
                 case BINDER_METHOD_CHANNEL:
                     binder = new MainMethodChannelBinder();
+                    break;
+                case BINDER_MAIN_RESULT_CALLBACK:
+                    binder = new MainResultCallbackBinder();
                     break;
             }
             return binder;

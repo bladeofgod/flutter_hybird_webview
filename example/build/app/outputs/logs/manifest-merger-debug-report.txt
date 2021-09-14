@@ -279,10 +279,10 @@ ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\bu
 		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-42
 	android:name
 		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-67
-service#remote_webview.service.MainMethodChannelService
-ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:13:9-83
+service#remote_webview.service.MainWebService
+ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:13:9-73
 	android:name
-		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:13:18-80
+		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:13:18-70
 uses-permission#android.permission.REORDER_TASKS
 ADDED from [androidx.test:core:1.2.0] C:\Users\Admin\.gradle\caches\transforms-1\files-1.1\core-1.2.0.aar\eebee4a0804424db7d2304c7b16c51fb\AndroidManifest.xml:24:5-72
 	android:name

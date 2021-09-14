@@ -61,6 +61,11 @@ abstract public class BinderCommunicateHub {
         methodResultCallbackSlog.remove(id);
     }
 
+    /**
+     * 
+     * @param id #{@linkplain #invokeMethod} remote_invoke's timeStamp, to associate 
+     *           a  result callback .
+     */
     private void cacheResultCallback(long id) {
         cacheMethodResultCallback(id, new ResultCallbackHandler(id));
     }
@@ -71,7 +76,7 @@ abstract public class BinderCommunicateHub {
      * @param model
      */
     public void invokeMethod(MethodModel model) {
-        int handlerId = model.getId();
+        final long handlerId = model.getInvokeTimeStamp();
         final MockMethodCall methodCall = new MockMethodCall(model.getMethodName(),model.getArguments());
         cacheResultCallback(handlerId);
         try {
@@ -87,16 +92,18 @@ abstract public class BinderCommunicateHub {
      * @param id
      * @param call
      */
-    public void invokeMethodById(long id, MockMethodCall call) throws NullPointerException {
+    private void invokeMethodById(final long id, MockMethodCall call) throws NullPointerException {
         methodHandlerSlot.get(id).onMethodCall(call, new IMockMethodResult() {
             @Override
             public void success(@Nullable HashMap var1) {
-                //todo
+                methodResultCallbackSlog.get(id).success(var1);
+                removeMethodResultCallbackById(id);
             }
 
             @Override
             public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
-                //todo
+                methodResultCallbackSlog.get(id).error(var1, var2, var3);
+                removeMethodResultCallbackById(id);
             }
 
             @Override

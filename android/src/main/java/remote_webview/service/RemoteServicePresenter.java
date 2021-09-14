@@ -14,9 +14,11 @@ import java.util.concurrent.CountDownLatch;
 
 import remote_webview.IBinderPool;
 import remote_webview.IRemoteMethodChannelBinder;
+import remote_webview.IRemoteProcessBinder;
 import remote_webview.IRemoteViewFactoryBinder;
 import remote_webview.model.MethodModel;
 import remote_webview.service.binders.RemoteMethodChannelBinder;
+import remote_webview.service.binders.RemoteProcessBinder;
 import remote_webview.service.binders.RemoteViewFactoryBinder;
 
 
@@ -24,6 +26,8 @@ import remote_webview.service.binders.RemoteViewFactoryBinder;
  * Represents remote service binder.
  * 
  * communicate with remote-process will by this presenter.
+ *
+ * Tip: this is run on main-app's UI-thread, do not block it!
  */
 
 public class RemoteServicePresenter extends ProcessServicePresenter {
@@ -33,26 +37,42 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
      */
     public static final int BINDER_VIEW_FACTORY = 609;
 
+    public static final int BINDER_REMOTE_PROCESS = 619;
+
     private static volatile RemoteServicePresenter singleton;
 
-    public static RemoteServicePresenter getInstance(Context context) {
+    public static RemoteServicePresenter getInstance() {
         if(singleton == null) {
             synchronized (RemoteServicePresenter.class) {
                 if(singleton == null) {
-                    singleton = new RemoteServicePresenter(context);
+                    singleton = new RemoteServicePresenter();
                 }
             }
         }
         return singleton;
     }
 
-    private RemoteServicePresenter(Context context) {
-        super(context);
+    private RemoteServicePresenter() {
     }
 
     @Override
-    public Class<? extends Service> getServiceClass() {
+    protected Class<? extends Service> getServiceClass() {
         return RemoteWebService.class;
+    }
+
+    @Override
+    protected void serviceConnectedCallback() {
+        Log.e("RemoteServicePresenter", "remote serviceConnected");
+        try {
+            getRemoteProcessBinder().initZygoteActivity();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void serviceDisConnectedCallback() {
+        Log.e("RemoteServicePresenter", "remote serviceDisConnected");
     }
 
     /**
@@ -73,10 +93,25 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
      * Directly fetch {@link IRemoteViewFactoryBinder} for easy to use.
      * @reture IBinder to create platform-view.
      */
-    public IRemoteViewFactoryBinder getRemoteViewFactory() {
+    public IRemoteViewFactoryBinder getRemoteViewFactoryBinder() {
         IRemoteViewFactoryBinder binder = null;
         try {
             binder = IRemoteViewFactoryBinder.Stub.asInterface(mBinderPool.queryBinder(BINDER_VIEW_FACTORY));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return binder;
+    }
+
+
+    /**
+     * Directly fetch {@link IRemoteProcessBinder} for easy to use.
+     * @reture IBinder to create platform-view.
+     */
+    public IRemoteProcessBinder getRemoteProcessBinder() {
+        IRemoteProcessBinder binder = null;
+        try {
+            binder = IRemoteProcessBinder.Stub.asInterface(mBinderPool.queryBinder(BINDER_REMOTE_PROCESS));
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,6 +125,7 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
 
         public RemoteBinderPoolImpl(Context context) {
             this.context = context;
+            MainServicePresenter.getInstance().holdContext(context);
         }
 
         @Override
@@ -101,6 +137,9 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
                     break;
                 case BINDER_VIEW_FACTORY:
                     binder = new RemoteViewFactoryBinder();
+                    break;
+                case BINDER_REMOTE_PROCESS:
+                    binder = new RemoteProcessBinder();
                     break;
             }
             return binder;
