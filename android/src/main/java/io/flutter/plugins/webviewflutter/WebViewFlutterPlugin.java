@@ -78,19 +78,6 @@ public class WebViewFlutterPlugin implements FlutterPlugin {
             "plugins.flutter.io/webview",
             new FlutterWebViewFactory(messenger, /*containerView=*/ null));
     flutterCookieManager = new FlutterCookieManager(messenger);
-    RemoteServicePresenter.getInstance().holdContext(binding.getApplicationContext());
-    //todo test code
-    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-      @Override
-      public void run() {
-        try {
-          int isAlive = RemoteServicePresenter.getInstance().getRemoteProcessBinder().isZygoteActivityAlive();
-          LogUtil.logMsg("RemoteServicePresenter"," is alive "  + isAlive);
-        } catch (RemoteException e) {
-          e.printStackTrace();
-        }
-      }
-    },4000);
   }
 
   @Override
