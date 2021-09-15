@@ -7,6 +7,8 @@ import 'package:webview_flutter/platform_interface.dart';
 import 'package:webview_flutter/src/webview_android.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import 'remote_webview_plugin.dart';
+
 /// author：JiaQiLi
 /// date：2021/9/15
 /// remark：
@@ -55,11 +57,24 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
   int? textureId;
 
   @override
+  void initState() {
+    super.initState();
+    RemoteWebViewPlugin.produceWebView().then((value) {
+      debugPrint('surface id  $value');
+      setState(() {
+        textureId = value;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return textureId == null
         ? Container(color: Colors.white,) : Texture(textureId: textureId!);
   }
 }
+
+
 
 
 

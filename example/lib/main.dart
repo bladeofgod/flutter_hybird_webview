@@ -39,7 +39,7 @@ class _WebViewExampleState extends State<WebViewExample> {
   @override
   void initState() {
     super.initState();
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    if (Platform.isAndroid) WebView.platform = TextureAndroidWebView();
   }
 
   @override

@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import remote_webview.model.ViewSurfaceModel;
-import remote_webview.model.WebViewSurfaceModel;
+import remote_webview.model.WebViewSurfaceClient;
 
 
 public class WebViewSurfaceProducer {
@@ -25,9 +25,9 @@ public class WebViewSurfaceProducer {
 
     public int buildGeneralWebViewSurface() {
 
-        final WebViewSurfaceModel surfaceModel = new WebViewSurfaceModel.Builder(flutterPluginBinding.getApplicationContext())
+        final WebViewSurfaceClient surfaceModel = new WebViewSurfaceClient.Builder(flutterPluginBinding.getApplicationContext())
                 .init(flutterPluginBinding.getTextureRegistry().createSurfaceTexture())
-                .build();
+                .build(flutterPluginBinding);
         cacheViewSurfaceModel(surfaceModel);
 
         return surfaceModel.getId();
