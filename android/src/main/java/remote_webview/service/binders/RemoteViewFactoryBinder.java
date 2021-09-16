@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi;
 import java.util.Map;
 
 import remote_webview.IRemoteViewFactoryBinder;
+import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.utils.StringUtil;
 import remote_webview.view.RemoteViewFactoryProcessor;
 
@@ -20,7 +21,7 @@ public class RemoteViewFactoryBinder extends IRemoteViewFactoryBinder.Stub {
      *
      * Initiate web-view and loadUrl, register callback.
      *
-     * @param orders : must contain a id(surface), and initiate params.
+     * @param creationParams : contain a id(surface), and initiate params.
      *               e.g autoMediaPlaybackPolicy, userAgent, initialUrl
      * @param surface : the web-view depend on it.
      *
@@ -29,8 +30,8 @@ public class RemoteViewFactoryBinder extends IRemoteViewFactoryBinder.Stub {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void createWithSurface(String orders, Surface surface) throws RemoteException {
-        RemoteViewFactoryProcessor.getInstance().createWithSurface(orders,surface);
+    public void createWithSurface(WebViewCreationParamsModel creationParams, Surface surface) throws RemoteException {
+        RemoteViewFactoryProcessor.getInstance().createWithSurface(creationParams,surface);
     }
 
     /**

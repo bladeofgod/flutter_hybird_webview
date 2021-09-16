@@ -41,7 +41,7 @@ public class RemoteZygoteActivity extends Activity {
         int sh = dm.heightPixels;
         int densityDpi = dm.densityDpi;
         DisplayManager displayManager = (DisplayManager) zygoteActivity.getSystemService(Context.DISPLAY_SERVICE);
-        final VirtualDisplay vd = displayManager.createVirtualDisplay("remote_web_view" + id,
+        final VirtualDisplay vd = displayManager.createVirtualDisplay("remote_web_view_" + id,
                 sw, sh, densityDpi, surface, 0);
         //todo method channel
         return new WebViewPresentation(zygoteActivity, vd.getDisplay(), null, id);

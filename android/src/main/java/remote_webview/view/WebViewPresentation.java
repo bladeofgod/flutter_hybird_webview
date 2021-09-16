@@ -29,16 +29,20 @@ import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.mock.MockMethodCall;
 import remote_webview.mock.MockMethodChannel;
 import remote_webview.mock.RemoteJavaScriptChannel;
+import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.service.hub.RemoteBinderCommHub;
+import remote_webview.utils.LogUtil;
 
 public class WebViewPresentation extends Presentation implements IMockMethodHandler {
+    
+    private final static String TAG = "WebViewPresentation";
 
     private final MockMethodChannel methodChannel;
     private final Handler platformThreadHandler;
     private final int surfaceId;
     private WebView webView;
 
-    private final Map<String,String> initialParams = new HashMap<>();
+    private WebViewCreationParamsModel initialParams;
 
     public WebViewPresentation(Context outerContext, Display display, MockMethodChannel methodChannel
             , int surfaceId) {
@@ -61,6 +65,7 @@ public class WebViewPresentation extends Presentation implements IMockMethodHand
 
     private WebView createWebView() {
         WebView webView = new WebView(RemoteZygoteActivity.zygoteActivity);
+        //todo update web view init params  see -> WebViewCreationParamsModel
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
@@ -81,14 +86,17 @@ public class WebViewPresentation extends Presentation implements IMockMethodHand
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void createWithOrders(Map<String, String> orders) {
-        initialParams.putAll(orders);
+    public void createWithOrders(WebViewCreationParamsModel creationParamsModel) {
+        initialParams = creationParamsModel;
         create();
     }
 
     public void showWithUrl() {
+        LogUtil.logMsg(TAG,"showWithUrl");
+        if(initialParams.getUrl() != null && !initialParams.getUrl().isEmpty()) {
+            webView.loadUrl(initialParams.getUrl());
+        }
         show();
-        webView.loadUrl(initialParams.get("initialUrl"));
     }
 
     @Override

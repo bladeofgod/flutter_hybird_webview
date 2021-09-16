@@ -22,14 +22,15 @@ public abstract class ProcessServicePresenter {
 
     protected IBinderPool mBinderPool;
 
-    private CountDownLatch mConnectionBinderPoolCountDownLatch;
+    //private CountDownLatch mConnectionBinderPoolCountDownLatch;
 
     ProcessServicePresenter(){
-        initConnectService();
+
     }
     
     public void holdContext(Context context) {
         this.mAppContext = context;
+        initConnectService();
     }
     
     public Context getContext() {
@@ -54,12 +55,7 @@ public abstract class ProcessServicePresenter {
      * it's recommended to connect it in a new thread.
      */
     protected void initConnectService() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectRemoteService();
-            }
-        }).start();
+        connectRemoteService();
     }
 
     /**
@@ -84,14 +80,8 @@ public abstract class ProcessServicePresenter {
      * connect remote service.
      */
     private synchronized void connectRemoteService() {
-        mConnectionBinderPoolCountDownLatch = new CountDownLatch(1);
         Intent service = new Intent(mAppContext, getServiceClass());
         mAppContext.bindService(service,serviceConnection,Context.BIND_AUTO_CREATE);
-        try {
-            mConnectionBinderPoolCountDownLatch.await();
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private final ServiceConnection serviceConnection = new ServiceConnection() {

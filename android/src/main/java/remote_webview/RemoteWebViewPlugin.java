@@ -1,11 +1,15 @@
 package remote_webview;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.RemoteException;
 
 import androidx.annotation.NonNull;
+
+import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -19,8 +23,13 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
     private static final String CHANNEL_NAME = "remote_webview_plugin";
 
     private Context mAppContext;
+    private Activity mActivity;
     private MethodChannel mMethodChannel;
-    
+
+    public RemoteWebViewPlugin(Activity mActivity) {
+        this.mActivity = mActivity;
+    }
+
     @Override
     public void onAttachedToEngine(@NonNull FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
         mAppContext = flutterPluginBinding.getApplicationContext();
@@ -29,6 +38,9 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
         mMethodChannel.setMethodCallHandler(this);
 
         RemoteServicePresenter.getInstance().holdContext(flutterPluginBinding.getApplicationContext());
+
+
+
         //todo test code
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
@@ -52,7 +64,16 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
     public void onMethodCall(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result) {
         switch (methodCall.method) {
             case "produceWebView":
-
+                //todo test code
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        LogUtil.logMsg("startActivity"," class : " + mActivity.getClass() );
+                        mActivity.startActivity(new Intent(mAppContext, mActivity.getClass()));
+                    }
+                },1000);
+                Map<String, Object> params = (Map<String, Object>) methodCall.arguments;
+                result.success(WebViewSurfaceProducer.producer.buildGeneralWebViewSurface(params));
                 break;
         }
 

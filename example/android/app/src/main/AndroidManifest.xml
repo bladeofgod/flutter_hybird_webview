@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="io.flutter.plugins.webviewflutterexample">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="io.flutter.plugins.webviewflutterexample">
 
   <application
     android:usesCleartextTraffic="true"
@@ -12,7 +13,8 @@
       android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
       android:hardwareAccelerated="true"
       android:launchMode="singleTop"
-      android:name="io.flutter.embedding.android.FlutterActivity"
+      android:name=".WebViewTestActivity"
+        android:taskAffinity="com.lijiaqi.flutter_remote_webview"
       android:theme="@style/LaunchTheme"
       android:windowSoftInputMode="adjustResize">
       <!-- This keeps the window background of the activity showing

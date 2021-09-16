@@ -3,8 +3,6 @@
  * Original file: D:\\flutterplugin\\flutter_hybird_webview\\android\\src\\main\\aidl\\remote_webview\\IRemoteViewFactoryBinder.aidl
  */
 package remote_webview;
-// Declare any non-default types here with import statements
-
 public interface IRemoteViewFactoryBinder extends android.os.IInterface
 {
 /** Local-side IPC implementation stub class. */
@@ -48,8 +46,13 @@ return true;
 case TRANSACTION_createWithSurface:
 {
 data.enforceInterface(descriptor);
-java.lang.String _arg0;
-_arg0 = data.readString();
+remote_webview.model.WebViewCreationParamsModel _arg0;
+if ((0!=data.readInt())) {
+_arg0 = remote_webview.model.WebViewCreationParamsModel.CREATOR.createFromParcel(data);
+}
+else {
+_arg0 = null;
+}
 android.view.Surface _arg1;
 if ((0!=data.readInt())) {
 _arg1 = android.view.Surface.CREATOR.createFromParcel(data);
@@ -98,13 +101,19 @@ public java.lang.String getInterfaceDescriptor()
 {
 return DESCRIPTOR;
 }
-@Override public void createWithSurface(java.lang.String orders, android.view.Surface surface) throws android.os.RemoteException
+@Override public void createWithSurface(remote_webview.model.WebViewCreationParamsModel createParams, android.view.Surface surface) throws android.os.RemoteException
 {
 android.os.Parcel _data = android.os.Parcel.obtain();
 android.os.Parcel _reply = android.os.Parcel.obtain();
 try {
 _data.writeInterfaceToken(DESCRIPTOR);
-_data.writeString(orders);
+if ((createParams!=null)) {
+_data.writeInt(1);
+createParams.writeToParcel(_data, 0);
+}
+else {
+_data.writeInt(0);
+}
 if ((surface!=null)) {
 _data.writeInt(1);
 surface.writeToParcel(_data, 0);
@@ -146,6 +155,6 @@ _data.recycle();
 static final int TRANSACTION_createWithSurface = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
 static final int TRANSACTION_dispatchTouchEvent = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
 }
-public void createWithSurface(java.lang.String orders, android.view.Surface surface) throws android.os.RemoteException;
+public void createWithSurface(remote_webview.model.WebViewCreationParamsModel createParams, android.view.Surface surface) throws android.os.RemoteException;
 public void dispatchTouchEvent(java.lang.String surfaceId, android.view.MotionEvent event) throws android.os.RemoteException;
 }

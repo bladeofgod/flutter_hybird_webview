@@ -8,8 +8,8 @@ import 'package:flutter/services.dart';
 class RemoteWebViewPlugin{
   static const MethodChannel _channel = MethodChannel('remote_webview_plugin');
 
-  static Future<int> produceWebView() async {
-    return await _channel.invokeMethod('produceWebView');
+  static Future<int> produceWebView(Map<String,String> params) async {
+    return await _channel.invokeMethod('produceWebView', params);
   }
 
 }

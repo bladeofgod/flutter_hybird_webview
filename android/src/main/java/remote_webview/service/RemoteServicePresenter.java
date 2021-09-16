@@ -5,7 +5,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -21,6 +23,7 @@ import remote_webview.service.binders.RemoteMethodChannelBinder;
 import remote_webview.service.binders.RemoteProcessBinder;
 import remote_webview.service.binders.RemoteViewFactoryBinder;
 import remote_webview.utils.LogUtil;
+import remote_webview.view.RemoteWebViewActivity;
 
 
 /**

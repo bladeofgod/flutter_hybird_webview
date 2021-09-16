@@ -19,10 +19,11 @@ import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.view.TextureRegistry;
+import remote_webview.utils.LogUtil;
 
 public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChannel.MethodCallHandler {
 
-    private static final String CHANNEL_NAME_HEAD = "remote_webview/webview_";
+    private static final String CHANNEL_NAME_HEAD = "plugins.flutter.io/webview_";
 
     private final MethodChannel methodChannel;
 
@@ -256,6 +257,7 @@ public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChan
     }
 
     public static class Builder{
+        public static final String TAG = "Builder";
 
         private final Context mPppContext;
 
@@ -273,8 +275,6 @@ public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChan
 
         public Builder init(TextureRegistry.SurfaceTextureEntry textureEntry) {
             mSurfaceTexture = textureEntry.surfaceTexture();
-            mSurface = new Surface(mSurfaceTexture);
-
             return this;
         }
 
@@ -299,7 +299,9 @@ public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChan
         }
 
         public WebViewSurfaceClient build(FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
+            LogUtil.logMsg(TAG," size : " + width + "  " + height);
             mSurfaceTexture.setDefaultBufferSize(width, height);
+            mSurface = new Surface(mSurfaceTexture);
             return new WebViewSurfaceClient(id, mSurface, flutterPluginBinding.getBinaryMessenger());
         }
 
@@ -308,7 +310,6 @@ public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChan
             width = dm.widthPixels;
             height = dm.heightPixels;
         }
-
-
+        
     }
 }
