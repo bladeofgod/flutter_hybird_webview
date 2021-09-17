@@ -34,7 +34,7 @@ ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManif
 	android:name
 		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:10:18-72
 service#remote_webview.service.MainWebService
-ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:12:9-72
+ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:12:9-73
 	android:name
 		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:12:18-70
 uses-sdk

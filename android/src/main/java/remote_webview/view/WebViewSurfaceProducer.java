@@ -25,7 +25,7 @@ public class WebViewSurfaceProducer {
         this.flutterPluginBinding = binding;
     }
 
-    private final HashMap<Integer, ViewSurfaceModel> surfaceModelCache = new HashMap<>();
+    public final HashMap<Integer, ViewSurfaceModel> surfaceModelCache = new HashMap<>();
 
 
     public int buildGeneralWebViewSurface(Map<String, Object> params) {

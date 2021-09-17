@@ -80,6 +80,22 @@ this.dispatchTouchEvent(_arg0, _arg1);
 reply.writeNoException();
 return true;
 }
+case TRANSACTION_dispatchKeyEvent:
+{
+data.enforceInterface(descriptor);
+java.lang.String _arg0;
+_arg0 = data.readString();
+android.view.KeyEvent _arg1;
+if ((0!=data.readInt())) {
+_arg1 = android.view.KeyEvent.CREATOR.createFromParcel(data);
+}
+else {
+_arg1 = null;
+}
+this.dispatchKeyEvent(_arg0, _arg1);
+reply.writeNoException();
+return true;
+}
 default:
 {
 return super.onTransact(code, data, reply, flags);
@@ -151,10 +167,34 @@ _reply.recycle();
 _data.recycle();
 }
 }
+@Override public void dispatchKeyEvent(java.lang.String surfaceId, android.view.KeyEvent keyEvent) throws android.os.RemoteException
+{
+android.os.Parcel _data = android.os.Parcel.obtain();
+android.os.Parcel _reply = android.os.Parcel.obtain();
+try {
+_data.writeInterfaceToken(DESCRIPTOR);
+_data.writeString(surfaceId);
+if ((keyEvent!=null)) {
+_data.writeInt(1);
+keyEvent.writeToParcel(_data, 0);
+}
+else {
+_data.writeInt(0);
+}
+mRemote.transact(Stub.TRANSACTION_dispatchKeyEvent, _data, _reply, 0);
+_reply.readException();
+}
+finally {
+_reply.recycle();
+_data.recycle();
+}
+}
 }
 static final int TRANSACTION_createWithSurface = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
 static final int TRANSACTION_dispatchTouchEvent = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
+static final int TRANSACTION_dispatchKeyEvent = (android.os.IBinder.FIRST_CALL_TRANSACTION + 2);
 }
 public void createWithSurface(remote_webview.model.WebViewCreationParamsModel createParams, android.view.Surface surface) throws android.os.RemoteException;
 public void dispatchTouchEvent(java.lang.String surfaceId, android.view.MotionEvent event) throws android.os.RemoteException;
+public void dispatchKeyEvent(java.lang.String surfaceId, android.view.KeyEvent keyEvent) throws android.os.RemoteException;
 }

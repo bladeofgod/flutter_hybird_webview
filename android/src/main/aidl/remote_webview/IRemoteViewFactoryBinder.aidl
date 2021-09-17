@@ -8,4 +8,6 @@ interface IRemoteViewFactoryBinder {
     void createWithSurface(in WebViewCreationParamsModel createParams, in Surface surface);
 
     void dispatchTouchEvent(String surfaceId, in MotionEvent event);
+
+    void dispatchKeyEvent(String surfaceId, in KeyEvent keyEvent);
 }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.webkit.WebSettings;
@@ -114,7 +115,16 @@ public class WebViewPresentation extends Presentation implements IMockMethodHand
     @Override
     public boolean dispatchTouchEvent(@NonNull MotionEvent ev) {
         webView.dispatchTouchEvent(ev);
-        return super.dispatchTouchEvent(ev);
+        //return super.dispatchTouchEvent(ev);
+        return true;
+    }
+
+
+    @Override
+    public boolean dispatchKeyEvent(@NonNull KeyEvent event) {
+        webView.dispatchKeyEvent(event);
+        //return super.dispatchKeyEvent(event);
+        return true;
     }
 
     @Override

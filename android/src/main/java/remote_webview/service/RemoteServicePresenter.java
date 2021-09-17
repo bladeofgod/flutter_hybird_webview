@@ -129,7 +129,7 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
 
         public RemoteBinderPoolImpl(Context context) {
             this.context = context;
-            MainServicePresenter.getInstance().holdContext(context);
+            MainServicePresenter.getInstance().holdContext(context.getApplicationContext());
         }
 
         @Override

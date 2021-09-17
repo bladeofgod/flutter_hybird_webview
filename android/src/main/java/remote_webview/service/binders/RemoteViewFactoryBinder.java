@@ -3,6 +3,7 @@ package remote_webview.service.binders;
 
 import android.os.Build;
 import android.os.RemoteException;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 
@@ -12,6 +13,7 @@ import java.util.Map;
 
 import remote_webview.IRemoteViewFactoryBinder;
 import remote_webview.model.WebViewCreationParamsModel;
+import remote_webview.utils.LogUtil;
 import remote_webview.utils.StringUtil;
 import remote_webview.view.RemoteViewFactoryProcessor;
 
@@ -42,6 +44,12 @@ public class RemoteViewFactoryBinder extends IRemoteViewFactoryBinder.Stub {
      */
     @Override
     public void dispatchTouchEvent(String surfaceId, MotionEvent event) throws RemoteException {
+        LogUtil.logMsg("remote", "dispatchTouchEvent  " + surfaceId);
         RemoteViewFactoryProcessor.getInstance().dispatchTouchEvent(surfaceId, event);
+    }
+
+    @Override
+    public void dispatchKeyEvent(String surfaceId, KeyEvent keyEvent) throws RemoteException {
+        RemoteViewFactoryProcessor.getInstance().dispatchKeyEvent(surfaceId, keyEvent);
     }
 }

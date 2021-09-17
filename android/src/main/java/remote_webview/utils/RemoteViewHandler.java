@@ -12,11 +12,7 @@ public class RemoteViewHandler extends Handler {
     public static RemoteViewHandler getInstance() {return instance;}
 
     public static void runOnUiThread(Runnable runnable) {
-        if(Looper.getMainLooper().equals(Looper.getMainLooper())) {
-            runnable.run();
-        } else {
-            instance.post(runnable);
-        }
+        instance.post(runnable);
     }
 
 }

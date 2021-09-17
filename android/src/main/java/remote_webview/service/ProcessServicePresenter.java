@@ -10,6 +10,7 @@ import android.os.IBinder;
 import java.util.concurrent.CountDownLatch;
 
 import remote_webview.IBinderPool;
+import remote_webview.utils.LogUtil;
 
 public abstract class ProcessServicePresenter {
 
@@ -30,7 +31,6 @@ public abstract class ProcessServicePresenter {
     
     public void holdContext(Context context) {
         this.mAppContext = context;
-        initConnectService();
     }
     
     public Context getContext() {
@@ -54,7 +54,7 @@ public abstract class ProcessServicePresenter {
      *
      * it's recommended to connect it in a new thread.
      */
-    protected void initConnectService() {
+    public void initConnectService() {
         connectRemoteService();
     }
 
@@ -79,7 +79,7 @@ public abstract class ProcessServicePresenter {
     /**
      * connect remote service.
      */
-    private synchronized void connectRemoteService() {
+    private void connectRemoteService() {
         Intent service = new Intent(mAppContext, getServiceClass());
         mAppContext.bindService(service,serviceConnection,Context.BIND_AUTO_CREATE);
     }
@@ -87,6 +87,7 @@ public abstract class ProcessServicePresenter {
     private final ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+            LogUtil.logMsg("serviceConnection", "  onServiceConnected");
             mBinderPool = IBinderPool.Stub.asInterface(service);
             serviceConnectedCallback();
             try {
@@ -98,6 +99,7 @@ public abstract class ProcessServicePresenter {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            LogUtil.logMsg("serviceConnection", "  onServiceDisconnected");
             serviceDisConnectedCallback();
         }
     };

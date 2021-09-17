@@ -38,6 +38,7 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
         mMethodChannel.setMethodCallHandler(this);
 
         RemoteServicePresenter.getInstance().holdContext(flutterPluginBinding.getApplicationContext());
+        RemoteServicePresenter.getInstance().initConnectService();
 
 
 

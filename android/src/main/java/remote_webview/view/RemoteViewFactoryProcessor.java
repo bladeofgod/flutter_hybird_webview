@@ -3,6 +3,7 @@ package remote_webview.view;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 import remote_webview.RemoteZygoteActivity;
 import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.model.WebViewCreationParamsModel;
+import remote_webview.utils.LogUtil;
 import remote_webview.utils.RemoteViewHandler;
 import remote_webview.utils.StringUtil;
 
@@ -47,9 +49,10 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
         RemoteViewHandler.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                final WebViewPresentation presentation;
                 try {
+                    final WebViewPresentation presentation;
                     final int surfaceId = creationParams.getSurfaceId();
+                    LogUtil.logMsg("view factory", " createWithSurface  id " + surfaceId);
                     presentation = RemoteZygoteActivity.generateWebViewPresentation(surfaceId,surface);
                     //todo cached presentation and need remove when it's disposed
                     viewCache.put(surfaceId, presentation);
@@ -66,12 +69,24 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
     }
 
     public void dispatchTouchEvent(String surfaceId, MotionEvent event) {
+        LogUtil.logMsg("view factory", " dispatchTouchEvent  id " + surfaceId);
         try {
-            viewCache.get(surfaceId).dispatchTouchEvent(event);
+            viewCache.get(Integer.parseInt(surfaceId)).dispatchTouchEvent(event);
         }catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
+    
+    public void dispatchKeyEvent(String surfaceId, KeyEvent event) {
+        LogUtil.logMsg("view factory", " dispatchKeyEvent  id " + surfaceId);
+        try {
+            viewCache.get(Integer.parseInt(surfaceId)).dispatchKeyEvent(event);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 
     @Override
     public void cleanGarbage(int id) {
