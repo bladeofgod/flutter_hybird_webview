@@ -1,11 +1,14 @@
 package remote_webview.service.hub;
 
 
+import remote_webview.interfaces.IGarbageCleanListener;
+import remote_webview.utils.RemoteGarbageCollect;
+
 /**
  * view's sub binder hub.
  * dispatch the order from main-process to the view according id.
  */
-public class RemoteBinderCommHub extends BinderCommunicateHub {
+public class RemoteBinderCommHub extends BinderCommunicateHub implements IGarbageCleanListener {
 
     private static volatile RemoteBinderCommHub singleton;
 
@@ -20,6 +23,17 @@ public class RemoteBinderCommHub extends BinderCommunicateHub {
         return singleton;
     }
     
-    private RemoteBinderCommHub(){}
+    private RemoteBinderCommHub(){
+        RemoteGarbageCollect.getInstance().registerCollectListener(this);
+    }
 
+    @Override
+    public void cleanGarbage(int id) {
+        
+    }
+
+    @Override
+    public void cleanAll() {
+
+    }
 }

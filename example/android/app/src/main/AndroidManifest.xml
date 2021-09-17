@@ -14,7 +14,6 @@
       android:hardwareAccelerated="true"
       android:launchMode="singleTop"
       android:name=".WebViewTestActivity"
-        android:taskAffinity="com.lijiaqi.flutter_remote_webview"
       android:theme="@style/LaunchTheme"
       android:windowSoftInputMode="adjustResize">
       <!-- This keeps the window background of the activity showing

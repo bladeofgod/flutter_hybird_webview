@@ -12,7 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import remote_webview.RemoteZygoteActivity;
+import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.model.WebViewCreationParamsModel;
+import remote_webview.utils.RemoteViewHandler;
 import remote_webview.utils.StringUtil;
 
 /**
@@ -21,7 +23,7 @@ import remote_webview.utils.StringUtil;
  *
  */
 
-public class RemoteViewFactoryProcessor {
+public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
 
     private static volatile RemoteViewFactoryProcessor singleton;
 
@@ -38,18 +40,16 @@ public class RemoteViewFactoryProcessor {
 
     private RemoteViewFactoryProcessor() {}
 
-    private Handler handler = new Handler(Looper.getMainLooper());
-
     private final HashMap<Integer, WebViewPresentation> viewCache = new HashMap<>();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void createWithSurface(final WebViewCreationParamsModel creationParams, final Surface surface) {
-        final int surfaceId = creationParams.getSurfaceId();
-        handler.post(new Runnable() {
+        RemoteViewHandler.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 final WebViewPresentation presentation;
                 try {
+                    final int surfaceId = creationParams.getSurfaceId();
                     presentation = RemoteZygoteActivity.generateWebViewPresentation(surfaceId,surface);
                     //todo cached presentation and need remove when it's disposed
                     viewCache.put(surfaceId, presentation);
@@ -63,7 +63,6 @@ public class RemoteViewFactoryProcessor {
             }
         });
 
-
     }
 
     public void dispatchTouchEvent(String surfaceId, MotionEvent event) {
@@ -74,6 +73,20 @@ public class RemoteViewFactoryProcessor {
         }
     }
 
+    @Override
+    public void cleanGarbage(int id) {
+        try {
+            viewCache.get(id).dispose();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        viewCache.remove(id);
+    }
+
+    @Override
+    public void cleanAll() {
+        viewCache.clear();
+    }
 }
 
 

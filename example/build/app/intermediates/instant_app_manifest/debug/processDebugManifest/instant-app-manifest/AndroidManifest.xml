@@ -39,7 +39,6 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
-            android:taskAffinity="com.lijiaqi.flutter_remote_webview"
             android:theme="@style/LaunchTheme"
             android:windowSoftInputMode="adjustResize" >
 

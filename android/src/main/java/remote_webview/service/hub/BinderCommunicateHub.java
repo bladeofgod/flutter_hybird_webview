@@ -26,13 +26,13 @@ abstract public class BinderCommunicateHub {
      * @value IMockMethodHandler
      *
      */
-    private final HashMap<Long,IMockMethodHandler> methodHandlerSlot = new HashMap<>();
+    protected final HashMap<Long,IMockMethodHandler> methodHandlerSlot = new HashMap<>();
 
     /**
      * cache a {@link IMockMethodResult} when called {@link #invokeMethodById} temporary.
      * remove after {@link IMockMethodResult} called.
      */
-    private final HashMap<Long,ResultCallbackHandler> methodResultCallbackSlog = new HashMap<>();
+    protected final HashMap<Long,ResultCallbackHandler> methodResultCallbackSlog = new HashMap<>();
 
 
     /**
@@ -89,7 +89,7 @@ abstract public class BinderCommunicateHub {
 
     /**
      * invoke web-view
-     * @param id
+     * @param id : invoke timeStamp as an id for linked  {@linkplain IMockMethodResult}
      * @param call
      */
     private void invokeMethodById(final long id, MockMethodCall call) throws NullPointerException {

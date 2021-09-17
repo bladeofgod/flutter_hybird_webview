@@ -5,6 +5,7 @@ import android.app.Presentation;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
@@ -63,6 +64,11 @@ public class WebViewPresentation extends Presentation implements IMockMethodHand
         RemoteBinderCommHub.getInstance().plugOutMethodHandler(surfaceId);
     }
 
+    public void dispose() {
+        //todo clean up
+        plugOutHub();
+    }
+
     private WebView createWebView() {
         WebView webView = new WebView(RemoteZygoteActivity.zygoteActivity);
         //todo update web view init params  see -> WebViewCreationParamsModel
@@ -97,6 +103,12 @@ public class WebViewPresentation extends Presentation implements IMockMethodHand
             webView.loadUrl(initialParams.getUrl());
         }
         show();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(webView);
     }
 
     @Override
