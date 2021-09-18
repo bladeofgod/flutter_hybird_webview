@@ -23,6 +23,10 @@ abstract public class RemoteWebViewActivity extends FlutterActivity {
         flutterEngine.getPlugins().add(new RemoteWebViewPlugin(this));
     }
 
+    //TODO for help information about the touch position on screen and deviate on web_view, see info below
+    //    (controller as AndroidViewController).pointTransformer =
+    //        (Offset position) => renderBox.globalToLocal(position);
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         final String id =WebViewSurfaceProducer.producer.surfaceModelCache.keySet().toArray()[0].toString();
