@@ -11,12 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import 'entry_page.dart';
+
 void main() {
   // 设置Android头部的导航栏透明
   SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.light);
   SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
 
-  runApp(MaterialApp(home: WebViewExample()));
+  runApp(MaterialApp(home: EntryPage()));
 }
 
 const String kNavigationExamplePage = '''
