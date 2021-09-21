@@ -18,7 +18,7 @@ void main() {
   SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.light);
   SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
 
-  runApp(MaterialApp(home: EntryPage()));
+  runApp(MaterialApp(home: WebViewExample()));
 }
 
 const String kNavigationExamplePage = '''

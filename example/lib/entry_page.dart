@@ -17,9 +17,9 @@ class EntryPage extends StatefulWidget{
 class EntryPageState extends State<EntryPage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return Material(
       color: Colors.white,
-      home: Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(

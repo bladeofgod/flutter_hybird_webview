@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: D:\\flutterplugin\\flutter_hybird_webview\\android\\src\\main\\aidl\\remote_webview\\IMainMethodChannelBinder.aidl
+ * Original file: Z:\\flutter_projects\\flutter_hybird_webview\\android\\src\\main\\aidl\\remote_webview\\IMainMethodChannelBinder.aidl
  */
 package remote_webview;
 public interface IMainMethodChannelBinder extends android.os.IInterface
