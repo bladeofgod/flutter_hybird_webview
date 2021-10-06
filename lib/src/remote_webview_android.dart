@@ -7,6 +7,7 @@ import 'package:webview_flutter/platform_interface.dart';
 import 'package:webview_flutter/src/webview_android.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import 'method_channel_remote_webview_platform.dart';
 import 'remote_webview_plugin.dart';
 import 'webview_method_channel.dart';
 
@@ -28,7 +29,7 @@ class TextureAndroidWebView extends AndroidWebView{
       WebViewPlatformCreatedCallback? onWebViewPlatformCreated,
       Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers}) {
     return RemoteAndroidWebView(
-      creationParams: creationParams,
+      creationParams: MethodChannelRemoteWebViewPlatform.creationParamsToMap(creationParams),
       webViewPlatformCallbacksHandler: webViewPlatformCallbacksHandler,
       onWebViewPlatformCreated: onWebViewPlatformCreated,
     );
@@ -37,14 +38,23 @@ class TextureAndroidWebView extends AndroidWebView{
 
 class RemoteAndroidWebView extends StatefulWidget{
 
-  final CreationParams creationParams;
-  final WebViewPlatformCallbacksHandler webViewPlatformCallbacksHandler;
-  final WebViewPlatformCreatedCallback? onWebViewPlatformCreated;
-
-  const RemoteAndroidWebView({Key? key,
+  const RemoteAndroidWebView({
+    Key? key,
     required this.creationParams,
     required this.webViewPlatformCallbacksHandler,
     this.onWebViewPlatformCreated}) : super(key: key);
+
+  ///Creation params that for platform web-view
+  final dynamic creationParams;
+
+  ///Platform web-view's callback.
+  ///e.g [WebViewPlatformCallbacksHandler.onPageStarted] , [WebViewPlatformCallbacksHandler.onPageFinished]
+  final WebViewPlatformCallbacksHandler webViewPlatformCallbacksHandler;
+
+  ///When view is ready , creation the private channel to associate web-widget
+  /// and platform web-view.
+  final WebViewPlatformCreatedCallback? onWebViewPlatformCreated;
+
 
   @override
   State<StatefulWidget> createState() {
