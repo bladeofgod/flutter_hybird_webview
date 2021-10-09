@@ -7,6 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:webview_flutter/src/remote_webview/remote_texture_box.dart';
 
 
 
@@ -104,11 +105,9 @@ class RemoteTexture extends Texture{
       : super(key: key, textureId: textureId, filterQuality: filterQuality);
 
 
-  /// The controller for the platform view integrated by this [PlatformViewSurface].
-  ///
-  /// [PlatformViewController] is used for dispatching touch events to the platform view.
-  /// [PlatformViewController.viewId] identifies the platform view whose contents are painted by this widget.
-  final PlatformViewController controller;
+  /// [TextureAndroidRemoteController] is used for dispatching touch events to the platform view.
+  /// [TextureAndroidRemoteController.viewId] identifies the platform view whose contents are painted by this widget.
+  final TextureAndroidRemoteController controller;
 
   /// Which gestures should be forwarded to the PlatformView.
   final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
@@ -116,6 +115,13 @@ class RemoteTexture extends Texture{
   /// {@macro flutter.widgets.AndroidView.hitTestBehavior}
   /// see [PlatformViewHitTestBehavior]
   final PlatformViewHitTestBehavior hitTestBehavior;
+
+  @override
+  TextureBox createRenderObject(BuildContext context) {
+    final TextureBox textureBox = super.createRenderObject(context);
+    controller.pointTransformer = (Offset position) => textureBox.globalToLocal(position);
+    return textureBox;
+  }
 
 
 }
