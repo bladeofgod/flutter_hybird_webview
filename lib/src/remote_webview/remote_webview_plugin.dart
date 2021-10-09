@@ -19,6 +19,13 @@ class RemoteWebViewPlugin{
     return await _channel.invokeMethod('produceWebView', params);
   }
 
+
+  ///Dispose the view
+  ///[id] textureId
+  static Future<void> dispose(int id) async {
+    await SystemChannels.platform_views.invokeMethod<void>('dispose', id);
+  }
+
 }
 
 

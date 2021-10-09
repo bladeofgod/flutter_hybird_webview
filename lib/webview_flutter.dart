@@ -16,7 +16,7 @@ import 'src/webview_android.dart';
 import 'src/webview_cupertino.dart';
 import 'src/webview_method_channel.dart';
 
-export 'src/remote_webview_android.dart';
+export 'src/remote_webview/remote_webview_android.dart';
 
 /// Optional callback invoked when a web view is first created. [controller] is
 /// the [WebViewController] for the created web view.
