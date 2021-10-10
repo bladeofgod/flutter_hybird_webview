@@ -7,6 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/platform_interface.dart';
+import 'package:webview_flutter/src/remote_webview/remote_texture.dart';
 import 'package:webview_flutter/src/webview_android.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -80,6 +81,8 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
 
   int? textureId;
 
+  TextureAndroidRemoteController? _remoteController;
+
   @override
   void initState() {
     super.initState();
@@ -101,6 +104,7 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
     );
     RemoteWebViewPlugin.createWebView(args).then((value) {
       debugPrint('surface id  $value');
+      _remoteController = TextureAndroidRemoteController(textureId: value);
       setState(() {
         textureId = value;
       });
@@ -115,16 +119,17 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
 
   @override
   void dispose() {
-    if(textureId != null) {
-      RemoteWebViewPlugin.dispose(textureId!);
-    }
+    _remoteController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return textureId == null
-        ? Container(color: Colors.red,) : Texture(textureId: textureId!);
+        ? Container(color: Colors.red,)
+        : RemoteTexture(
+          textureId: textureId!, controller: _remoteController!,
+    );
   }
 }
 

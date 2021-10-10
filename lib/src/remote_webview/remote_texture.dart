@@ -9,6 +9,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/src/remote_webview/remote_texture_box.dart';
 
+import 'remote_webview_plugin.dart';
+
 
 
 class TextureAndroidRemoteController extends PlatformViewController{
@@ -34,7 +36,7 @@ class TextureAndroidRemoteController extends PlatformViewController{
   @override
   Future<void> clearFocus() {
     // TODO: implement clearFocus
-    throw UnimplementedError();
+    return Future.value();
   }
 
   /// Sends an Android [MotionEvent](https://developer.android.com/reference/android/view/MotionEvent)
@@ -81,8 +83,7 @@ class TextureAndroidRemoteController extends PlatformViewController{
 
   @override
   Future<void> dispose() {
-    // TODO: implement dispose
-    throw UnimplementedError();
+    return RemoteWebViewPlugin.dispose(viewId);
   }
 
   @override
@@ -118,7 +119,12 @@ class RemoteTexture extends Texture{
 
   @override
   TextureBox createRenderObject(BuildContext context) {
-    final TextureBox textureBox = super.createRenderObject(context);
+    final RemoteTextureBox textureBox = RemoteTextureBox(
+      viewController: controller,
+      gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
+      textureId: textureId,
+      hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+    );
     controller.pointTransformer = (Offset position) => textureBox.globalToLocal(position);
     return textureBox;
   }

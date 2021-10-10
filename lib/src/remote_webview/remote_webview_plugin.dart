@@ -19,6 +19,10 @@ class RemoteWebViewPlugin{
     return await _channel.invokeMethod('produceWebView', params);
   }
 
+  Future<void> sendMotionEvent(List<dynamic> motionEvent) async {
+    return await _channel.invokeMethod('touch', motionEvent);
+  }
+
 
   ///Dispose the view
   ///[id] textureId
