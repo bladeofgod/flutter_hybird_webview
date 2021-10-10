@@ -11,9 +11,8 @@ import 'package:webview_flutter/src/remote_webview/remote_texture.dart';
 import 'package:webview_flutter/src/webview_android.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../method_channel_remote_webview_platform.dart';
+import 'method_channel_remote_webview_platform.dart';
 import 'remote_webview_plugin.dart';
-import '../webview_method_channel.dart';
 
 /// author：JiaQiLi
 /// date：2021/9/15
@@ -36,6 +35,7 @@ class TextureAndroidWebView extends AndroidWebView{
       creationParams: MethodChannelRemoteWebViewPlatform.creationParamsToMap(creationParams),
       webViewPlatformCallbacksHandler: webViewPlatformCallbacksHandler,
       onWebViewPlatformCreated: onWebViewPlatformCreated,
+      gestureRecognizers: gestureRecognizers ?? const <Factory<OneSequenceGestureRecognizer>>{},
       creationParamsCodec: const StandardMessageCodec(),
     );
   }
@@ -48,7 +48,20 @@ class RemoteAndroidWebView extends StatefulWidget{
     required this.creationParams,
     required this.webViewPlatformCallbacksHandler,
     required this.creationParamsCodec,
+    required this.gestureRecognizers,
     this.onWebViewPlatformCreated}) : super(key: key);
+
+
+  /// Which gestures should be consumed by the web view.
+  ///
+  /// It is possible for other gesture recognizers to be competing with the web view on pointer
+  /// events, e.g if the web view is inside a [ListView] the [ListView] will want to handle
+  /// vertical drags. The web view will claim gestures that are recognized by any of the
+  /// recognizers on this list.
+  ///
+  /// When this set is empty or null, the web view will only handle pointer events for gestures that
+  /// were not claimed by any other gesture recognizer.
+  final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
 
   ///Creation params that for platform web-view
   final dynamic creationParams;
@@ -111,7 +124,7 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
       if (widget.onWebViewPlatformCreated == null) {
         return;
       }
-      widget.onWebViewPlatformCreated!(MethodChannelWebViewPlatform(
+      widget.onWebViewPlatformCreated!(MethodChannelRemoteWebViewPlatform(
           value, widget.webViewPlatformCallbacksHandler));
 
     });
@@ -128,8 +141,9 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
     return textureId == null
         ? Container(color: Colors.red,)
         : RemoteTexture(
-          textureId: textureId!, controller: _remoteController!,
-    );
+          textureId: textureId!,
+          controller: _remoteController!,
+          gestureRecognizers: widget.gestureRecognizers,);
   }
 }
 

@@ -3,7 +3,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:webview_flutter/src/remote_webview/remote_texture.dart';
 
 ///This is not concern the paint or layout for now, just for handle
@@ -53,9 +52,7 @@ class RemoteTextureBox extends TextureBox with _RemotePlatformViewGestureMixin{
 
 }
 
-
 typedef _HandlePointerEvent = Future<void> Function(PointerEvent event);
-
 
 
 /// The Mixin handling the pointer events and gestures of a platform view render box.
@@ -197,7 +194,7 @@ class _PlatformViewGestureRecognizer extends OneSequenceGestureRecognizer {
   }
 
   @override
-  String get debugDescription => 'Platform view';
+  String get debugDescription => 'Remote Platform view';
 
   @override
   void didStopTrackingLastPointer(int pointer) { }
@@ -251,14 +248,9 @@ class _PlatformViewGestureRecognizer extends OneSequenceGestureRecognizer {
 }
 
 
-
-
-
-
 Set<Type> _factoriesTypeSet<T>(Set<Factory<T>> factories) {
   return factories.map<Type>((Factory<T> factory) => factory.type).toSet();
 }
-
 
 
 bool _factoryTypesSetEquals<T>(Set<Factory<T>>? a, Set<Factory<T>>? b) {

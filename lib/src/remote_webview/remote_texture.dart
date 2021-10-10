@@ -12,7 +12,7 @@ import 'package:webview_flutter/src/remote_webview/remote_texture_box.dart';
 import 'remote_webview_plugin.dart';
 
 
-
+///Web-view texture controller
 class TextureAndroidRemoteController extends PlatformViewController{
 
   TextureAndroidRemoteController({
@@ -49,10 +49,7 @@ class TextureAndroidRemoteController extends PlatformViewController{
   /// See [AndroidViewController.dispatchPointerEvent] for sending a
   /// [PointerEvent].
   Future<void> sendMotionEvent(AndroidMotionEvent event) async {
-    await SystemChannels.platform_views.invokeMethod<dynamic>(
-      'touch',
-      event._asList(viewId),
-    );
+    return RemoteWebViewPlugin.sendMotionEvent(event._asList(viewId));
   }
 
   @override
@@ -100,7 +97,7 @@ class RemoteTexture extends Texture{
     Key? key,
     required textureId,
     required this.controller,
-    this.gestureRecognizers = const <Factory<OneSequenceGestureRecognizer>>{},
+    required this.gestureRecognizers,
     this.hitTestBehavior = PlatformViewHitTestBehavior.opaque,
     FilterQuality filterQuality = FilterQuality.low,})
       : super(key: key, textureId: textureId, filterQuality: filterQuality);
