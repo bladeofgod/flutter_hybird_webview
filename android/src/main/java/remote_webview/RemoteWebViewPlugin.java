@@ -64,7 +64,19 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
     @Override
     public void onMethodCall(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result) {
         switch (methodCall.method) {
+            //todo method
             case "produceWebView":
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        LogUtil.logMsg("startActivity"," class : " + mActivity.getClass() );
+                        mActivity.startActivity(new Intent(mAppContext, mActivity.getClass()));
+                    }
+                },1000);
+                Map<String, Object> params = (Map<String, Object>) methodCall.arguments;
+                result.success(WebViewSurfaceProducer.producer.buildGeneralWebViewSurface(params));
+                break;
+            case "create":
                 //todo test code
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
@@ -75,6 +87,13 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
                 },1000);
                 Map<String, Object> params = (Map<String, Object>) methodCall.arguments;
                 result.success(WebViewSurfaceProducer.producer.buildGeneralWebViewSurface(params));
+                break;
+            case "touch":
+                //todo
+                break;
+                
+            case "dispose":
+                //todo
                 break;
         }
 

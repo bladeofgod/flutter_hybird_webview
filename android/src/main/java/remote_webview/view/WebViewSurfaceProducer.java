@@ -25,6 +25,9 @@ public class WebViewSurfaceProducer {
         this.flutterPluginBinding = binding;
     }
 
+    /**
+     * Hold all create surface in {@linkplain ViewSurfaceModel}.
+     */
     public final HashMap<Integer, ViewSurfaceModel> surfaceModelCache = new HashMap<>();
 
 
