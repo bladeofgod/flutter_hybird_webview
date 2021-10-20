@@ -27,7 +27,7 @@ public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChan
 
     private final MethodChannel methodChannel;
 
-    protected WebViewSurfaceClient(int id, Surface surface, BinaryMessenger binaryMessenger) {
+    protected WebViewSurfaceClient(long id, Surface surface, BinaryMessenger binaryMessenger) {
         super(id, surface);
         methodChannel = new MethodChannel(binaryMessenger,CHANNEL_NAME_HEAD+id);
         methodChannel.setMethodCallHandler(this);
@@ -267,7 +267,7 @@ public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChan
         }
 
 
-        private int id;
+        private long id;
 
         private SurfaceTexture mSurfaceTexture;
 
@@ -275,6 +275,7 @@ public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChan
 
         public Builder init(TextureRegistry.SurfaceTextureEntry textureEntry) {
             mSurfaceTexture = textureEntry.surfaceTexture();
+            id = textureEntry.id();
             return this;
         }
 

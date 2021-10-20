@@ -8,7 +8,7 @@ import java.util.List;
 
 public class WebViewCreationParamsModel implements Parcelable {
 
-    int surfaceId;
+    long surfaceId;
     
     boolean usesHybridComposition;
 
@@ -22,7 +22,7 @@ public class WebViewCreationParamsModel implements Parcelable {
 
     String url;
 
-    public WebViewCreationParamsModel(int surfaceId, 
+    public WebViewCreationParamsModel(long surfaceId, 
                                       boolean usesHybridComposition, 
                                       HashMap<String, String> settings, 
                                       List<String> jsNames, 
@@ -38,7 +38,7 @@ public class WebViewCreationParamsModel implements Parcelable {
         this.url = url;
     }
 
-    public int getSurfaceId() {
+    public long getSurfaceId() {
         return surfaceId;
     }
 
@@ -67,7 +67,7 @@ public class WebViewCreationParamsModel implements Parcelable {
     }
 
     protected WebViewCreationParamsModel(Parcel in) {
-        surfaceId = in.readInt();
+        surfaceId = in.readLong();
         usesHybridComposition = in.readByte() != 0;
         settings = in.readHashMap(HashMap.class.getClassLoader());
         jsNames = in.createStringArrayList();
@@ -78,7 +78,7 @@ public class WebViewCreationParamsModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(surfaceId);
+        dest.writeLong(surfaceId);
         dest.writeByte((byte) (usesHybridComposition ? 1 : 0));
         dest.writeMap(settings);
         dest.writeStringList(jsNames);

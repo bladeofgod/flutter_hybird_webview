@@ -14,6 +14,8 @@ import remote_webview.service.RemoteServicePresenter;
 
 public class WebViewSurfaceProducer {
 
+    private static final String JS_CHANNEL_NAMES_FIELD = "javascriptChannelNames";
+
     public static WebViewSurfaceProducer producer = new WebViewSurfaceProducer();
 
     private WebViewSurfaceProducer() {
@@ -28,10 +30,10 @@ public class WebViewSurfaceProducer {
     /**
      * Hold all create surface in {@linkplain ViewSurfaceModel}.
      */
-    public final HashMap<Integer, ViewSurfaceModel> surfaceModelCache = new HashMap<>();
+    public final HashMap<Long, ViewSurfaceModel> surfaceModelCache = new HashMap<>();
 
 
-    public int buildGeneralWebViewSurface(Map<String, Object> params) {
+    public long buildGeneralWebViewSurface(Map<String, Object> params) {
 
         final WebViewSurfaceClient surfaceModel = new WebViewSurfaceClient.Builder(flutterPluginBinding.getApplicationContext())
                 .init(flutterPluginBinding.getTextureRegistry().createSurfaceTexture())
@@ -57,7 +59,7 @@ public class WebViewSurfaceProducer {
         surfaceModelCache.put(surfaceModel.getId(), surfaceModel);
     }
 
-    public void remoteViewSurfaceModel(int id) {
+    public void remoteViewSurfaceModel(long id) {
         surfaceModelCache.remove(id);
     }
 

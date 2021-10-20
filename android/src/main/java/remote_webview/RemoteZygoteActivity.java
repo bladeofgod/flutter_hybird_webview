@@ -35,7 +35,7 @@ public class RemoteZygoteActivity extends Activity {
         zygoteActivity = this;
     }
 
-    public static WebViewPresentation generateWebViewPresentation(int id, Surface surface) throws Exception {
+    public static WebViewPresentation generateWebViewPresentation(long id, Surface surface) throws Exception {
         final DisplayMetrics dm = zygoteActivity.getResources().getDisplayMetrics();
         int sw = dm.widthPixels;
         int sh = dm.heightPixels;

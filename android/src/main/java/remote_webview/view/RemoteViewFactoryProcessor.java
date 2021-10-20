@@ -42,7 +42,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
 
     private RemoteViewFactoryProcessor() {}
 
-    private final HashMap<Integer, WebViewPresentation> viewCache = new HashMap<>();
+    private final HashMap<Long, WebViewPresentation> viewCache = new HashMap<>();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void createWithSurface(final WebViewCreationParamsModel creationParams, final Surface surface) {
@@ -51,7 +51,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
             public void run() {
                 try {
                     final WebViewPresentation presentation;
-                    final int surfaceId = creationParams.getSurfaceId();
+                    final long surfaceId = creationParams.getSurfaceId();
                     LogUtil.logMsg("view factory", " createWithSurface  id " + surfaceId);
                     presentation = RemoteZygoteActivity.generateWebViewPresentation(surfaceId,surface);
                     //todo cached presentation and need remove when it's disposed
@@ -89,7 +89,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
     
 
     @Override
-    public void cleanGarbage(int id) {
+    public void cleanGarbage(long id) {
         try {
             viewCache.get(id).dispose();
         }catch (Exception e) {

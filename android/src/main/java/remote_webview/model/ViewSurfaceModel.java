@@ -5,16 +5,16 @@ import android.view.Surface;
 
 abstract public class ViewSurfaceModel {
     
-    private final int id;
+    private final long id;
     
     private final Surface surface;
 
-    protected ViewSurfaceModel(int id, Surface surface) {
+    protected ViewSurfaceModel(long id, Surface surface) {
         this.id = id;
         this.surface = surface;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

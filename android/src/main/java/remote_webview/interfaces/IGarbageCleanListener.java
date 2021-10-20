@@ -6,7 +6,7 @@ public interface IGarbageCleanListener {
      * Clean single web-presentation.
      * @param id surface's id
      */
-    void cleanGarbage(int id);
+    void cleanGarbage(long id);
     
     
     void cleanAll();

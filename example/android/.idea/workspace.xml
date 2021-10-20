@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5c92f9a-4e61-43d4-b9e8-149fc11b0734" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/RemoteWebViewPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/RemoteWebViewPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/view/WebViewSurfaceProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/view/WebViewSurfaceProducer.java" afterDir="false" />
+    <list default="true" id="fb17d6b1-3f2b-4d23-8547-2b40811640bb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/-14705501/android.espresso.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/-14705501/android.espresso.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/-268335680/android.webview_flutter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/-268335680/android.webview_flutter.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/-799940127/android.integration_test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/-799940127/android.integration_test.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/android.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/android.app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectId" id="1ziKiluXxyNajGqyauvCifLHSDL" />
+  <component name="ProjectId" id="1zlGJjkz6OcnfHta6J1gMg0SPEF" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -112,11 +105,11 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b5c92f9a-4e61-43d4-b9e8-149fc11b0734" name="Default Changelist" comment="" />
-      <created>1634625597886</created>
+      <changelist id="fb17d6b1-3f2b-4d23-8547-2b40811640bb" name="Default Changelist" comment="" />
+      <created>1634715190621</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1634625597886</updated>
+      <updated>1634715190621</updated>
     </task>
     <servers />
   </component>

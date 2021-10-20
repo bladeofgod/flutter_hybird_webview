@@ -41,13 +41,13 @@ public class WebViewPresentation extends Presentation implements IMockMethodHand
 
     private final MockMethodChannel methodChannel;
     private final Handler platformThreadHandler;
-    private final int surfaceId;
+    private final long surfaceId;
     private WebView webView;
 
     private WebViewCreationParamsModel initialParams;
 
     public WebViewPresentation(Context outerContext, Display display, MockMethodChannel methodChannel
-            , int surfaceId) {
+            , long surfaceId) {
         super(outerContext, display);
         this.surfaceId = surfaceId;
         this.methodChannel = methodChannel;

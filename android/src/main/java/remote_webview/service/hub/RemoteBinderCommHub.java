@@ -28,7 +28,7 @@ public class RemoteBinderCommHub extends BinderCommunicateHub implements IGarbag
     }
 
     @Override
-    public void cleanGarbage(int id) {
+    public void cleanGarbage(long id) {
         
     }
 
