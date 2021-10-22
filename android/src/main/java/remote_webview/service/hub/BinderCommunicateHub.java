@@ -54,10 +54,21 @@ abstract public class BinderCommunicateHub {
         methodHandlerSlot.remove(id);
     }
 
+
+    /**
+     * It's a result-callback , pair of invoke-method.
+     * It can only use once.
+     * @param id use surface's id in {@link MethodModel}
+     * @param result
+     */
     private void cacheMethodResultCallback(long id,ResultCallbackHandler result) {
         methodResultCallbackSlog.put(id, result);
     }
-    
+
+    /**
+     * After result callback called, use this method to remove it.
+     * @param id use surface's id in {@link MethodModel}
+     */
     private void removeMethodResultCallbackById(long id) {
         methodResultCallbackSlog.remove(id);
     }
