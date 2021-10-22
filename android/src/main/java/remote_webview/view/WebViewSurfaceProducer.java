@@ -100,7 +100,7 @@ public class WebViewSurfaceProducer {
 
 
     /**
-     * Build a simple {@linkplain Map<String, String>} setting
+     * Build a simple {@linkplain Map<String,String>} setting
      * for {@linkplain WebViewCreationParamsModel}.
      * @param settings for remote transfer.
      * @return

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import remote_webview.interfaces.IMockMethodHandler;
 import remote_webview.interfaces.IMockMethodResult;
@@ -82,6 +83,9 @@ abstract public class BinderCommunicateHub {
         try {
             invokeMethodById(handlerId,methodCall);
         }catch (Exception e) {
+            Objects.requireNonNull(methodResultCallbackSlog.get(handlerId)).error("",
+                    "Invoke Method Exception" + this.getClass().getSimpleName(), new HashMap() );
+            removeMethodResultCallbackById(handlerId);
             e.printStackTrace();
         }
     }
@@ -93,16 +97,16 @@ abstract public class BinderCommunicateHub {
      * @param call
      */
     private void invokeMethodById(final long id, MockMethodCall call) throws NullPointerException {
-        methodHandlerSlot.get(id).onMethodCall(call, new IMockMethodResult() {
+        Objects.requireNonNull(methodHandlerSlot.get(id)).onMethodCall(call, new IMockMethodResult() {
             @Override
             public void success(@Nullable HashMap var1) {
-                methodResultCallbackSlog.get(id).success(var1);
+                Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
                 removeMethodResultCallbackById(id);
             }
 
             @Override
             public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
-                methodResultCallbackSlog.get(id).error(var1, var2, var3);
+                Objects.requireNonNull(methodResultCallbackSlog.get(id)).error(var1, var2, var3);
                 removeMethodResultCallbackById(id);
             }
 
