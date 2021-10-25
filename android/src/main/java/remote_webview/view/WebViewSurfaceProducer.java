@@ -36,6 +36,10 @@ public class WebViewSurfaceProducer {
      */
     public final HashMap<Long, ViewSurfaceModel> surfaceModelCache = new HashMap<>();
 
+    public boolean checkViewExists(long viewId) {
+        return surfaceModelCache.containsKey(viewId);
+    }
+
 
     public long buildGeneralWebViewSurface(Map<String, Object> params) {
 

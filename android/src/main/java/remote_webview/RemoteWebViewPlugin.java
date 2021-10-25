@@ -92,8 +92,8 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
                 remoteWebViewController.create(methodCall, result);
                 break;
             case "touch":
-                //todo dispatch point event to remote
-                //RemoteServicePresenter.getInstance().getRemoteViewFactoryBinder().dispatchKeyEvent();
+                //todo need test
+                remoteWebViewController.touch(methodCall, result);
                 break;
                 
             case "dispose":
