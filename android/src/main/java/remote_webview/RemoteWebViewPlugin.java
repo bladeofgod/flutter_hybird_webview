@@ -16,12 +16,14 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import remote_webview.service.RemoteServicePresenter;
 import remote_webview.utils.LogUtil;
+import remote_webview.view.RemoteWebViewController;
 import remote_webview.view.WebViewSurfaceProducer;
 
 public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodCallHandler {
 
     private static final String CHANNEL_NAME = "remote_webview_plugin";
 
+    private RemoteWebViewController remoteWebViewController;
     private Context mAppContext;
     private Activity mActivity;
     private MethodChannel mMethodChannel;
@@ -33,6 +35,7 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
     @Override
     public void onAttachedToEngine(@NonNull FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
         mAppContext = flutterPluginBinding.getApplicationContext();
+        remoteWebViewController = new RemoteWebViewController(mActivity);
         WebViewSurfaceProducer.producer.holdFlutterBinding(flutterPluginBinding);
         mMethodChannel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), CHANNEL_NAME);
         mMethodChannel.setMethodCallHandler(this);
@@ -85,8 +88,8 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
                         mActivity.startActivity(new Intent(mAppContext, mActivity.getClass()));
                     }
                 },1000);
-                final Map<String, Object> params = (Map<String, Object>) methodCall.arguments;
-                result.success(WebViewSurfaceProducer.producer.buildGeneralWebViewSurface(params));
+
+                remoteWebViewController.create(methodCall, result);
                 break;
             case "touch":
                 //todo dispatch point event to remote
