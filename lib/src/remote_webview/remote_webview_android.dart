@@ -111,13 +111,13 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
       'direction': 'ltr',
     };
     args['initialUrl'] = testUrl;
-    final ByteData paramsByteData =
-    widget.creationParamsCodec.encodeMessage(widget.creationParamsCodec)!;
-    args['params'] = Uint8List.view(
-      paramsByteData.buffer,
-      0,
-      paramsByteData.lengthInBytes,
-    );
+    // final ByteData paramsByteData =
+    // widget.creationParamsCodec.encodeMessage(widget.creationParams)!;
+    // args['params'] = Uint8List.view(
+    //   paramsByteData.buffer,
+    //   0,
+    //   paramsByteData.lengthInBytes,
+    // );
     RemoteWebViewPlugin.createWebView(args).then((value) {
       debugPrint('surface id  $value');
       _remoteController = TextureAndroidRemoteController(textureId: value);
