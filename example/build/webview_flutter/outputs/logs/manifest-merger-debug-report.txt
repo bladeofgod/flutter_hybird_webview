@@ -1,0 +1,47 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:1:1-15:12
+	package
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:1:11-54
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:2:5-63
+uses-permission#android.permission.INTERNET
+ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:3:5-67
+	android:name
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:3:22-64
+application
+ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:4:5-14:19
+	android:theme
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:5:9-79
+activity#remote_webview.RemoteZygoteActivity
+ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:6:9-9:44
+	android:process
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:9:13-42
+	android:launchMode
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:7:13-44
+	android:theme
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:8:13-83
+	android:name
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:6:19-69
+service#remote_webview.service.RemoteWebService
+ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:10:9-11:48
+	android:process
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:11:17-46
+	android:name
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:10:18-72
+service#remote_webview.service.MainWebService
+ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:12:9-73
+	android:name
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:12:18-70
+uses-sdk
+INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml
+INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml
+		INJECTED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml

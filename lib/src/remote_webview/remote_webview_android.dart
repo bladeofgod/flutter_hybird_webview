@@ -92,6 +92,8 @@ class RemoteAndroidWebView extends StatefulWidget{
 
 class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
 
+  String testUrl = 'www.jd.com';
+
   int? textureId;
 
   TextureAndroidRemoteController? _remoteController;
@@ -108,6 +110,7 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
       //TODO set default value, do it later or needed it.
       'direction': 'ltr',
     };
+    args['initialUrl'] = testUrl;
     final ByteData paramsByteData =
     widget.creationParamsCodec.encodeMessage(widget.creationParamsCodec)!;
     args['params'] = Uint8List.view(

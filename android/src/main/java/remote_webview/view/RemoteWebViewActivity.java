@@ -27,18 +27,18 @@ abstract public class RemoteWebViewActivity extends FlutterActivity {
     //    (controller as AndroidViewController).pointTransformer =
     //        (Offset position) => renderBox.globalToLocal(position);
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        //todo test way
-        final String id =WebViewSurfaceProducer.producer.surfaceModelCache.keySet().toArray()[0].toString();
-        try {
-            LogUtil.logMsg("remmote activity", "dispatchTouchEvent  " + id);
-            RemoteServicePresenter.getInstance().getRemoteViewFactoryBinder().dispatchTouchEvent(id,ev);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        return super.dispatchTouchEvent(ev);
-    }
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        //todo test way
+//        final String id =WebViewSurfaceProducer.producer.surfaceModelCache.keySet().toArray()[0].toString();
+//        try {
+//            LogUtil.logMsg("remmote activity", "dispatchTouchEvent  " + id);
+//            RemoteServicePresenter.getInstance().getRemoteViewFactoryBinder().dispatchTouchEvent(id,ev);
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
+//        return super.dispatchTouchEvent(ev);
+//    }
 
     //todo
 

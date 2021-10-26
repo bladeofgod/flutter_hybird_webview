@@ -43,7 +43,7 @@ public class WebViewSurfaceProducer {
 
     public long buildGeneralWebViewSurface(Map<String, Object> params) {
 
-        final WebViewSurfaceClient surfaceModel = new WebViewSurfaceClient.Builder(flutterPluginBinding.getApplicationContext())
+        WebViewSurfaceClient surfaceModel = new WebViewSurfaceClient.Builder(flutterPluginBinding.getApplicationContext())
                 .init(flutterPluginBinding.getTextureRegistry().createSurfaceTexture())
                 .build(flutterPluginBinding);
         //todo test model
