@@ -2,6 +2,7 @@ package remote_webview.view;
 
 import android.os.Build;
 import android.os.RemoteException;
+import android.util.Log;
 import android.webkit.WebViewClient;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import remote_webview.model.ViewSurfaceModel;
 import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.model.WebViewSurfaceClient;
 import remote_webview.service.RemoteServicePresenter;
+import remote_webview.utils.LogUtil;
 
 
 public class WebViewSurfaceProducer {
@@ -42,7 +44,7 @@ public class WebViewSurfaceProducer {
 
 
     public long buildGeneralWebViewSurface(Map<String, Object> params) {
-
+        
         WebViewSurfaceClient surfaceModel = new WebViewSurfaceClient.Builder(flutterPluginBinding.getApplicationContext())
                 .init(flutterPluginBinding.getTextureRegistry().createSurfaceTexture())
                 .build(flutterPluginBinding);
@@ -92,10 +94,17 @@ public class WebViewSurfaceProducer {
         }
 
         Integer autoMediaPlaybackPolicy = (Integer) params.get("autoMediaPlaybackPolicy");
+        if(autoMediaPlaybackPolicy == null) {
+            autoMediaPlaybackPolicy = 0;
+        }
 
         String userAgent = (String) params.get("userAgent");
+        if(userAgent == null) {
+            userAgent = "";
+        }
 
         String url = (String) params.get("initialUrl");
+        LogUtil.logMsg("initialUrl",url);
 
         return new WebViewCreationParamsModel(id,usesHybridComposition,
                 settings,names,autoMediaPlaybackPolicy

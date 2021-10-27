@@ -21,6 +21,11 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.view.TextureRegistry;
 import remote_webview.utils.LogUtil;
 
+/**
+ * The client of remote web view, has a private channel to flutter.
+ * accept flutter's control order and send to remote.
+ */
+
 public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChannel.MethodCallHandler {
 
     private static final String CHANNEL_NAME_HEAD = "plugins.flutter.io/webview_";
