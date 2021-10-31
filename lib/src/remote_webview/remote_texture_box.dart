@@ -144,8 +144,8 @@ class _PlatformViewGestureRecognizer extends OneSequenceGestureRecognizer {
   _PlatformViewGestureRecognizer(
       _HandlePointerEvent handlePointerEvent,
       this.gestureRecognizerFactories, {
-        PointerDeviceKind? kind,
-      }) : super(kind: kind) {
+        Set<PointerDeviceKind>? supportedDevices,
+      }) : super(supportedDevices: supportedDevices) {
     team = GestureArenaTeam()
       ..captain = this;
     _gestureRecognizers = gestureRecognizerFactories.map(
@@ -188,7 +188,7 @@ class _PlatformViewGestureRecognizer extends OneSequenceGestureRecognizer {
 
   @override
   void addAllowedPointer(PointerDownEvent event) {
-    startTrackingPointer(event.pointer, event.transform);
+    super.addAllowedPointer(event);
     for (final OneSequenceGestureRecognizer recognizer in _gestureRecognizers) {
       recognizer.addPointer(event);
     }

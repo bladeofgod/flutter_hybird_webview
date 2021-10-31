@@ -116,14 +116,20 @@ class RemoteTexture extends Texture{
 
   @override
   TextureBox createRenderObject(BuildContext context) {
-    final RemoteTextureBox textureBox = RemoteTextureBox(
+    // todo look like duplicate code , delete it after test
+    // final RemoteTextureBox textureBox = RemoteTextureBox(
+    //   viewController: controller,
+    //   gestureRecognizers: gestureRecognizers,
+    //   textureId: textureId,
+    //   hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+    // );
+    // controller.pointTransformer = (Offset position) => textureBox.globalToLocal(position);
+    return RemoteTextureBox(
       viewController: controller,
-      gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
+      gestureRecognizers: gestureRecognizers,
       textureId: textureId,
       hitTestBehavior: PlatformViewHitTestBehavior.opaque,
     );
-    controller.pointTransformer = (Offset position) => textureBox.globalToLocal(position);
-    return textureBox;
   }
 
 
