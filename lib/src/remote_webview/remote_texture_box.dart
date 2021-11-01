@@ -18,17 +18,29 @@ class RemoteTextureBox extends TextureBox with _RemotePlatformViewGestureMixin{
     FilterQuality filterQuality = FilterQuality.low,
   }) : _viewController = viewController,
       super(textureId: textureId, filterQuality: filterQuality) {
-    _viewController.pointTransformer = (Offset offset) => globalToLocal(offset);
+    //_viewController.pointTransformer = (Offset offset) => globalToLocal(offset);
+    this.hitTestBehavior = hitTestBehavior;
     updateGestureRecognizers(gestureRecognizers);
     //do not need
     //_viewController.addOnPlatformViewCreatedListener(_onPlatformViewCreated);
-    this.hitTestBehavior = hitTestBehavior;
   }
 
 
   /// The Android view controller for the Android view associated with this render object.
   TextureAndroidRemoteController get viewcontroller => _viewController;
   TextureAndroidRemoteController _viewController;
+
+  set viewController(TextureAndroidRemoteController controller) {
+    if ( _viewController == controller) {
+      return;
+    }
+    final bool needsSemanticsUpdate = _viewController.viewId != controller.viewId;
+    _viewController = controller;
+    markNeedsPaint();
+    if (needsSemanticsUpdate) {
+      markNeedsSemanticsUpdate();
+    }
+  }
 
 
   /// {@template flutter.rendering.RenderAndroidView.updateGestureRecognizers}
@@ -144,8 +156,8 @@ class _PlatformViewGestureRecognizer extends OneSequenceGestureRecognizer {
   _PlatformViewGestureRecognizer(
       _HandlePointerEvent handlePointerEvent,
       this.gestureRecognizerFactories, {
-        Set<PointerDeviceKind>? supportedDevices,
-      }) : super(supportedDevices: supportedDevices) {
+        PointerDeviceKind? kind,
+      }) : super(kind: kind) {
     team = GestureArenaTeam()
       ..captain = this;
     _gestureRecognizers = gestureRecognizerFactories.map(
@@ -188,7 +200,8 @@ class _PlatformViewGestureRecognizer extends OneSequenceGestureRecognizer {
 
   @override
   void addAllowedPointer(PointerDownEvent event) {
-    super.addAllowedPointer(event);
+    //super.addAllowedPointer(event);
+    startTrackingPointer(event.pointer, event.transform);
     for (final OneSequenceGestureRecognizer recognizer in _gestureRecognizers) {
       recognizer.addPointer(event);
     }

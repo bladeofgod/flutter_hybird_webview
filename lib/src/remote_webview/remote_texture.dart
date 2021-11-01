@@ -28,7 +28,6 @@ class TextureAndroidRemoteController extends PlatformViewController{
   /// This is required to convert a [PointerEvent] to an [AndroidMotionEvent].
   /// It is typically provided by using [RenderBox.globalToLocal].
   set pointTransformer(PointTransformer transformer) {
-    assert(transformer != null);
     _motionEventConverter._pointTransformer = transformer;
   }
 
@@ -57,7 +56,6 @@ class TextureAndroidRemoteController extends PlatformViewController{
     if (event is PointerHoverEvent) {
       return;
     }
-
     if (event is PointerDownEvent) {
       _motionEventConverter.handlePointerDownEvent(event);
     }
@@ -72,7 +70,6 @@ class TextureAndroidRemoteController extends PlatformViewController{
     } else if (event is PointerCancelEvent) {
       _motionEventConverter.handlePointerCancelEvent(event);
     }
-
     if (androidEvent != null) {
       await sendMotionEvent(androidEvent);
     }
@@ -117,19 +114,28 @@ class RemoteTexture extends Texture{
   @override
   TextureBox createRenderObject(BuildContext context) {
     // todo look like duplicate code , delete it after test
-    // final RemoteTextureBox textureBox = RemoteTextureBox(
-    //   viewController: controller,
-    //   gestureRecognizers: gestureRecognizers,
-    //   textureId: textureId,
-    //   hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-    // );
-    // controller.pointTransformer = (Offset position) => textureBox.globalToLocal(position);
-    return RemoteTextureBox(
+    final RemoteTextureBox textureBox = RemoteTextureBox(
       viewController: controller,
       gestureRecognizers: gestureRecognizers,
       textureId: textureId,
       hitTestBehavior: PlatformViewHitTestBehavior.opaque,
     );
+    controller.pointTransformer = (Offset position) => textureBox.globalToLocal(position);
+    return textureBox;
+    // return RemoteTextureBox(
+    //   viewController: controller,
+    //   gestureRecognizers: gestureRecognizers,
+    //   textureId: textureId,
+    //   hitTestBehavior: hitTestBehavior,
+    // );
+  }
+
+  @override
+  void updateRenderObject(BuildContext context, covariant TextureBox renderObject) {
+    (renderObject as RemoteTextureBox)
+        ..viewController = controller
+        ..hitTestBehavior = hitTestBehavior
+        ..updateGestureRecognizers(gestureRecognizers);
   }
 
 
