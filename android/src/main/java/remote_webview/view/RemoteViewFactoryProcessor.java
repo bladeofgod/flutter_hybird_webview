@@ -50,10 +50,9 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
             @Override
             public void run() {
                 try {
-                    final WebViewPresentation presentation;
                     final long surfaceId = creationParams.getSurfaceId();
                     LogUtil.logMsg("view factory", " createWithSurface  id " + surfaceId);
-                    presentation = RemoteZygoteActivity.generateWebViewPresentation(surfaceId,surface);
+                    WebViewPresentation presentation = RemoteZygoteActivity.generateWebViewPresentation(surfaceId,surface);
                     //todo cached presentation and need remove when it's disposed
                     viewCache.put(surfaceId, presentation);
 
@@ -69,9 +68,10 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
     }
 
     public void dispatchTouchEvent(String surfaceId, MotionEvent event) {
-        LogUtil.logMsg("view factory", " dispatchTouchEvent  id " + surfaceId);
+        LogUtil.logMsg("view factory", " dispatchTouchEvent  id " + surfaceId
+                + "  cache size :" + viewCache.size());
         try {
-            viewCache.get(Integer.parseInt(surfaceId)).dispatchTouchEvent(event);
+            viewCache.get(Long.decode(surfaceId)).dispatchTouchEvent(event);
         }catch (Exception e) {
             e.printStackTrace();
         }

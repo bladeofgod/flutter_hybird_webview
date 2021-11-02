@@ -3,6 +3,7 @@ package remote_webview.view;
 import android.content.Context;
 import android.os.Build;
 import android.os.RemoteException;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.platform.PlatformViewsController;
 import remote_webview.service.RemoteServicePresenter;
+import remote_webview.utils.LogUtil;
 
 /**
  * Control the remote view.
