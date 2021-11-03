@@ -18,7 +18,7 @@ class RemoteTextureBox extends TextureBox with _RemotePlatformViewGestureMixin{
     FilterQuality filterQuality = FilterQuality.low,
   }) : _viewController = viewController,
       super(textureId: textureId, filterQuality: filterQuality) {
-    //_viewController.pointTransformer = (Offset offset) => globalToLocal(offset);
+    _viewController.pointTransformer = (Offset offset) => globalToLocal(offset);
     this.hitTestBehavior = hitTestBehavior;
     updateGestureRecognizers(gestureRecognizers);
     //do not need
