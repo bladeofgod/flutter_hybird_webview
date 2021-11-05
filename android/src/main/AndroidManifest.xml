@@ -2,10 +2,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+        android:theme="@android:style/Theme.Translucent.NoTitleBar">
         <activity android:name="remote_webview.RemoteZygoteActivity"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:process=":remote.web"/>
         <service android:name="remote_webview.service.RemoteWebService"
                 android:process=":remote.web"/>

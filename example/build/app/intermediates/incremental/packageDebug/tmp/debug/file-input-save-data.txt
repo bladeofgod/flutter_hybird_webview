@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Tue Oct 26 10:54:13 CST 2021
+#Fri Nov 05 16:07:06 CST 2021
 8.base=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
 2.base=D\:\\flutterplugin\\flutter_hybird_webview\\example\\build\\app\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
 0.path=flutter_assets/assets/sample_video.mp4

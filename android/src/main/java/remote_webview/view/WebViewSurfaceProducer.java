@@ -44,16 +44,18 @@ public class WebViewSurfaceProducer {
 
 
     public long buildGeneralWebViewSurface(Map<String, Object> params) {
+
+        // real size of device, physical width/height.
+        // calculate from flutter's paintBounds.
+        int pWidth = (int) params.get("physicalWidth");
+
+        int pHeight = (int) params.get("physicalHeight");
         
         WebViewSurfaceClient surfaceModel = new WebViewSurfaceClient.Builder(flutterPluginBinding.getApplicationContext())
                 .init(flutterPluginBinding.getTextureRegistry().createSurfaceTexture())
+                .setSurfaceDefaultBufferSize(pWidth,pHeight)
                 .build(flutterPluginBinding);
-        //todo test model
-//        WebViewCreationParamsModel paramsModel = new WebViewCreationParamsModel(
-//                surfaceModel.getId(), false,
-//                new HashMap<String, String>(),null,1,"",
-//                "https://www.jd.com/"
-//        );
+
         try {
             RemoteServicePresenter.getInstance().getRemoteViewFactoryBinder()
                     .createWithSurface(createParamsModel(surfaceModel.getId(), params)
@@ -102,13 +104,17 @@ public class WebViewSurfaceProducer {
         if(userAgent == null) {
             userAgent = "";
         }
+        
+        int pWidth = (int) params.get("physicalWidth");
+        
+        int pHeight = (int) params.get("physicalHeight");
 
         String url = (String) params.get("initialUrl");
         LogUtil.logMsg("initialUrl",url);
 
         return new WebViewCreationParamsModel(id,usesHybridComposition,
                 settings,names,autoMediaPlaybackPolicy
-                ,userAgent,url);
+                ,userAgent,url, pWidth, pHeight);
     }
 
 

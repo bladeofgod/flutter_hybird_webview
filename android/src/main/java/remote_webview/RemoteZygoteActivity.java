@@ -13,13 +13,15 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import io.flutter.embedding.android.FlutterActivity;
+import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.service.MainServicePresenter;
 import remote_webview.utils.LogUtil;
 import remote_webview.view.RemoteAccessibilityEventsDelegate;
 import remote_webview.view.WebViewPresentation;
 
 
-public class RemoteZygoteActivity extends Activity {
+public class RemoteZygoteActivity extends FlutterActivity {
 
     public static RemoteZygoteActivity zygoteActivity;
     
@@ -39,16 +41,16 @@ public class RemoteZygoteActivity extends Activity {
 
     final RemoteAccessibilityEventsDelegate remoteAccessibilityEventsDelegate = new RemoteAccessibilityEventsDelegate();
 
-    public static WebViewPresentation generateWebViewPresentation(long id, Surface surface) throws Exception {
+    public static WebViewPresentation generateWebViewPresentation(WebViewCreationParamsModel creationParams, Surface surface) throws Exception {
         final DisplayMetrics dm = zygoteActivity.getResources().getDisplayMetrics();
-        int sw = dm.widthPixels;
-        int sh = dm.heightPixels;
+//        int sw = dm.widthPixels;
+//        int sh = dm.heightPixels;
         int densityDpi = dm.densityDpi;
         DisplayManager displayManager = (DisplayManager) zygoteActivity.getSystemService(Context.DISPLAY_SERVICE);
-        final VirtualDisplay vd = displayManager.createVirtualDisplay("remote_web_view_" + id,
-                sw, sh, densityDpi, surface, 0);
+        final VirtualDisplay vd = displayManager.createVirtualDisplay("remote_web_view_" + creationParams.getSurfaceId(),
+                creationParams.getPhysicalWidth(), creationParams.getPhysicalHeight(), densityDpi, surface, 0);
         //todo method channel
-        return new WebViewPresentation(zygoteActivity, vd.getDisplay(), null, id,
+        return new WebViewPresentation(zygoteActivity, vd.getDisplay(), null, creationParams.getSurfaceId(),
                 zygoteActivity.remoteAccessibilityEventsDelegate, new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

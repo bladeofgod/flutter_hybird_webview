@@ -268,7 +268,6 @@ public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChan
 
         public Builder(Context appContext) {
             this.mPppContext = appContext;
-            userScreenSize();
         }
 
 
@@ -311,6 +310,8 @@ public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChan
             return new WebViewSurfaceClient(id, mSurface, flutterPluginBinding.getBinaryMessenger());
         }
 
+        //will cause event miss location
+        @Deprecated
         private void userScreenSize() {
             DisplayMetrics dm = mPppContext.getResources().getDisplayMetrics();
             width = dm.widthPixels;

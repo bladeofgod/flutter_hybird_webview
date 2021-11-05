@@ -28,7 +28,7 @@
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
         android:label="webview_flutter_example"
-        android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
         android:usesCleartextTraffic="true" >
         <meta-data
             android:name="flutterEmbedding"
@@ -62,7 +62,7 @@
             android:name="remote_webview.RemoteZygoteActivity"
             android:launchMode="singleTask"
             android:process=":remote.web"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service
             android:name="remote_webview.service.RemoteWebService"

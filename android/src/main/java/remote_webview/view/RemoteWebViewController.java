@@ -65,6 +65,7 @@ public class RemoteWebViewController{
         MotionEvent event;
         if(WebViewSurfaceProducer.producer.checkViewExists(viewId)) {
             event = toMotionEvent(density, touch, true);
+            LogUtil.logMsg("android touch ", "  " + event.toString());
             RemoteServicePresenter.getInstance().getRemoteViewFactoryBinder()
                     .dispatchTouchEvent(""+viewId, event);
         } else {

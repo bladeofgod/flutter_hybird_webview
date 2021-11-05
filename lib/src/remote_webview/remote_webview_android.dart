@@ -2,6 +2,7 @@
 
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,9 @@ class RemoteAndroidWebView extends StatefulWidget{
     required this.webViewPlatformCallbacksHandler,
     required this.creationParamsCodec,
     required this.gestureRecognizers,
-    this.onWebViewPlatformCreated}) : super(key: key);
+    this.onWebViewPlatformCreated}) :
+        assert(creationParams is Map, "creationParams must be Map"),
+        super(key: key);
 
 
   /// Which gestures should be consumed by the web view.
@@ -115,19 +118,29 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
     //   0,
     //   paramsByteData.lengthInBytes,
     // );
-    RemoteWebViewPlugin.createWebView(widget.creationParams).then((value) {
-      debugPrint('surface id  $value');
-      _remoteController = TextureAndroidRemoteController(textureId: value);
-      setState(() {
-        textureId = value;
-      });
-      if (widget.onWebViewPlatformCreated == null) {
-        return;
-      }
-      widget.onWebViewPlatformCreated!(MethodChannelRemoteWebViewPlatform(
-          value, widget.webViewPlatformCallbacksHandler));
+    Future.delayed(const Duration(milliseconds: 16*4), () {
+      final Rect paintBounds = context.findRenderObject()!.paintBounds;
+      final int physicalWidthP = (paintBounds.width * MediaQuery.of(context).devicePixelRatio).floor();
+      final int physicalHeightP = (paintBounds.height * MediaQuery.of(context).devicePixelRatio).floor();
 
+      RemoteWebViewPlugin.createWebView((widget.creationParams as Map<String,dynamic>)..addAll({
+        'physicalWidth' : physicalWidthP,
+        'physicalHeight' : physicalHeightP,
+      })).then((value) {
+        debugPrint('surface id  $value');
+        _remoteController = TextureAndroidRemoteController(textureId: value);
+        setState(() {
+          textureId = value;
+        });
+        if (widget.onWebViewPlatformCreated == null) {
+          return;
+        }
+        widget.onWebViewPlatformCreated!(MethodChannelRemoteWebViewPlatform(
+            value, widget.webViewPlatformCallbacksHandler));
+
+      });
     });
+
   }
 
   @override

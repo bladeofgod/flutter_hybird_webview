@@ -52,7 +52,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
                 try {
                     final long surfaceId = creationParams.getSurfaceId();
                     LogUtil.logMsg("view factory", " createWithSurface  id " + surfaceId);
-                    WebViewPresentation presentation = RemoteZygoteActivity.generateWebViewPresentation(surfaceId,surface);
+                    WebViewPresentation presentation = RemoteZygoteActivity.generateWebViewPresentation(creationParams,surface);
                     //todo cached presentation and need remove when it's disposed
                     viewCache.put(surfaceId, presentation);
 

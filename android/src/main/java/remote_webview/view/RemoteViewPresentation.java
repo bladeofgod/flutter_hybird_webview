@@ -52,9 +52,11 @@ public abstract class RemoteViewPresentation extends Presentation {
         this.focusChangeListener = focusChangeListener;
         this.outerContext = outerContext;
         this.state = new PresentationState();
-        this.getWindow().setFlags(8, 8);
+        this.getWindow()
+                .setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
         if (Build.VERSION.SDK_INT >= 19) {
-            this.getWindow().setType(2030);
+            this.getWindow().setType(WindowManager.LayoutParams.TYPE_PRIVATE_PRESENTATION);
         }
     }
 
@@ -64,14 +66,16 @@ public abstract class RemoteViewPresentation extends Presentation {
         this.state = state;
         this.focusChangeListener = focusChangeListener;
         this.outerContext = outerContext;
-        this.getWindow().setFlags(8, 8);
+        this.getWindow()
+                .setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
         this.startFocused = startFocused;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        this.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         if (this.state.fakeWindowViewGroup == null) {
             this.state.fakeWindowViewGroup = new FakeWindowViewGroup(this.getContext());
         }
@@ -145,50 +149,26 @@ public abstract class RemoteViewPresentation extends Presentation {
             return (WindowManager) Proxy.newProxyInstance(WindowManager.class.getClassLoader(), new Class[]{WindowManager.class}, this);
         }
 
+        @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            String var4 = method.getName();
-            byte var5 = -1;
-            switch(var4.hashCode()) {
-                case -1148522778:
-                    if (var4.equals("addView")) {
-                        var5 = 0;
-                    }
-                    break;
-                case 542766184:
-                    if (var4.equals("removeViewImmediate")) {
-                        var5 = 2;
-                    }
-                    break;
-                case 931413976:
-                    if (var4.equals("updateViewLayout")) {
-                        var5 = 3;
-                    }
-                    break;
-                case 1098630473:
-                    if (var4.equals("removeView")) {
-                        var5 = 1;
-                    }
+            switch (method.getName()) {
+                case "addView":
+                    addView(args);
+                    return null;
+                case "removeView":
+                    removeView(args);
+                    return null;
+                case "removeViewImmediate":
+                    removeViewImmediate(args);
+                    return null;
+                case "updateViewLayout":
+                    updateViewLayout(args);
+                    return null;
             }
-
-            switch(var5) {
-                case 0:
-                    this.addView(args);
-                    return null;
-                case 1:
-                    this.removeView(args);
-                    return null;
-                case 2:
-                    this.removeViewImmediate(args);
-                    return null;
-                case 3:
-                    this.updateViewLayout(args);
-                    return null;
-                default:
-                    try {
-                        return method.invoke(this.delegate, args);
-                    } catch (InvocationTargetException var6) {
-                        throw var6.getCause();
-                    }
+            try {
+                return method.invoke(delegate, args);
+            } catch (InvocationTargetException e) {
+                throw e.getCause();
             }
         }
 

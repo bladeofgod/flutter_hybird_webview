@@ -16,7 +16,7 @@ ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManif
 application
 ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:4:5-14:19
 	android:theme
-		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:5:9-79
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:5:9-68
 activity#remote_webview.RemoteZygoteActivity
 ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:6:9-9:44
 	android:process
@@ -24,7 +24,7 @@ ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManif
 	android:launchMode
 		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:7:13-44
 	android:theme
-		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:8:13-83
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:8:13-72
 	android:name
 		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:6:19-69
 service#remote_webview.service.RemoteWebService

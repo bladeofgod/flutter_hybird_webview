@@ -21,6 +21,10 @@ public class WebViewCreationParamsModel implements Parcelable {
     String userAgent;
 
     String url;
+    
+    int physicalWidth;
+    
+    int physicalHeight;
 
     public WebViewCreationParamsModel(long surfaceId, 
                                       boolean usesHybridComposition, 
@@ -28,7 +32,9 @@ public class WebViewCreationParamsModel implements Parcelable {
                                       List<String> jsNames, 
                                       int autoMediaPlaybackPolicy, 
                                       String userAgent, 
-                                      String url) {
+                                      String url,
+                                      int physicalWidth,
+                                      int physicalHeight) {
         this.surfaceId = surfaceId;
         this.usesHybridComposition = usesHybridComposition;
         this.settings = settings;
@@ -36,6 +42,8 @@ public class WebViewCreationParamsModel implements Parcelable {
         this.autoMediaPlaybackPolicy = autoMediaPlaybackPolicy;
         this.userAgent = userAgent;
         this.url = url;
+        this.physicalWidth = physicalWidth;
+        this.physicalHeight = physicalHeight;
     }
 
     public long getSurfaceId() {
@@ -66,6 +74,14 @@ public class WebViewCreationParamsModel implements Parcelable {
         return url;
     }
 
+    public int getPhysicalWidth() {
+        return physicalWidth;
+    }
+
+    public int getPhysicalHeight() {
+        return physicalHeight;
+    }
+
     protected WebViewCreationParamsModel(Parcel in) {
         surfaceId = in.readLong();
         usesHybridComposition = in.readByte() != 0;
@@ -74,6 +90,8 @@ public class WebViewCreationParamsModel implements Parcelable {
         autoMediaPlaybackPolicy = in.readInt();
         userAgent = in.readString();
         url = in.readString();
+        physicalWidth = in.readInt();
+        physicalHeight = in.readInt();
     }
 
     @Override
@@ -85,6 +103,8 @@ public class WebViewCreationParamsModel implements Parcelable {
         dest.writeInt(autoMediaPlaybackPolicy);
         dest.writeString(userAgent);
         dest.writeString(url);
+        dest.writeInt(physicalWidth);
+        dest.writeInt(physicalHeight);
     }
 
     @Override
