@@ -34,6 +34,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../../../../android/src/main/aidl" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../../../android/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../../../android/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../android/src/main/res" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../../../../android/.gradle" />
     </content>
     <content url="file://$MODULE_DIR$/../../../../build/webview_flutter/generated/aidl_source_output_dir/debug/compileDebugAidl/out">

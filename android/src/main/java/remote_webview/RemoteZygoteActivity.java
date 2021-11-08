@@ -66,6 +66,12 @@ public class RemoteZygoteActivity extends FlutterActivity {
     }
 
     @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
     protected void finalize() throws Throwable {
         super.finalize();
     }
