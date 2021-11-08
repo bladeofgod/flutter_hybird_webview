@@ -8,8 +8,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/../../../../flutter/flutter2.0/flutter/.pub-cache/hosted/pub.flutter-io.cn/espresso-0.1.0+3/android" />
-            <option value="$PROJECT_DIR$/../../../../flutter/flutter2.0/flutter/packages/integration_test/android" />
+            <option value="$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.flutter-io.cn/espresso-0.1.0+3/android" />
+            <option value="I:/flutter/flutter/packages/integration_test/android" />
             <option value="$PROJECT_DIR$/../../android" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
