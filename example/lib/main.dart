@@ -10,6 +10,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_example/test_page.dart';
 
 import 'entry_page.dart';
 
@@ -53,7 +54,7 @@ class _WebViewExampleState extends State<WebViewExample> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(child: Scaffold(
       // appBar: AppBar(
       //   title: const Text('Flutter WebView example'),
       //   // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
@@ -95,7 +96,9 @@ class _WebViewExampleState extends State<WebViewExample> {
         );
       }),
       floatingActionButton: favoriteButton(),
-    );
+    ), onWillPop: () {
+      return Future.value(false);
+    });
   }
 
   JavascriptChannel _toasterJavascriptChannel(BuildContext context) {
@@ -116,12 +119,8 @@ class _WebViewExampleState extends State<WebViewExample> {
             AsyncSnapshot<WebViewController> controller) {
           if (controller.hasData) {
             return FloatingActionButton(
-              onPressed: () async {
-                final String url = (await controller.data!.currentUrl())!;
-                // ignore: deprecated_member_use
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(content: Text('Favorited $url')),
-                );
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_)=>TestPage(symbol: '123')));
               },
               child: const Icon(Icons.favorite),
             );

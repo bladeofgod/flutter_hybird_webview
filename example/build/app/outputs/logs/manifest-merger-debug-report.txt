@@ -115,7 +115,7 @@ ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\
 	android:configChanges
 		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml:13:7-138
 	android:theme
-		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml:17:7-41
+		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml:17:7-56
 	android:name
 		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml:16:7-42
 meta-data#io.flutter.app.android.SplashScreenUntilFirstFrame
@@ -257,13 +257,13 @@ INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\ma
 		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml
 		INJECTED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml
 activity#remote_webview.RemoteZygoteActivity
-ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:10:9-14:75
+ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:10:9-14:58
 	android:process
 		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-42
 	android:launchMode
 		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-44
 	android:theme
-		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-72
+		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-55
 	android:name
 		ADDED from [:webview_flutter] D:\flutterplugin\flutter_hybird_webview\example\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-63
 service#remote_webview.service.RemoteWebService

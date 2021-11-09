@@ -19,7 +19,7 @@
     <remote-repository>
       <option name="id" value="maven" />
       <option name="name" value="maven" />
-      <option name="url" value="https://storage.flutter-io.cn/download.flutter.io" />
+      <option name="url" value="https://mirrors.sjtug.sjtu.edu.cn//download.flutter.io" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="Google3" />
@@ -27,19 +27,24 @@
       <option name="url" value="https://dl.google.com/dl/android/maven2/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="G:\Android\android-sdk\extras\google\m2repository" />
-      <option name="name" value="G:\Android\android-sdk\extras\google\m2repository" />
-      <option name="url" value="file:/G:/Android/android-sdk/extras/google/m2repository/" />
+      <option name="id" value="BintrayJCenter" />
+      <option name="name" value="BintrayJCenter" />
+      <option name="url" value="https://jcenter.bintray.com/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="G:\Android\android-sdk\extras\android\m2repository" />
-      <option name="name" value="G:\Android\android-sdk\extras\android\m2repository" />
-      <option name="url" value="file:/G:/Android/android-sdk/extras/android/m2repository/" />
+      <option name="id" value="D:\androidSdk\Sdk\extras\google\m2repository" />
+      <option name="name" value="D:\androidSdk\Sdk\extras\google\m2repository" />
+      <option name="url" value="file:/$PROJECT_DIR$/../../../../androidSdk/Sdk/extras/google/m2repository" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="G:\Android\android-sdk\extras\m2repository" />
-      <option name="name" value="G:\Android\android-sdk\extras\m2repository" />
-      <option name="url" value="file:/G:/Android/android-sdk/extras/m2repository/" />
+      <option name="id" value="D:\androidSdk\Sdk\extras\android\m2repository" />
+      <option name="name" value="D:\androidSdk\Sdk\extras\android\m2repository" />
+      <option name="url" value="file:/$PROJECT_DIR$/../../../../androidSdk/Sdk/extras/android/m2repository" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="D:\androidSdk\Sdk\extras\m2repository" />
+      <option name="name" value="D:\androidSdk\Sdk\extras\m2repository" />
+      <option name="url" value="file:/$PROJECT_DIR$/../../../../androidSdk/Sdk/extras/m2repository" />
     </remote-repository>
   </component>
 </project>

@@ -11,7 +11,7 @@
             android:name="remote_webview.RemoteZygoteActivity"
             android:launchMode="singleTask"
             android:process=":remote.web"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/ZygoteActivityTheme" />
 
         <service
             android:name="remote_webview.service.RemoteWebService"

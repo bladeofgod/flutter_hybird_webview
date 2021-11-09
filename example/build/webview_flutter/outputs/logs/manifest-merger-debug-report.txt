@@ -24,7 +24,7 @@ ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManif
 	android:launchMode
 		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:7:13-44
 	android:theme
-		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:8:13-72
+		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:8:13-55
 	android:name
 		ADDED from D:\flutterplugin\flutter_hybird_webview\android\src\main\AndroidManifest.xml:6:19-69
 service#remote_webview.service.RemoteWebService

@@ -14,7 +14,7 @@
       android:hardwareAccelerated="true"
       android:launchMode="singleTop"
       android:name=".WebViewTestActivity"
-      android:theme="@style/LaunchTheme"
+      android:theme="@style/DisableTransitionAnimation"
       android:windowSoftInputMode="adjustResize">
       <!-- This keeps the window background of the activity showing
            until Flutter renders its first frame. It can be removed if
