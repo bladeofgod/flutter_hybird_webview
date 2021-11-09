@@ -17,12 +17,38 @@ import remote_webview.view.RemoteWebViewController;
  * Description: Manipulate remote view.
  */
 abstract public class BaseRemoteViewController {
-    
+
+    /**
+     * Create a surface and render it from remote-process.
+     * @param methodCall
+     * @param result
+     */
     abstract public void create(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result);
 
+    /**
+     * Touch event from flutter's side, and dispatch to remote-view.
+     * @param methodCall
+     * @param result
+     */
     abstract public void touch(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result);
 
+    /**
+     * Dispose a view module that contains in main and remote process.
+     * @param methodCall call from flutter.
+     * @param result result for flutter.
+     */
     abstract public void dispose(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result);
+
+    
+    /**
+     * Dispose all view module.
+     * Use careful.
+     * @see #dispose(MethodCall, MethodChannel.Result) 
+     *
+     * @param methodCall call from flutter.
+     * @param result result for flutter.
+     */
+    abstract public void disposeAll(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result);
 
 
     /**

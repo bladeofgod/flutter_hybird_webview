@@ -91,6 +91,10 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
                 //todo
                 remoteWebViewController.dispose(methodCall, result);
                 break;
+            case "disposeAll":
+                //todo
+                remoteWebViewController.disposeAll(methodCall, result);
+                break;
         }
 
     }

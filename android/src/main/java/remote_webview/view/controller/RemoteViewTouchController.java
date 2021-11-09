@@ -49,10 +49,15 @@ abstract public class RemoteViewTouchController extends BaseRemoteViewController
 
     }
 
-
     @CallSuper
     @Override
     public void dispose(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result) {
+        //didn't need any dispose for now.
+    }
+
+    @CallSuper
+    @Override
+    public void disposeAll(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result) {
         //didn't need any dispose for now.
     }
 

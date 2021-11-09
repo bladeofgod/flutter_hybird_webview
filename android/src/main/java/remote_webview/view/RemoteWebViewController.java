@@ -20,6 +20,7 @@ import io.flutter.embedding.engine.systemchannels.PlatformViewsChannel;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.platform.PlatformViewsController;
+import remote_webview.garbage_collect.MainGarbageCollector;
 import remote_webview.service.RemoteServicePresenter;
 import remote_webview.utils.LogUtil;
 import remote_webview.view.controller.RemoteViewTouchController;
@@ -50,8 +51,14 @@ public class RemoteWebViewController extends RemoteViewTouchController {
         if(viewId == -1) {
             LogUtil.logMsg("Dispose","view not found!");
         } else {
-            //todo 
+            MainGarbageCollector.getInstance().notifyClean(viewId);
         }
+    }
+
+    @Override
+    public void disposeAll(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result) {
+        super.disposeAll(methodCall, result);
+        MainGarbageCollector.getInstance().notifyCleanAll();
     }
 }
 

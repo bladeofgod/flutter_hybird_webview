@@ -27,7 +27,14 @@ class RemoteWebViewPlugin{
   ///Dispose the view
   ///[id] textureId
   static Future<void> dispose(int id) async {
-    await SystemChannels.platform_views.invokeMethod<void>('dispose', id);
+    return await _channel.invokeMethod('dispose', id);
+  }
+
+  ///Dispose all remote-view.
+  /// * It will invalid all related texture's content.
+  /// * Use careful!
+  static Future<void> disposeAll() async {
+    return await _channel.invokeMethod('disposeAll');
   }
 
 }

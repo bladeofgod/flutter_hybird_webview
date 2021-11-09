@@ -2,7 +2,7 @@ package remote_webview.service.hub;
 
 
 import remote_webview.interfaces.IGarbageCleanListener;
-import remote_webview.utils.RemoteGarbageCollect;
+import remote_webview.garbage_collect.RemoteGarbageCollector;
 
 /**
  * view's sub binder hub.
@@ -24,7 +24,7 @@ public class RemoteBinderCommHub extends BinderCommunicateHub implements IGarbag
     }
     
     private RemoteBinderCommHub(){
-        RemoteGarbageCollect.getInstance().registerCollectListener(this);
+        RemoteGarbageCollector.getInstance().registerCollectListener(this);
     }
 
     @Override
