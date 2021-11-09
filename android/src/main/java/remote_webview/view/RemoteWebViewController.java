@@ -42,6 +42,29 @@ public class RemoteWebViewController extends RemoteViewTouchController {
         long surfaceId = WebViewSurfaceProducer.producer.buildGeneralWebViewSurface(params);
         result.success(surfaceId);
     }
-    
 
+    @Override
+    public void dispose(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result) {
+        super.dispose(methodCall, result);
+        long viewId = getViewId(methodCall);
+        if(viewId == -1) {
+            LogUtil.logMsg("Dispose","view not found!");
+        } else {
+            //todo 
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

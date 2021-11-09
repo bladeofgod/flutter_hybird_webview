@@ -18,10 +18,29 @@ import remote_webview.view.RemoteWebViewController;
  */
 abstract public class BaseRemoteViewController {
     
-     abstract public void create(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result);
+    abstract public void create(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result);
 
     abstract public void touch(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result);
-    
+
+    abstract public void dispose(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result);
+
+
+    /**
+     * Must a int type from flutter.
+     * 
+     * If return -1 means occur an error.
+     * @param methodCall called from flutter'side.
+     * @return view's id.
+     */
+    protected long getViewId(@NonNull MethodCall methodCall) {
+        long viewId = -1;
+        try {
+            viewId = (long)methodCall.argument("viewId");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return viewId;
+    }
     
     protected void ensureValidAndroidVersion(int minSdkVersion) {
         if (Build.VERSION.SDK_INT < minSdkVersion) {

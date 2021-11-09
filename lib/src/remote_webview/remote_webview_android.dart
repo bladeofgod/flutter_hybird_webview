@@ -152,7 +152,7 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
   @override
   Widget build(BuildContext context) {
     return textureId == null
-        ? Container(color: Colors.red,)
+        ? Center(child: CircularProgressIndicator(color: Colors.blue,),)
         : RemoteTexture(
           textureId: textureId!,
           controller: _remoteController!,

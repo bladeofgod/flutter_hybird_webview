@@ -66,9 +66,15 @@ public class RemoteZygoteActivity extends FlutterActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        finish();
+    }
+
+    @Override
     public void finish() {
-        super.finish();
         overridePendingTransition(0, 0);
+        super.finish();
     }
 
     @Override

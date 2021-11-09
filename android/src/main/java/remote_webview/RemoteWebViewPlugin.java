@@ -80,15 +80,6 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
 //                result.success(WebViewSurfaceProducer.producer.buildGeneralWebViewSurface(params));
 //                break;
             case "create":
-                //todo test code
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        LogUtil.logMsg("startActivity"," class : " + mActivity.getClass() );
-                        mActivity.startActivity(new Intent(mAppContext, mActivity.getClass()));
-                    }
-                },1000);
-
                 remoteWebViewController.create(methodCall, result);
                 break;
             case "touch":
@@ -98,6 +89,7 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
                 
             case "dispose":
                 //todo
+                remoteWebViewController.dispose(methodCall, result);
                 break;
         }
 

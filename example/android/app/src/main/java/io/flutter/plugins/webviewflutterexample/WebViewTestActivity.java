@@ -5,7 +5,6 @@
 package io.flutter.plugins.webviewflutterexample;
 
 import androidx.annotation.NonNull;
-import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import remote_webview.view.RemoteWebViewActivity;
 

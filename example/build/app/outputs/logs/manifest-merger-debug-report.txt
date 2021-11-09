@@ -117,7 +117,7 @@ ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\
 	android:theme
 		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml:17:7-56
 	android:name
-		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml:16:7-42
+		ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml:16:7-82
 meta-data#io.flutter.app.android.SplashScreenUntilFirstFrame
 ADDED from D:\flutterplugin\flutter_hybird_webview\example\android\app\src\main\AndroidManifest.xml:23:7-25:31
 	android:value

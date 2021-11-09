@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.RemoteException;
 import android.view.MotionEvent;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -46,6 +47,13 @@ abstract public class RemoteViewTouchController extends BaseRemoteViewController
             result.error("error","occur an error on Dispatch touch event to remote !",null);
         }
 
+    }
+
+
+    @CallSuper
+    @Override
+    public void dispose(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result) {
+        //didn't need any dispose for now.
     }
 
     private void onTouch(PlatformViewsChannel.PlatformViewTouch touch) throws RemoteException {
