@@ -96,6 +96,22 @@ this.dispatchKeyEvent(_arg0, _arg1);
 reply.writeNoException();
 return true;
 }
+case TRANSACTION_dispose:
+{
+data.enforceInterface(descriptor);
+long _arg0;
+_arg0 = data.readLong();
+this.dispose(_arg0);
+reply.writeNoException();
+return true;
+}
+case TRANSACTION_disposeAll:
+{
+data.enforceInterface(descriptor);
+this.disposeAll();
+reply.writeNoException();
+return true;
+}
 default:
 {
 return super.onTransact(code, data, reply, flags);
@@ -189,12 +205,45 @@ _reply.recycle();
 _data.recycle();
 }
 }
+@Override public void dispose(long viewId) throws android.os.RemoteException
+{
+android.os.Parcel _data = android.os.Parcel.obtain();
+android.os.Parcel _reply = android.os.Parcel.obtain();
+try {
+_data.writeInterfaceToken(DESCRIPTOR);
+_data.writeLong(viewId);
+mRemote.transact(Stub.TRANSACTION_dispose, _data, _reply, 0);
+_reply.readException();
+}
+finally {
+_reply.recycle();
+_data.recycle();
+}
+}
+@Override public void disposeAll() throws android.os.RemoteException
+{
+android.os.Parcel _data = android.os.Parcel.obtain();
+android.os.Parcel _reply = android.os.Parcel.obtain();
+try {
+_data.writeInterfaceToken(DESCRIPTOR);
+mRemote.transact(Stub.TRANSACTION_disposeAll, _data, _reply, 0);
+_reply.readException();
+}
+finally {
+_reply.recycle();
+_data.recycle();
+}
+}
 }
 static final int TRANSACTION_createWithSurface = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
 static final int TRANSACTION_dispatchTouchEvent = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
 static final int TRANSACTION_dispatchKeyEvent = (android.os.IBinder.FIRST_CALL_TRANSACTION + 2);
+static final int TRANSACTION_dispose = (android.os.IBinder.FIRST_CALL_TRANSACTION + 3);
+static final int TRANSACTION_disposeAll = (android.os.IBinder.FIRST_CALL_TRANSACTION + 4);
 }
 public void createWithSurface(remote_webview.model.WebViewCreationParamsModel createParams, android.view.Surface surface) throws android.os.RemoteException;
 public void dispatchTouchEvent(java.lang.String surfaceId, android.view.MotionEvent event) throws android.os.RemoteException;
 public void dispatchKeyEvent(java.lang.String surfaceId, android.view.KeyEvent keyEvent) throws android.os.RemoteException;
+public void dispose(long viewId) throws android.os.RemoteException;
+public void disposeAll() throws android.os.RemoteException;
 }

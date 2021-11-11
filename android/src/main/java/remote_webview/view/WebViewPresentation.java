@@ -138,6 +138,11 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
 //        return true;
 //    }
 
+    /**
+     * 
+     * @param methodCall method model with name and argument
+     * @param result result call back, must ensure call it after method-call.
+     */
     @Override
     public void onMethodCall(@NonNull MockMethodCall methodCall, @NonNull IMockMethodResult result) {
         switch (methodCall.method) {

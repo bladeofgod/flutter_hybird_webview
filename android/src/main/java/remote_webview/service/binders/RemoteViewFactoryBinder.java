@@ -12,10 +12,17 @@ import androidx.annotation.RequiresApi;
 import java.util.Map;
 
 import remote_webview.IRemoteViewFactoryBinder;
+import remote_webview.garbage_collect.RemoteGarbageCollector;
 import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.utils.LogUtil;
 import remote_webview.utils.StringUtil;
 import remote_webview.view.RemoteViewFactoryProcessor;
+
+
+/**
+ * {@linkplain RemoteViewFactoryBinder} for dispatch view-related commands from main-process 
+ * to {@linkplain RemoteViewFactoryProcessor}.
+ */
 
 public class RemoteViewFactoryBinder extends IRemoteViewFactoryBinder.Stub {
 
@@ -44,12 +51,21 @@ public class RemoteViewFactoryBinder extends IRemoteViewFactoryBinder.Stub {
      */
     @Override
     public void dispatchTouchEvent(String surfaceId, MotionEvent event) throws RemoteException {
-        LogUtil.logMsg("remote", "dispatchTouchEvent  " + surfaceId);
         RemoteViewFactoryProcessor.getInstance().dispatchTouchEvent(surfaceId, event);
     }
 
     @Override
     public void dispatchKeyEvent(String surfaceId, KeyEvent keyEvent) throws RemoteException {
         RemoteViewFactoryProcessor.getInstance().dispatchKeyEvent(surfaceId, keyEvent);
+    }
+
+    @Override
+    public void dispose(long viewId) throws RemoteException {
+        RemoteGarbageCollector.getInstance().notifyClean(viewId);
+    }
+
+    @Override
+    public void disposeAll() throws RemoteException {
+        RemoteGarbageCollector.getInstance().notifyCleanAll();
     }
 }

@@ -42,7 +42,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
 
     private RemoteViewFactoryProcessor() {}
 
-    private final HashMap<Long, WebViewPresentation> viewCache = new HashMap<>();
+    private final HashMap<Long, RemoteViewPresentation> viewCache = new HashMap<>();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void createWithSurface(final WebViewCreationParamsModel creationParams, final Surface surface) {

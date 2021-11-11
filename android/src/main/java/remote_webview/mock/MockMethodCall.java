@@ -5,16 +5,21 @@ import androidx.annotation.Nullable;
 import java.util.HashMap;
 
 public class MockMethodCall {
+    
+    //surface's id.
+    public final long id;
+    
     public final String method;
 
     public final HashMap arguments;
 
-    public MockMethodCall(String method, HashMap arguments) {
+    public MockMethodCall(long id, String method, HashMap arguments) {
         if (method == null) {
             throw new AssertionError("Parameter method must not be null.");
         } else {
             this.method = method;
             this.arguments = arguments;
+            this.id = id;
         }
     }
 

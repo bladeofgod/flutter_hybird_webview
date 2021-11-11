@@ -6,6 +6,13 @@ import remote_webview.IRemoteProcessBinder;
 import remote_webview.RemoteZygoteActivity;
 import remote_webview.utils.LogUtil;
 
+/**
+ * {@linkplain RemoteProcessBinder} for communicate to remote-process.
+ * 
+ * e.g keep {@linkplain RemoteZygoteActivity}, check process-alive.
+ * 
+ */
+
 public class RemoteProcessBinder extends IRemoteProcessBinder.Stub {
     @Override
     public void initZygoteActivity() throws RemoteException {

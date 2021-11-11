@@ -53,25 +53,36 @@ abstract public class BinderCommunicateHub {
     public void plugOutMethodHandler(long id) {
         methodHandlerSlot.remove(id);
     }
+    
+    protected void cleanAllMethodHandler() {
+        methodHandlerSlot.clear();
+    }
 
 
     /**
      * It's a result-callback , pair of invoke-method.
      * It can only use once.
-     * @param id use surface's id in {@link MethodModel}
+     * @param id #{@linkplain #invokeMethod} remote_invoke's timeStamp, to associate
+     *           a  result callback .
      * @param result
      */
-    private void cacheMethodResultCallback(long id,ResultCallbackHandler result) {
+    protected void cacheMethodResultCallback(long id,ResultCallbackHandler result) {
         methodResultCallbackSlog.put(id, result);
     }
 
     /**
      * After result callback called, use this method to remove it.
-     * @param id use surface's id in {@link MethodModel}
+     * @param id #{@linkplain #invokeMethod} remote_invoke's timeStamp, to associate
+     *           a  result callback .
      */
-    private void removeMethodResultCallbackById(long id) {
+    protected void removeMethodResultCallbackById(long id) {
         methodResultCallbackSlog.remove(id);
     }
+    
+    protected void cleanAllMethodResultCallback() {
+        methodResultCallbackSlog.clear();
+    }
+    
 
     /**
      * 
@@ -85,11 +96,13 @@ abstract public class BinderCommunicateHub {
 
     /**
      * IBinder invoke.
-     * @param model
+     * Use invoke-timestamp for id to mark a resultCallback,
+     * and call {@linkplain ResultCallbackHandler} after {@linkplain #invokeMethodById}
+     * @param model method model.
      */
     public void invokeMethod(MethodModel model) {
         final long handlerId = model.getInvokeTimeStamp();
-        final MockMethodCall methodCall = new MockMethodCall(model.getMethodName(),model.getArguments());
+        final MockMethodCall methodCall = new MockMethodCall(model.getId(), model.getMethodName(),model.getArguments());
         cacheResultCallback(handlerId);
         try {
             invokeMethodById(handlerId,methodCall);
@@ -103,12 +116,13 @@ abstract public class BinderCommunicateHub {
 
 
     /**
-     * invoke web-view
-     * @param id : invoke timeStamp as an id for linked  {@linkplain IMockMethodResult}
-     * @param call
+     * Invoke web-view's method.
+     * @param id : invoke-method timeStamp as an id for linked  {@linkplain IMockMethodResult}.
+     *           @see MethodModel#invokeTimeStamp
+     * @param call {@linkplain MockMethodCall.id} is came from surface's id, and marked a view.
      */
     private void invokeMethodById(final long id, MockMethodCall call) throws NullPointerException {
-        Objects.requireNonNull(methodHandlerSlot.get(id)).onMethodCall(call, new IMockMethodResult() {
+        Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {
             @Override
             public void success(@Nullable HashMap var1) {
                 Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);

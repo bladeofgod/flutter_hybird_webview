@@ -11,14 +11,18 @@ import java.util.List;
 import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.model.ViewSurfaceModel;
 import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.model.WebViewSurfaceClient;
 import remote_webview.service.RemoteServicePresenter;
 import remote_webview.utils.LogUtil;
 
+/**
+ * Produce a Remote-view and cache it in {@linkplain WebViewSurfaceProducer#surfaceModelCache}.
+ */
 
-public class WebViewSurfaceProducer {
+public class WebViewSurfaceProducer implements IGarbageCleanListener {
 
     private static final String JS_CHANNEL_NAMES_FIELD = "javascriptChannelNames";
 
@@ -168,7 +172,7 @@ public class WebViewSurfaceProducer {
      * @param surfaceModel already created view Model that linked
      *                     a real view on remote.
      */
-    public void cacheViewSurfaceModel(ViewSurfaceModel surfaceModel) {
+    private void cacheViewSurfaceModel(ViewSurfaceModel surfaceModel) {
         surfaceModelCache.put(surfaceModel.getId(), surfaceModel);
     }
 
@@ -176,11 +180,20 @@ public class WebViewSurfaceProducer {
      *
      * @param id mark a view model.
      */
-    public void remoteViewSurfaceModel(long id) {
+    private void removeViewSurfaceModel(long id) {
         surfaceModelCache.remove(id);
     }
 
 
+    @Override
+    public void cleanGarbage(long id) {
+        removeViewSurfaceModel(id);
+    }
+
+    @Override
+    public void cleanAll() {
+        surfaceModelCache.clear();
+    }
 }
 
 
