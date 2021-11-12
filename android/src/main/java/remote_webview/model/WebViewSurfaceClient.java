@@ -28,7 +28,7 @@ import remote_webview.utils.LogUtil;
 
 public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChannel.MethodCallHandler {
 
-    private static final String CHANNEL_NAME_HEAD = "plugins.flutter.io/webview_";
+    private static final String CHANNEL_NAME_HEAD = "hybird.flutter/webview_";
 
     private final MethodChannel methodChannel;
 
@@ -36,6 +36,12 @@ public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChan
         super(id, surface);
         methodChannel = new MethodChannel(binaryMessenger,CHANNEL_NAME_HEAD+id);
         methodChannel.setMethodCallHandler(this);
+    }
+
+    @Override
+    public void release() {
+        methodChannel.setMethodCallHandler(null);
+        super.release();
     }
 
     @Override

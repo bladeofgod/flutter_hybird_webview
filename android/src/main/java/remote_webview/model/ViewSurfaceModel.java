@@ -2,6 +2,8 @@ package remote_webview.model;
 
 import android.view.Surface;
 
+import androidx.annotation.CallSuper;
+
 
 abstract public class ViewSurfaceModel {
     
@@ -20,6 +22,11 @@ abstract public class ViewSurfaceModel {
 
     public Surface getSurface() {
         return surface;
+    }
+
+    @CallSuper
+    public void release() {
+        surface.release();
     }
 
 }

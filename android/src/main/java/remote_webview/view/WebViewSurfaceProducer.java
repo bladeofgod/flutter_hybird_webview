@@ -1,14 +1,12 @@
 package remote_webview.view;
 
-import android.os.Build;
 import android.os.RemoteException;
-import android.util.Log;
-import android.webkit.WebViewClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import remote_webview.interfaces.IGarbageCleanListener;
@@ -181,6 +179,11 @@ public class WebViewSurfaceProducer implements IGarbageCleanListener {
      * @param id mark a view model.
      */
     private void removeViewSurfaceModel(long id) {
+        try {
+            Objects.requireNonNull(surfaceModelCache.get(id)).release();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         surfaceModelCache.remove(id);
     }
 
