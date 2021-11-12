@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import remote_webview.RemoteZygoteActivity;
 import remote_webview.interfaces.IGarbageCleanListener;
@@ -53,10 +54,9 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
                     final long surfaceId = creationParams.getSurfaceId();
                     LogUtil.logMsg("view factory", " createWithSurface  id " + surfaceId);
                     WebViewPresentation presentation = RemoteZygoteActivity.generateWebViewPresentation(creationParams,surface);
-                    //todo cached presentation and need remove when it's disposed
-                    viewCache.put(surfaceId, presentation);
 
-                    presentation.createWithOrders(creationParams);
+                    viewCache.put(surfaceId, presentation);
+                    presentation.create();
                     presentation.showWithUrl();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -71,7 +71,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
         LogUtil.logMsg("view factory", " dispatchTouchEvent  id " + surfaceId
                 + "  cache size :" + viewCache.size());
         try {
-            viewCache.get(Long.decode(surfaceId)).dispatchTouchEvent(event);
+            Objects.requireNonNull(viewCache.get(Long.decode(surfaceId))).dispatchTouchEvent(event);
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,7 +81,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
     public void dispatchKeyEvent(String surfaceId, KeyEvent event) {
         LogUtil.logMsg("view factory", " dispatchKeyEvent  id " + surfaceId);
         try {
-            viewCache.get(Integer.parseInt(surfaceId)).dispatchKeyEvent(event);
+            Objects.requireNonNull(viewCache.get(Long.parseLong(surfaceId))).dispatchKeyEvent(event);
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,7 +91,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
     @Override
     public void cleanGarbage(long id) {
         try {
-            viewCache.get(id).dispose();
+            Objects.requireNonNull(viewCache.get(id)).dispose();
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -100,6 +100,13 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
 
     @Override
     public void cleanAll() {
+        try {
+            for(RemoteViewPresentation cache : viewCache.values()) {
+                cache.dispose();
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         viewCache.clear();
     }
 }

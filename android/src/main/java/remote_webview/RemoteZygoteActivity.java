@@ -50,7 +50,7 @@ public class RemoteZygoteActivity extends FlutterActivity {
         final VirtualDisplay vd = displayManager.createVirtualDisplay("remote_web_view_" + creationParams.getSurfaceId(),
                 creationParams.getPhysicalWidth(), creationParams.getPhysicalHeight(), densityDpi, surface, 0);
         //todo method channel
-        return new WebViewPresentation(zygoteActivity, vd.getDisplay(), null, creationParams.getSurfaceId(),
+        return new WebViewPresentation(zygoteActivity, creationParams , vd.getDisplay(), null, creationParams.getSurfaceId(),
                 zygoteActivity.remoteAccessibilityEventsDelegate, new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

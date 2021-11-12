@@ -29,7 +29,7 @@ import java.lang.reflect.Proxy;
 import io.flutter.Log;
 
 import io.flutter.plugin.platform.PlatformView;
-
+import remote_webview.service.hub.RemoteBinderCommHub;
 
 
 public abstract class RemoteViewPresentation extends Presentation {
@@ -71,6 +71,12 @@ public abstract class RemoteViewPresentation extends Presentation {
                         WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
         this.startFocused = startFocused;
     }
+
+    abstract protected void plugInHub();
+
+    abstract protected void plugOutHub();
+
+    abstract public void dispose();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

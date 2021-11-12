@@ -41,17 +41,17 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
     private final static String TAG = "WebViewPresentation";
 
     private final MockMethodChannel methodChannel;
+    //Handle js
     private final Handler platformThreadHandler;
-    //private final long surfaceId;
-    //private WebView webView;
 
     private WebViewCreationParamsModel initialParams;
 
-    public WebViewPresentation(Context outerContext, Display display, MockMethodChannel methodChannel
-            , long surfaceId, RemoteAccessibilityEventsDelegate accessibilityEventsDelegate,
+    public WebViewPresentation(Context outerContext, WebViewCreationParamsModel creationParamsModel,
+                               Display display, MockMethodChannel methodChannel, long surfaceId,
+                               RemoteAccessibilityEventsDelegate accessibilityEventsDelegate,
                                View.OnFocusChangeListener focusChangeListener) {
         super(outerContext, display, accessibilityEventsDelegate, surfaceId , focusChangeListener);
-        //this.surfaceId = surfaceId;
+        initialParams = creationParamsModel;
         this.methodChannel = methodChannel;
         //this.webView = createWebView();
         platformThreadHandler = new Handler(outerContext.getMainLooper());
@@ -59,17 +59,23 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         plugInHub();
     }
 
-    private void plugInHub() {
+    @Override
+    protected void plugInHub() {
         RemoteBinderCommHub.getInstance().plugInMethodHandler(viewId,this);
     }
 
-    private void plugOutHub() {
+    @Override
+    protected void plugOutHub() {
         RemoteBinderCommHub.getInstance().plugOutMethodHandler(viewId);
     }
 
+    @Override
     public void dispose() {
-        //todo clean up
         plugOutHub();
+//        if (getWebView() instanceof InputAwareWebView) {
+//            ((InputAwareWebView) webView).dispose();
+//        }
+        getWebView().destroy();
     }
 
     private WebView createWebView() {
@@ -94,12 +100,6 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         return webView;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void createWithOrders(WebViewCreationParamsModel creationParamsModel) {
-        initialParams = creationParamsModel;
-        create();
-    }
-
     public void showWithUrl() {
         LogUtil.logMsg(TAG,"showWithUrl");
         if(initialParams.getUrl() != null && !initialParams.getUrl().isEmpty()) {
@@ -112,11 +112,6 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         return (WebView) state.childView;
     }
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(webView);
-//    }
 
     @Override
     public View createChildView() {
