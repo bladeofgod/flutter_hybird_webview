@@ -121,7 +121,7 @@ abstract public class BinderCommunicateHub {
      *           @see MethodModel#invokeTimeStamp
      * @param call {@linkplain MockMethodCall.id} is came from surface's id, and marked a view.
      */
-    private void invokeMethodById(final long id, MockMethodCall call) throws NullPointerException {
+    protected void invokeMethodById(final long id, MockMethodCall call) throws NullPointerException {
         Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {
             @Override
             public void success(@Nullable HashMap var1) {

@@ -83,7 +83,7 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
      * Directly fetch {@link IRemoteMethodChannelBinder} for easy to use.
      * @return invoke method to control web-view
      */
-    IRemoteMethodChannelBinder getRemoteChannelBinder() {
+    public IRemoteMethodChannelBinder getRemoteChannelBinder() {
         IRemoteMethodChannelBinder binder = null;
         try {
             binder = IRemoteMethodChannelBinder.Stub.asInterface(mBinderPool.queryBinder(BINDER_METHOD_CHANNEL));

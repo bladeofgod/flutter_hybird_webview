@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.os.Build;
+import android.os.RemoteException;
 import android.util.DisplayMetrics;
 import android.view.Surface;
 import android.webkit.WebStorage;
@@ -11,6 +12,7 @@ import android.webkit.WebStorage;
 import androidx.annotation.NonNull;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +24,7 @@ import io.flutter.view.TextureRegistry;
 import remote_webview.interfaces.IMockMethodHandler;
 import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.mock.MockMethodCall;
+import remote_webview.service.RemoteServicePresenter;
 import remote_webview.service.hub.MainBinderCommHub;
 import remote_webview.utils.LogUtil;
 
@@ -53,6 +56,20 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
 
     @Override
     public void onMethodCall(@NonNull MethodCall methodCall, MethodChannel.Result result) {
+        if(methodCall.arguments instanceof HashMap) {
+            long invokeTimeStamp = System.currentTimeMillis();
+            final MethodModel model = new MethodModel(getId(), methodCall.method, 
+                    (HashMap) methodCall.arguments, invokeTimeStamp);
+            //cache the result.
+            MainBinderCommHub.getInstance().cacheResultCallback(invokeTimeStamp, result);
+            try {
+                RemoteServicePresenter.getInstance().getRemoteChannelBinder().invokeMethod(model);
+            } catch (RemoteException e) {
+                result.error("remote call error", methodCall.method, methodCall.arguments);
+                e.printStackTrace();
+            }
+        }
+
         switch (methodCall.method) {
             case "loadUrl":
                 loadUrl(methodCall, result);
