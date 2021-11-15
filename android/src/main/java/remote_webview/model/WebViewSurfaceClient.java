@@ -19,6 +19,10 @@ import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.view.TextureRegistry;
+import remote_webview.interfaces.IMockMethodHandler;
+import remote_webview.interfaces.IMockMethodResult;
+import remote_webview.mock.MockMethodCall;
+import remote_webview.service.hub.MainBinderCommHub;
 import remote_webview.utils.LogUtil;
 
 /**
@@ -26,7 +30,8 @@ import remote_webview.utils.LogUtil;
  * accept flutter's control order and send to remote.
  */
 
-public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChannel.MethodCallHandler {
+public class WebViewSurfaceClient extends ViewSurfaceModel
+        implements MethodChannel.MethodCallHandler, IMockMethodHandler {
 
     private static final String CHANNEL_NAME_HEAD = "hybird.flutter/webview_";
 
@@ -36,11 +41,13 @@ public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChan
         super(id, surface);
         methodChannel = new MethodChannel(binaryMessenger,CHANNEL_NAME_HEAD+id);
         methodChannel.setMethodCallHandler(this);
+        MainBinderCommHub.getInstance().plugInMethodHandler(id, this);
     }
 
     @Override
     public void release() {
         methodChannel.setMethodCallHandler(null);
+        MainBinderCommHub.getInstance().plugOutMethodHandler(getId());
         super.release();
     }
 
@@ -265,6 +272,21 @@ public class WebViewSurfaceClient extends ViewSurfaceModel implements MethodChan
                     throw new IllegalArgumentException("Unknown WebView setting: " + key);
             }
         }
+    }
+
+    /**
+     * This is mock method, and usually use in remote communicate.
+     * In {@link WebViewSurfaceClient}, this called from remote-process 
+     * by {@link remote_webview.service.binders.MainMethodChannelBinder}.
+     * @see MainBinderCommHub
+     * @see IMockMethodHandler
+     * 
+     * @param methodCall method model with name and argument
+     * @param result result call back, must ensure call it after method-call.
+     */
+    @Override
+    public void onMethodCall(@NonNull MockMethodCall methodCall, @NonNull IMockMethodResult result) {
+        methodChannel.invokeMethod(methodCall.method, methodCall.arguments);
     }
 
     public static class Builder{

@@ -8,20 +8,20 @@ import java.util.HashMap;
 public class MethodModel implements Parcelable {
 
     /**
-     * surface's id,and represent a web-view.
+     * surface's id,and represent a remote-view, e.g web-view.
      * must be unique.
      */
-    private int id;
+    private long id;
 
     //invoked method's name
     private String methodName;
     
-    //invoked time-stamp
+    //invoked time-stamp, usually use it to mark a invoke-method.
     private long invokeTimeStamp;
 
     private HashMap arguments = new HashMap<>();
 
-    public MethodModel(int id, String methodName, HashMap arguments, long invokeTimeStamp) {
+    public MethodModel(long id, String methodName, HashMap arguments, long invokeTimeStamp) {
         this.id = id;
         this.methodName = methodName;
         this.arguments = arguments;
@@ -29,7 +29,7 @@ public class MethodModel implements Parcelable {
     }
 
     protected MethodModel(Parcel in) {
-        id = in.readInt();
+        id = in.readLong();
         methodName = in.readString();
         arguments = in.readHashMap(HashMap.class.getClassLoader());
         invokeTimeStamp = in.readLong();
@@ -37,7 +37,7 @@ public class MethodModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(methodName);
         dest.writeMap(arguments);
         dest.writeLong(invokeTimeStamp);
@@ -60,7 +60,7 @@ public class MethodModel implements Parcelable {
         }
     };
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -74,7 +74,7 @@ public class MethodModel implements Parcelable {
     
     public long getInvokeTimeStamp() {return invokeTimeStamp;}
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

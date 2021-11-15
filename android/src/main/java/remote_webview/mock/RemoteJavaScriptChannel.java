@@ -2,9 +2,12 @@ package remote_webview.mock;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.os.RemoteException;
 import android.webkit.JavascriptInterface;
 
 import java.util.HashMap;
+
+import remote_webview.utils.LogUtil;
 
 public class RemoteJavaScriptChannel {
 
@@ -36,7 +39,13 @@ public class RemoteJavaScriptChannel {
                         HashMap<String, String> arguments = new HashMap<>();
                         arguments.put("channel", javaScriptChannelName);
                         arguments.put("message", message);
-                        methodChannel.invokeMethod("javascriptChannelMessage", arguments);
+                        try {
+                            methodChannel.invokeMethod("javascriptChannelMessage", arguments);
+                        }catch (RemoteException e) {
+                            LogUtil.logMsg("Remote view","occur an error when JS CALL !");
+                            e.printStackTrace();
+                        }
+
                     }
                 };
         if (platformThreadHandler.getLooper() == Looper.myLooper()) {

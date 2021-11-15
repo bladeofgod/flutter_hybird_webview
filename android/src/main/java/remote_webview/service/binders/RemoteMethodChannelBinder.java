@@ -15,7 +15,7 @@ import remote_webview.service.hub.RemoteBinderCommHub;
 public class RemoteMethodChannelBinder extends IRemoteMethodChannelBinder.Stub {
     @Override
     public void invokeMethod(MethodModel model) throws RemoteException {
-        Log.e("remote service", model.toString());
+        Log.e("Main Order", model.toString());
         RemoteBinderCommHub.getInstance().invokeMethod(model);
     }
 }

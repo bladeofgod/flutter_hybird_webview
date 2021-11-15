@@ -47,12 +47,12 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
     private WebViewCreationParamsModel initialParams;
 
     public WebViewPresentation(Context outerContext, WebViewCreationParamsModel creationParamsModel,
-                               Display display, MockMethodChannel methodChannel, long surfaceId,
+                               Display display, long surfaceId,
                                RemoteAccessibilityEventsDelegate accessibilityEventsDelegate,
                                View.OnFocusChangeListener focusChangeListener) {
         super(outerContext, display, accessibilityEventsDelegate, surfaceId , focusChangeListener);
         initialParams = creationParamsModel;
-        this.methodChannel = methodChannel;
+        this.methodChannel = new MockMethodChannel(surfaceId);
         //this.webView = createWebView();
         platformThreadHandler = new Handler(outerContext.getMainLooper());
 
