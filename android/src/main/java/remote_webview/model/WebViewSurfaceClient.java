@@ -54,22 +54,14 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
         super.release();
     }
 
+    /**
+     * send remote order its separate in each function,because some args need repackage to HashMap.
+     * Also need dePackage the results.
+     * @param methodCall from flutter's call
+     * @param result back to flutter
+     */
     @Override
     public void onMethodCall(@NonNull MethodCall methodCall, MethodChannel.Result result) {
-        if(methodCall.arguments instanceof HashMap) {
-            long invokeTimeStamp = System.currentTimeMillis();
-            final MethodModel model = new MethodModel(getId(), methodCall.method, 
-                    (HashMap) methodCall.arguments, invokeTimeStamp);
-            //cache the result.
-            MainBinderCommHub.getInstance().cacheResultCallback(invokeTimeStamp, result);
-            try {
-                RemoteServicePresenter.getInstance().getRemoteChannelBinder().invokeMethod(model);
-            } catch (RemoteException e) {
-                result.error("remote call error", methodCall.method, methodCall.arguments);
-                e.printStackTrace();
-            }
-        }
-
         switch (methodCall.method) {
             case "loadUrl":
                 loadUrl(methodCall, result);
@@ -78,22 +70,22 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
                 updateSettings(methodCall, result);
                 break;
             case "canGoBack":
-                canGoBack(result);
+                canGoBack(methodCall, result);
                 break;
             case "canGoForward":
-                canGoForward(result);
+                canGoForward(methodCall, result);
                 break;
             case "goBack":
-                goBack(result);
+                goBack(methodCall, result);
                 break;
             case "goForward":
-                goForward(result);
+                goForward(methodCall, result);
                 break;
             case "reload":
-                reload(result);
+                reload(methodCall, result);
                 break;
             case "currentUrl":
-                currentUrl(result);
+                currentUrl(methodCall, result);
                 break;
             case "evaluateJavascript":
                 evaluateJavaScript(methodCall, result);
@@ -105,10 +97,10 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
                 removeJavaScriptChannels(methodCall, result);
                 break;
             case "clearCache":
-                clearCache(result);
+                clearCache(methodCall, result);
                 break;
             case "getTitle":
-                getTitle(result);
+                getTitle(methodCall, result);
                 break;
             case "scrollTo":
                 scrollTo(methodCall, result);
@@ -117,10 +109,10 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
                 scrollBy(methodCall, result);
                 break;
             case "getScrollX":
-                getScrollX(result);
+                getScrollX(methodCall, result);
                 break;
             case "getScrollY":
-                getScrollY(result);
+                getScrollY(methodCall, result);
                 break;
             default:
                 result.notImplemented();
@@ -128,55 +120,71 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
 
     }
 
+    private MethodModel buildMethodModel(MethodCall methodCall, HashMap args) {
+        long invokeTimeStamp = System.currentTimeMillis();
+        return new MethodModel(getId(), methodCall.method, args == null ? new HashMap() : args, invokeTimeStamp);
+    }
+
+    private void sendRemoteMethodCall(MethodModel model) {
+        try {
+            RemoteServicePresenter.getInstance().getRemoteChannelBinder().invokeMethod(model);
+        } catch (RemoteException e) {
+            LogUtil.logMsg("remote call error", model.getMethodName() + "-" + model.getArguments());
+            e.printStackTrace();
+        }
+    }
+
 
     @SuppressWarnings("unchecked")
     private void loadUrl(MethodCall methodCall, MethodChannel.Result result) {
-        Map<String, Object> request = (Map<String, Object>) methodCall.arguments;
-        String url = (String) request.get("url");
-        Map<String, String> headers = (Map<String, String>) request.get("headers");
-        if (headers == null) {
-            headers = Collections.emptyMap();
-        }
-        //todo webView.loadUrl(url, headers);
+        MethodModel model = buildMethodModel(methodCall, (HashMap) methodCall.arguments);
+        sendRemoteMethodCall(model);
         result.success(null);
     }
 
-    private void canGoBack(MethodChannel.Result result) {
-        //todo result.success(webView.canGoBack());
+    private void canGoBack(MethodCall methodCall, MethodChannel.Result result) {
+        MethodModel model = buildMethodModel(methodCall, null);
+        //cache the result.
+        MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
+        sendRemoteMethodCall(model);
     }
 
-    private void canGoForward(MethodChannel.Result result) {
-        //todo result.success(webView.canGoForward());
+    private void canGoForward(MethodCall methodCall, MethodChannel.Result result) {
+        MethodModel model = buildMethodModel(methodCall, null);
+        //cache the result.
+        MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
+        sendRemoteMethodCall(model);
     }
 
-    private void goBack(MethodChannel.Result result) {
-        //todo
-//        if (webView.canGoBack()) {
-//            webView.goBack();
-//        }
+    private void goBack(MethodCall methodCall, MethodChannel.Result result) {
+        MethodModel model = buildMethodModel(methodCall, null);
+        sendRemoteMethodCall(model);
         result.success(null);
     }
 
-    private void goForward(MethodChannel.Result result) {
-        //todo
-//        if (webView.canGoForward()) {
-//            webView.goForward();
-//        }
+    private void goForward(MethodCall methodCall, MethodChannel.Result result) {
+        MethodModel model = buildMethodModel(methodCall, null);
+        sendRemoteMethodCall(model);
         result.success(null);
     }
 
-    private void reload(MethodChannel.Result result) {
-        //todo webView.reload();
+    private void reload(MethodCall methodCall, MethodChannel.Result result) {
+        MethodModel model = buildMethodModel(methodCall, null);
+        sendRemoteMethodCall(model);
         result.success(null);
     }
 
-    private void currentUrl(MethodChannel.Result result) {
-        //todo result.success(webView.getUrl());
+    private void currentUrl(MethodCall methodCall, MethodChannel.Result result) {
+        MethodModel model = buildMethodModel(methodCall, null);
+        //cache the result.
+        MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
+        sendRemoteMethodCall(model);
     }
 
     @SuppressWarnings("unchecked")
     private void updateSettings(MethodCall methodCall, MethodChannel.Result result) {
-        applySettings((Map<String, Object>) methodCall.arguments);
+        MethodModel model = buildMethodModel(methodCall, (HashMap) methodCall.arguments);
+        sendRemoteMethodCall(model);
         result.success(null);
     }
 
@@ -186,109 +194,79 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
         if (jsString == null) {
             throw new UnsupportedOperationException("JavaScript string cannot be null");
         }
-        //todo
-//        webView.evaluateJavascript(
-//                jsString,
-//                new android.webkit.ValueCallback<String>() {
-//                    @Override
-//                    public void onReceiveValue(String value) {
-//                        result.success(value);
-//                    }
-//                });
+        HashMap<String, String> ripeArgs= new HashMap<>();
+        ripeArgs.put("jsString", jsString);
+        MethodModel model = buildMethodModel(methodCall, ripeArgs);
+        //cache the result.
+        MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
+        sendRemoteMethodCall(model);
     }
 
     @SuppressWarnings("unchecked")
     private void addJavaScriptChannels(MethodCall methodCall, MethodChannel.Result result) {
         List<String> channelNames = (List<String>) methodCall.arguments;
-        //todo registerJavaScriptChannelNames(channelNames);
+        HashMap<Integer, String> ripeArgs = new HashMap();
+        int i = 0;
+        for(String name : channelNames) {
+            ripeArgs.put(i, name);
+            i++;
+        }
+        MethodModel model = buildMethodModel(methodCall, ripeArgs);
+        sendRemoteMethodCall(model);
         result.success(null);
     }
 
     @SuppressWarnings("unchecked")
     private void removeJavaScriptChannels(MethodCall methodCall, MethodChannel.Result result) {
         List<String> channelNames = (List<String>) methodCall.arguments;
-        for (String channelName : channelNames) {
-            //todo webView.removeJavascriptInterface(channelName);
+        HashMap<Integer, String> ripeArgs = new HashMap();
+        int i = 0;
+        for(String name : channelNames) {
+            ripeArgs.put(i, name);
+            i++;
         }
+        MethodModel model = buildMethodModel(methodCall, ripeArgs);
+        sendRemoteMethodCall(model);
         result.success(null);
     }
 
-    private void clearCache(MethodChannel.Result result) {
-        //todo webView.clearCache(true);
+    private void clearCache(MethodCall methodCall, MethodChannel.Result result) {
+        MethodModel model = buildMethodModel(methodCall, null);
+        sendRemoteMethodCall(model);
         WebStorage.getInstance().deleteAllData();
         result.success(null);
     }
 
-    private void getTitle(MethodChannel.Result result) {
-        //todo result.success(webView.getTitle());
+    private void getTitle(MethodCall methodCall, MethodChannel.Result result) {
+        MethodModel model = buildMethodModel(methodCall, null);
+        MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
+        sendRemoteMethodCall(model);
     }
 
     private void scrollTo(MethodCall methodCall, MethodChannel.Result result) {
-        Map<String, Object> request = methodCall.arguments();
-        int x = (int) request.get("x");
-        int y = (int) request.get("y");
-
-        //todo webView.scrollTo(x, y);
+        MethodModel model = buildMethodModel(methodCall, (HashMap) methodCall.arguments());
+        sendRemoteMethodCall(model);
 
         result.success(null);
     }
 
     private void scrollBy(MethodCall methodCall, MethodChannel.Result result) {
-        Map<String, Object> request = methodCall.arguments();
-        int x = (int) request.get("x");
-        int y = (int) request.get("y");
+        MethodModel model = buildMethodModel(methodCall, (HashMap) methodCall.arguments());
+        sendRemoteMethodCall(model);
 
-        //todo webView.scrollBy(x, y);
         result.success(null);
     }
 
-    private void getScrollX(MethodChannel.Result result) {
-        //todo result.success(webView.getScrollX());
+    private void getScrollX(MethodCall methodCall, MethodChannel.Result result) {
+        MethodModel model = buildMethodModel(methodCall, null);
+        MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
+        sendRemoteMethodCall(model);
     }
 
-    private void getScrollY(MethodChannel.Result result) {
-        //todo result.success(webView.getScrollY());
-    }
-
-    private void applySettings(Map<String, Object> settings) {
-        for (String key : settings.keySet()) {
-            switch (key) {
-                case "jsMode":
-                    Integer mode = (Integer) settings.get(key);
-//                    if (mode != null) {
-//                        updateJsMode(mode);
-//                    }
-                    break;
-                case "hasNavigationDelegate":
-                    final boolean hasNavigationDelegate = (boolean) settings.get(key);
-
-//                    final WebViewClient webViewClient =
-//                            flutterWebViewClient.createWebViewClient(hasNavigationDelegate);
-
-                    //webView.setWebViewClient(webViewClient);
-                    break;
-                case "debuggingEnabled":
-                    final boolean debuggingEnabled = (boolean) settings.get(key);
-
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//                        webView.setWebContentsDebuggingEnabled(debuggingEnabled);
-//                    }
-                    break;
-                case "hasProgressTracking":
-                    //flutterWebViewClient.hasProgressTracking = (boolean) settings.get(key);
-                    break;
-                case "gestureNavigationEnabled":
-                    break;
-                case "userAgent":
-                    //updateUserAgent((String) settings.get(key));
-                    break;
-                case "allowsInlineMediaPlayback":
-                    // no-op inline media playback is always allowed on Android.
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown WebView setting: " + key);
-            }
-        }
+    private void getScrollY(MethodCall methodCall, MethodChannel.Result result) {
+        MethodModel model = buildMethodModel(methodCall, null);
+        MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
+        sendRemoteMethodCall(model);
     }
 
     /**

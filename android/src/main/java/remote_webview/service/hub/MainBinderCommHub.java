@@ -55,7 +55,8 @@ public class MainBinderCommHub extends BinderCommunicateHub implements IGarbageC
     }
 
     /**
-     *
+     * When you call a method to remote-view and wait a result back to flutter side, than you need
+     * to cache {@link MethodChannel.Result}
      * @param id invoke timestamp.
      */
     public void cacheResultCallback(long id, MethodChannel.Result result) {
