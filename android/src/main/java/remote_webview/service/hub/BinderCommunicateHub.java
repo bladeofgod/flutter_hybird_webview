@@ -1,5 +1,6 @@
 package remote_webview.service.hub;
 
+import android.util.LongSparseArray;
 import android.util.SparseArray;
 import android.util.SparseLongArray;
 
@@ -27,13 +28,13 @@ abstract public class BinderCommunicateHub {
      * @value IMockMethodHandler
      *
      */
-    protected final HashMap<Long,IMockMethodHandler> methodHandlerSlot = new HashMap<>();
+    protected final LongSparseArray<IMockMethodHandler> methodHandlerSlot = new LongSparseArray<>();
 
     /**
      * cache a {@link IMockMethodResult} when called {@link #invokeMethodById} temporary.
      * remove after {@link IMockMethodResult} called.
      */
-    protected final HashMap<Long,ResultCallbackHandler> methodResultCallbackSlog = new HashMap<>();
+    protected final LongSparseArray<ResultCallbackHandler> methodResultCallbackSlog = new LongSparseArray<>();
 
 
     /**
@@ -118,8 +119,8 @@ abstract public class BinderCommunicateHub {
     /**
      * Invoke web-view's method.
      * @param id : invoke-method timeStamp as an id for linked  {@linkplain IMockMethodResult}.
-     *           @see MethodModel#invokeTimeStamp
-     * @param call {@linkplain MockMethodCall.id} is came from surface's id, and marked a view.
+     *           @see MethodModel#getInvokeTimeStamp()
+     * @param call an invoke with method-name, arguments.
      */
     protected void invokeMethodById(final long id, MockMethodCall call) throws NullPointerException {
         Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {

@@ -70,8 +70,16 @@ public class MainBinderCommHub extends BinderCommunicateHub implements IGarbageC
         resultCallbackCache.remove(id);
     }
 
-    public void remoteCacheCallback() {
-        //todo
+    /**
+     * Remove {@link ResultCallbackHandler} and {@link MethodChannel.Result} by id (invoke timestamp).
+     *
+     * @see remote_webview.model.MethodModel
+     */
+    protected void removeCallback(long id) {
+        //remove flutter's callback
+        removeCacheResultCallback(id);
+        //remove platform-thread's callback
+        removeMethodResultCallbackById(id);
     }
 
 
@@ -86,8 +94,12 @@ public class MainBinderCommHub extends BinderCommunicateHub implements IGarbageC
      * @see  io.flutter.plugin.common.MethodChannel.Result
      *
      * @param id : invoke-method timeStamp as an id for linked  {@linkplain IMockMethodResult}.
-     * @param call {@linkplain MockMethodCall.id} is came from surface's id, and marked a view.
+     * @param call : an invoke with method-name, arguments.
+     *
+     * @see remote_webview.model.MethodModel
+     *
      * @throws NullPointerException
+     *
      */
     @Override
     protected void invokeMethodById(final long id, MockMethodCall call) throws NullPointerException {
@@ -98,7 +110,7 @@ public class MainBinderCommHub extends BinderCommunicateHub implements IGarbageC
                 resultCallbackCache.get(id, defaultResultCallback).success(var1);
 
                 Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
-                removeMethodResultCallbackById(id);
+                removeCallback(id);
             }
 
             @Override
@@ -106,12 +118,13 @@ public class MainBinderCommHub extends BinderCommunicateHub implements IGarbageC
                 resultCallbackCache.get(id, defaultResultCallback).error(var1, var2, var3);
 
                 Objects.requireNonNull(methodResultCallbackSlog.get(id)).error(var1, var2, var3);
-                removeMethodResultCallbackById(id);
+                removeCallback(id);
             }
 
             @Override
             public void notImplemented() {
                 resultCallbackCache.get(id, defaultResultCallback).notImplemented();
+                removeCallback(id);
             }
         });
     }
