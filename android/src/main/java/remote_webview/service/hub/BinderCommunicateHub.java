@@ -81,6 +81,10 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
     
     protected abstract C getCallbackHandler(long id);
     
+    public C fetchCallbackHandler(long id) {
+        return methodResultCallbackSlog.get(id);
+    }
+    
 
 //    /**
 //     * 
@@ -102,7 +106,9 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
     public void invokeMethod(MethodModel model) {
         final long handlerId = model.getInvokeTimeStamp();
         final MockMethodCall methodCall = new MockMethodCall(model.getId(), model.getMethodName(),model.getArguments());
-        cacheMethodResultCallback(handlerId, getCallbackHandler(handlerId));
+        if(model.getNeedCallback() == 1) {
+            cacheMethodResultCallback(handlerId, getCallbackHandler(handlerId));
+        }
         try {
             invokeMethodById(handlerId,methodCall);
         }catch (Exception e) {

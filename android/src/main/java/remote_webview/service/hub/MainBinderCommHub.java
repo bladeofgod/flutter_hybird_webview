@@ -72,7 +72,7 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
      *
      * @param id invoke timestamp.
      */
-    public void removeCacheResultCallback(long id) {
+    protected void removeCacheResultCallback(long id) {
         resultCallbackCache.remove(id);
     }
 

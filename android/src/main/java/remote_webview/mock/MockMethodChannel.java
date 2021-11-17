@@ -29,7 +29,7 @@ public class MockMethodChannel {
      */
     @UiThread
     public void invokeMethod(@NonNull String method, @Nullable HashMap arguments) throws RemoteException {
-        final MethodModel methodModel = new MethodModel(id, method, arguments, System.currentTimeMillis());
+        final MethodModel methodModel = new MethodModel(id, method, arguments, System.currentTimeMillis(), (byte) 0);
         MainServicePresenter.getInstance().getMainChannelBinder().invokeMethod(methodModel);
     }
     

@@ -122,7 +122,7 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
 
     private MethodModel buildMethodModel(MethodCall methodCall, HashMap args) {
         long invokeTimeStamp = System.currentTimeMillis();
-        return new MethodModel(getId(), methodCall.method, args == null ? new HashMap() : args, invokeTimeStamp);
+        return new MethodModel(getId(), methodCall.method, args == null ? new HashMap() : args, invokeTimeStamp, (byte) 0);
     }
 
     private void sendRemoteMethodCall(MethodModel model) {

@@ -68,6 +68,7 @@ public class RemoteZygoteActivity extends FlutterActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        MainServicePresenter.getInstance().initConnectService();
         finish();
     }
 

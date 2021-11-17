@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import java.util.HashMap;
 
+import remote_webview.interfaces.IMockMethodResult;
+
 public class MethodModel implements Parcelable {
 
     /**
@@ -21,11 +23,19 @@ public class MethodModel implements Parcelable {
 
     private HashMap arguments = new HashMap<>();
 
-    public MethodModel(long id, String methodName, HashMap arguments, long invokeTimeStamp) {
+    /**
+     * 0 means didn't care result , and will not register a callback in hub.
+     * @see IMockMethodResult
+     * @see remote_webview.service.hub.BinderCommunicateHub
+     */
+    private byte needCallback;
+
+    public MethodModel(long id, String methodName, HashMap arguments, long invokeTimeStamp, byte needCallback) {
         this.id = id;
         this.methodName = methodName;
         this.arguments = arguments;
         this.invokeTimeStamp = invokeTimeStamp;
+        this.needCallback = needCallback;
     }
 
     protected MethodModel(Parcel in) {
@@ -33,6 +43,7 @@ public class MethodModel implements Parcelable {
         methodName = in.readString();
         arguments = in.readHashMap(HashMap.class.getClassLoader());
         invokeTimeStamp = in.readLong();
+        needCallback = in.readByte();
     }
 
     @Override
@@ -41,6 +52,7 @@ public class MethodModel implements Parcelable {
         dest.writeString(methodName);
         dest.writeMap(arguments);
         dest.writeLong(invokeTimeStamp);
+        dest.writeByte(needCallback);
     }
 
     @Override
@@ -85,7 +97,14 @@ public class MethodModel implements Parcelable {
     public void setArguments(HashMap arguments) {
         this.arguments = arguments;
     }
-    
+
+    public void setNeedCallback(byte needCallback) {
+        this.needCallback = needCallback;
+    }
+
+    public byte getNeedCallback() {
+        return needCallback;
+    }
 
     @Override
     public String toString() {
