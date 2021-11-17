@@ -13,6 +13,7 @@ import remote_webview.garbage_collect.MainGarbageCollector;
 import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.mock.MockMethodCall;
+import remote_webview.service.decoder.WebViewDecoder;
 
 public class MainBinderCommHub extends BinderCommunicateHub implements IGarbageCleanListener {
     
@@ -29,10 +30,14 @@ public class MainBinderCommHub extends BinderCommunicateHub implements IGarbageC
         return singleton;
     }
 
+    /**
+     * For somehow the {@linkplain MainBinderCommHub#resultCallbackCache} did not find
+     * a result by id, so it will call this to avoid a null pointer exception.
+     */
     private final MethodChannel.Result defaultResultCallback = new MethodChannel.Result() {
         @Override
         public void success(@Nullable Object o) {
-
+            //todo maybe can log error.
         }
 
         @Override
@@ -103,12 +108,13 @@ public class MainBinderCommHub extends BinderCommunicateHub implements IGarbageC
      *
      */
     @Override
-    protected void invokeMethodById(final long id, MockMethodCall call) throws NullPointerException {
+    protected void invokeMethodById(final long id, final MockMethodCall call) throws NullPointerException {
         Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {
             @Override
             public void success(@Nullable HashMap var1) {
                 //result to flutter
-                resultCallbackCache.get(id, defaultResultCallback).success(var1);
+                Object flutterResult = WebViewDecoder.decodeToFlutterResult(call.method, var1);
+                resultCallbackCache.get(id, defaultResultCallback).success(flutterResult);
 
                 Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
                 removeCallback(id);

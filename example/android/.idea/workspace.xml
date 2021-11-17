@@ -13,8 +13,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79f642e3-31f2-43f0-a703-a88304599c47" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/model/WebViewSurfaceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/model/WebViewSurfaceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/service/hub/BinderCommunicateHub.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/service/hub/BinderCommunicateHub.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/service/hub/MainBinderCommHub.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/service/hub/MainBinderCommHub.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/view/WebViewPresentation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/view/WebViewPresentation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -169,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637032254015</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="dev: finish on main onMethodCall to remote">
+      <created>1637035940923</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1637035940923</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -179,7 +187,8 @@
     <MESSAGE value="fix: impl garbage clean" />
     <MESSAGE value="dev: fix bugs, add MainBinderCommHub, refine some comments." />
     <MESSAGE value="dev: refine commHub cache's type" />
-    <option name="LAST_COMMIT_MESSAGE" value="dev: refine commHub cache's type" />
+    <MESSAGE value="dev: finish on main onMethodCall to remote" />
+    <option name="LAST_COMMIT_MESSAGE" value="dev: finish on main onMethodCall to remote" />
   </component>
   <component name="WindowStateProjectService">
     <state x="765" y="225" key="#com.intellij.ide.util.MemberChooser" timestamp="1636970358480">
@@ -194,10 +203,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="530" y="386" width="860" height="274" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636451835816" />
-    <state x="577" y="166" key="CommitChangelistDialog2" timestamp="1637032253692">
+    <state x="608" y="166" key="CommitChangelistDialog2" timestamp="1637035940607">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="577" y="166" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637032253692" />
+    <state x="608" y="166" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637035940607" />
     <state width="1877" height="409" key="GridCell.Tab.0.bottom" timestamp="1636443778105">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -214,10 +223,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="409" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636443778105" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1636708124816">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1637114649474">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636708124816" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637114649474" />
     <state x="763" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1637032255545">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -230,9 +239,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636967391158" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1636971932220">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1637120776779">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636971932220" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637120776779" />
   </component>
 </project>

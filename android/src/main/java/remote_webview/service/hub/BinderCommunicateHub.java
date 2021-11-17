@@ -98,7 +98,8 @@ abstract public class BinderCommunicateHub {
     /**
      * IBinder invoke.
      * Use invoke-timestamp for id to mark a resultCallback,
-     * and call {@linkplain ResultCallbackHandler} after {@linkplain #invokeMethodById}
+     * and call {@linkplain ResultCallbackHandler} after {@linkplain #invokeMethodById},
+     * invoke-timestamp its always created at main-process.
      * @param model method model.
      */
     public void invokeMethod(MethodModel model) {

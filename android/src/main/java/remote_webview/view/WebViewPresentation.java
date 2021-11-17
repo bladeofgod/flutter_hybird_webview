@@ -243,7 +243,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
 
     private void currentUrl(IMockMethodResult result) {
         HashMap<String,String> p = new HashMap<>();
-        p.put("canGoForward",getWebView().getUrl());
+        p.put("currentUrl",getWebView().getUrl());
         result.success(p);
     }
 
