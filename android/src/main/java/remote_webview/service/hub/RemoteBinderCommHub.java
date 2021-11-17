@@ -8,7 +8,7 @@ import remote_webview.garbage_collect.RemoteGarbageCollector;
  * view's private-binder hub.
  * dispatch the order from main-process to the view according id.
  */
-public class RemoteBinderCommHub extends BinderCommunicateHub implements IGarbageCleanListener {
+public class RemoteBinderCommHub extends BinderCommunicateHub<RemoteCallbackHandler> implements IGarbageCleanListener {
 
     private static volatile RemoteBinderCommHub singleton;
 
@@ -36,5 +36,10 @@ public class RemoteBinderCommHub extends BinderCommunicateHub implements IGarbag
     public void cleanAll() {
         cleanAllMethodHandler();
         cleanAllMethodResultCallback();
+    }
+
+    @Override
+    protected RemoteCallbackHandler getCallbackHandler(long id) {
+        return new RemoteCallbackHandler(id);
     }
 }

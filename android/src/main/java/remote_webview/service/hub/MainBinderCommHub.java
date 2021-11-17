@@ -1,7 +1,6 @@
 package remote_webview.service.hub;
 
 import android.util.LongSparseArray;
-import android.util.SparseArray;
 
 import androidx.annotation.Nullable;
 
@@ -14,8 +13,9 @@ import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.mock.MockMethodCall;
 import remote_webview.service.decoder.WebViewDecoder;
+import remote_webview.utils.HandlerUtil;
 
-public class MainBinderCommHub extends BinderCommunicateHub implements IGarbageCleanListener {
+public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler> implements IGarbageCleanListener {
     
     private static volatile MainBinderCommHub singleton;
     
@@ -77,7 +77,7 @@ public class MainBinderCommHub extends BinderCommunicateHub implements IGarbageC
     }
 
     /**
-     * Remove {@link ResultCallbackHandler} and {@link MethodChannel.Result} by id (invoke timestamp).
+     * Remove {@link RemoteCallbackHandler} and {@link MethodChannel.Result} by id (invoke timestamp).
      *
      * @see remote_webview.model.MethodModel
      */
@@ -88,6 +88,11 @@ public class MainBinderCommHub extends BinderCommunicateHub implements IGarbageC
         removeMethodResultCallbackById(id);
     }
 
+
+    @Override
+    protected MainCallbackHandler getCallbackHandler(long id) {
+        return new MainCallbackHandler(id);
+    }
 
     /**
      * In main process, the invoke-method's resultCallback will pass 2 thread
@@ -109,31 +114,37 @@ public class MainBinderCommHub extends BinderCommunicateHub implements IGarbageC
      */
     @Override
     protected void invokeMethodById(final long id, final MockMethodCall call) throws NullPointerException {
-        Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {
+        HandlerUtil.runOnUiThread(new Runnable() {
             @Override
-            public void success(@Nullable HashMap var1) {
-                //result to flutter
-                Object flutterResult = WebViewDecoder.decodeToFlutterResult(call.method, var1);
-                resultCallbackCache.get(id, defaultResultCallback).success(flutterResult);
+            public void run() {
+                Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {
+                    @Override
+                    public void success(@Nullable HashMap var1) {
+                        //result to flutter
+                        Object flutterResult = WebViewDecoder.decodeToFlutterResult(call.method, var1);
+                        resultCallbackCache.get(id, defaultResultCallback).success(flutterResult);
 
-                Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
-                removeCallback(id);
-            }
+                        Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
+                        removeCallback(id);
+                    }
 
-            @Override
-            public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
-                resultCallbackCache.get(id, defaultResultCallback).error(var1, var2, var3);
+                    @Override
+                    public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
+                        resultCallbackCache.get(id, defaultResultCallback).error(var1, var2, var3);
 
-                Objects.requireNonNull(methodResultCallbackSlog.get(id)).error(var1, var2, var3);
-                removeCallback(id);
-            }
+                        Objects.requireNonNull(methodResultCallbackSlog.get(id)).error(var1, var2, var3);
+                        removeCallback(id);
+                    }
 
-            @Override
-            public void notImplemented() {
-                resultCallbackCache.get(id, defaultResultCallback).notImplemented();
-                removeCallback(id);
+                    @Override
+                    public void notImplemented() {
+                        resultCallbackCache.get(id, defaultResultCallback).notImplemented();
+                        removeCallback(id);
+                    }
+                });
             }
         });
+
     }
 
     @Override

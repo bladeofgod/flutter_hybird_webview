@@ -1,13 +1,8 @@
 package remote_webview.service.hub;
 
 import android.util.LongSparseArray;
-import android.util.SparseArray;
-import android.util.SparseLongArray;
 
 import androidx.annotation.Nullable;
-
-import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -16,9 +11,9 @@ import remote_webview.interfaces.IMockMethodHandler;
 import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.mock.MockMethodCall;
 import remote_webview.model.MethodModel;
-import remote_webview.utils.StringUtil;
+import remote_webview.utils.HandlerUtil;
 
-abstract public class BinderCommunicateHub {
+abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
 
     /**
      * register webView's method handler.
@@ -34,7 +29,7 @@ abstract public class BinderCommunicateHub {
      * cache a {@link IMockMethodResult} when called {@link #invokeMethodById} temporary.
      * remove after {@link IMockMethodResult} called.
      */
-    protected final LongSparseArray<ResultCallbackHandler> methodResultCallbackSlog = new LongSparseArray<>();
+    protected final LongSparseArray<C> methodResultCallbackSlog = new LongSparseArray<>();
 
 
     /**
@@ -67,7 +62,7 @@ abstract public class BinderCommunicateHub {
      *           a  result callback .
      * @param result
      */
-    protected void cacheMethodResultCallback(long id,ResultCallbackHandler result) {
+    protected void cacheMethodResultCallback(long id, C result) {
         methodResultCallbackSlog.put(id, result);
     }
 
@@ -84,28 +79,30 @@ abstract public class BinderCommunicateHub {
         methodResultCallbackSlog.clear();
     }
     
+    protected abstract C getCallbackHandler(long id);
+    
 
-    /**
-     * 
-     * @param id #{@linkplain #invokeMethod} remote_invoke's timeStamp, to associate 
-     *           a  result callback .
-     */
-    private void cacheResultCallback(long id) {
-        cacheMethodResultCallback(id, new ResultCallbackHandler(id));
-    }
+//    /**
+//     * 
+//     * @param id #{@linkplain #invokeMethod} remote_invoke's timeStamp, to associate 
+//     *           a  result callback .
+//     */
+//    private void cacheResultCallback(long id) {
+//        cacheMethodResultCallback(id,);
+//    }
 
 
     /**
      * IBinder invoke.
      * Use invoke-timestamp for id to mark a resultCallback,
-     * and call {@linkplain ResultCallbackHandler} after {@linkplain #invokeMethodById},
+     * and call {@linkplain IMockMethodResult} after {@linkplain #invokeMethodById},
      * invoke-timestamp its always created at main-process.
      * @param model method model.
      */
     public void invokeMethod(MethodModel model) {
         final long handlerId = model.getInvokeTimeStamp();
         final MockMethodCall methodCall = new MockMethodCall(model.getId(), model.getMethodName(),model.getArguments());
-        cacheResultCallback(handlerId);
+        cacheMethodResultCallback(handlerId, getCallbackHandler(handlerId));
         try {
             invokeMethodById(handlerId,methodCall);
         }catch (Exception e) {
@@ -123,25 +120,31 @@ abstract public class BinderCommunicateHub {
      *           @see MethodModel#getInvokeTimeStamp()
      * @param call an invoke with method-name, arguments.
      */
-    protected void invokeMethodById(final long id, MockMethodCall call) throws NullPointerException {
-        Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {
+    protected void invokeMethodById(final long id, final MockMethodCall call) throws NullPointerException {
+        HandlerUtil.runOnUiThread(new Runnable() {
             @Override
-            public void success(@Nullable HashMap var1) {
-                Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
-                removeMethodResultCallbackById(id);
-            }
+            public void run() {
+                Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {
+                    @Override
+                    public void success(@Nullable HashMap var1) {
+                        Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
+                        removeMethodResultCallbackById(id);
+                    }
 
-            @Override
-            public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
-                Objects.requireNonNull(methodResultCallbackSlog.get(id)).error(var1, var2, var3);
-                removeMethodResultCallbackById(id);
-            }
+                    @Override
+                    public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
+                        Objects.requireNonNull(methodResultCallbackSlog.get(id)).error(var1, var2, var3);
+                        removeMethodResultCallbackById(id);
+                    }
 
-            @Override
-            public void notImplemented() {
+                    @Override
+                    public void notImplemented() {
 
+                    }
+                });
             }
         });
+
     }
 
 

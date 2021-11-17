@@ -45,12 +45,14 @@ class WebViewExample extends StatefulWidget {
 class _WebViewExampleState extends State<WebViewExample> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
+  WebViewController? webViewController;
 
   @override
   void initState() {
     super.initState();
     if (Platform.isAndroid) WebView.platform = TextureAndroidWebView();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +72,7 @@ class _WebViewExampleState extends State<WebViewExample> {
           initialUrl: 'https://jd.com',
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
+            this.webViewController = webViewController;
             _controller.complete(webViewController);
           },
           onProgress: (int progress) {
@@ -96,8 +99,13 @@ class _WebViewExampleState extends State<WebViewExample> {
         );
       }),
       floatingActionButton: favoriteButton(),
-    ), onWillPop: () {
-      return Future.value(false);
+    ), onWillPop: () async {
+      bool canBack = await webViewController?.canGoBack() ?? false;
+      debugPrint('web view  canBack : $canBack');
+      if(canBack) {
+        webViewController?.goBack();
+      }
+      return Future.value(!canBack);
     });
   }
 

@@ -1,8 +1,6 @@
 package remote_webview.view;
 
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
@@ -10,15 +8,13 @@ import android.view.Surface;
 import androidx.annotation.RequiresApi;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import remote_webview.RemoteZygoteActivity;
 import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.utils.LogUtil;
-import remote_webview.utils.RemoteViewHandler;
-import remote_webview.utils.StringUtil;
+import remote_webview.utils.HandlerUtil;
 
 /**
  * the {@link remote_webview.service.binders.RemoteViewFactoryBinder} processor.
@@ -47,7 +43,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void createWithSurface(final WebViewCreationParamsModel creationParams, final Surface surface) {
-        RemoteViewHandler.runOnUiThread(new Runnable() {
+        HandlerUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
