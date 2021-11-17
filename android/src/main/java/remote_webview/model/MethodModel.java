@@ -112,7 +112,8 @@ public class MethodModel implements Parcelable {
                 "invokeTimeStamp=" + invokeTimeStamp +
                 "id=" + id +
                 ", methodName='" + methodName + '\'' +
-                ", arguments=" + arguments +
+                ", arguments=" + arguments + '\'' +
+                ", needCallback=" + needCallback +
                 '}';
     }
 }

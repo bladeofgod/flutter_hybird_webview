@@ -12,6 +12,7 @@ import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.mock.MockMethodCall;
 import remote_webview.model.MethodModel;
 import remote_webview.utils.HandlerUtil;
+import remote_webview.utils.LogUtil;
 
 abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
 
@@ -106,6 +107,7 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
     public void invokeMethod(MethodModel model) {
         final long handlerId = model.getInvokeTimeStamp();
         final MockMethodCall methodCall = new MockMethodCall(model.getId(), model.getMethodName(),model.getArguments());
+        LogUtil.logMsg(this.toString(), model.toString());
         if(model.getNeedCallback() == 1) {
             cacheMethodResultCallback(handlerId, getCallbackHandler(handlerId));
         }
@@ -133,6 +135,7 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
                 Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {
                     @Override
                     public void success(@Nullable HashMap var1) {
+                        LogUtil.logMsg(this.toString(),"cache size : " + methodResultCallbackSlog.size());
                         Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
                         removeMethodResultCallbackById(id);
                     }
@@ -145,7 +148,7 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
 
                     @Override
                     public void notImplemented() {
-
+                        removeMethodResultCallbackById(id);
                     }
                 });
             }
