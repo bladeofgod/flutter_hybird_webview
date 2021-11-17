@@ -120,9 +120,16 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
 
     }
 
-    private MethodModel buildMethodModel(MethodCall methodCall, HashMap args) {
+    /**
+     *
+     * @param methodCall
+     * @param args
+     * @param needCallback   1 : true , 0 : false
+     * @return
+     */
+    private MethodModel buildMethodModel(MethodCall methodCall, HashMap args, int needCallback) {
         long invokeTimeStamp = System.currentTimeMillis();
-        return new MethodModel(getId(), methodCall.method, args == null ? new HashMap() : args, invokeTimeStamp, (byte) 0);
+        return new MethodModel(getId(), methodCall.method, args == null ? new HashMap() : args, invokeTimeStamp, (byte) needCallback);
     }
 
     private void sendRemoteMethodCall(MethodModel model) {
@@ -137,45 +144,45 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
 
     @SuppressWarnings("unchecked")
     private void loadUrl(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, (HashMap) methodCall.arguments);
+        MethodModel model = buildMethodModel(methodCall, (HashMap) methodCall.arguments, 0);
         sendRemoteMethodCall(model);
         result.success(null);
     }
 
     private void canGoBack(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, null);
+        MethodModel model = buildMethodModel(methodCall, null, 0);
         //cache the result.
         MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
         sendRemoteMethodCall(model);
     }
 
     private void canGoForward(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, null);
+        MethodModel model = buildMethodModel(methodCall, null, 0);
         //cache the result.
         MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
         sendRemoteMethodCall(model);
     }
 
     private void goBack(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, null);
+        MethodModel model = buildMethodModel(methodCall, null, 0);
         sendRemoteMethodCall(model);
         result.success(null);
     }
 
     private void goForward(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, null);
+        MethodModel model = buildMethodModel(methodCall, null, 0);
         sendRemoteMethodCall(model);
         result.success(null);
     }
 
     private void reload(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, null);
+        MethodModel model = buildMethodModel(methodCall, null, 0);
         sendRemoteMethodCall(model);
         result.success(null);
     }
 
     private void currentUrl(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, null);
+        MethodModel model = buildMethodModel(methodCall, null, 1);
         //cache the result.
         MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
         sendRemoteMethodCall(model);
@@ -183,7 +190,7 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
 
     @SuppressWarnings("unchecked")
     private void updateSettings(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, (HashMap) methodCall.arguments);
+        MethodModel model = buildMethodModel(methodCall, (HashMap) methodCall.arguments, 0);
         sendRemoteMethodCall(model);
         result.success(null);
     }
@@ -196,7 +203,7 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
         }
         HashMap<String, String> ripeArgs= new HashMap<>();
         ripeArgs.put("jsString", jsString);
-        MethodModel model = buildMethodModel(methodCall, ripeArgs);
+        MethodModel model = buildMethodModel(methodCall, ripeArgs, 1);
         //cache the result.
         MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
         sendRemoteMethodCall(model);
@@ -211,7 +218,7 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
             ripeArgs.put(i, name);
             i++;
         }
-        MethodModel model = buildMethodModel(methodCall, ripeArgs);
+        MethodModel model = buildMethodModel(methodCall, ripeArgs, 0);
         sendRemoteMethodCall(model);
         result.success(null);
     }
@@ -225,46 +232,46 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
             ripeArgs.put(i, name);
             i++;
         }
-        MethodModel model = buildMethodModel(methodCall, ripeArgs);
+        MethodModel model = buildMethodModel(methodCall, ripeArgs, 0);
         sendRemoteMethodCall(model);
         result.success(null);
     }
 
     private void clearCache(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, null);
+        MethodModel model = buildMethodModel(methodCall, null, 0);
         sendRemoteMethodCall(model);
         WebStorage.getInstance().deleteAllData();
         result.success(null);
     }
 
     private void getTitle(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, null);
+        MethodModel model = buildMethodModel(methodCall, null, 1);
         MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
         sendRemoteMethodCall(model);
     }
 
     private void scrollTo(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, (HashMap) methodCall.arguments());
+        MethodModel model = buildMethodModel(methodCall, (HashMap) methodCall.arguments(), 0);
         sendRemoteMethodCall(model);
 
         result.success(null);
     }
 
     private void scrollBy(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, (HashMap) methodCall.arguments());
+        MethodModel model = buildMethodModel(methodCall, (HashMap) methodCall.arguments(), 0);
         sendRemoteMethodCall(model);
 
         result.success(null);
     }
 
     private void getScrollX(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, null);
+        MethodModel model = buildMethodModel(methodCall, null, 1);
         MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
         sendRemoteMethodCall(model);
     }
 
     private void getScrollY(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, null);
+        MethodModel model = buildMethodModel(methodCall, null, 0);
         MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
         sendRemoteMethodCall(model);
     }

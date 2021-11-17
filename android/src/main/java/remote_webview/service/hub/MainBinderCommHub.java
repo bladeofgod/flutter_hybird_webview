@@ -123,7 +123,7 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
                         //result to flutter
                         Object flutterResult = WebViewDecoder.decodeToFlutterResult(call.method, var1);
                         resultCallbackCache.get(id, defaultResultCallback).success(flutterResult);
-
+                        
                         Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
                         removeCallback(id);
                     }
