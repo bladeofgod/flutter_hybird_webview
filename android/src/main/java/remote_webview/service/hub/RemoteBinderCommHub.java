@@ -42,4 +42,10 @@ public class RemoteBinderCommHub extends BinderCommunicateHub<RemoteCallbackHand
     protected RemoteCallbackHandler getCallbackHandler(long id) {
         return new RemoteCallbackHandler(id);
     }
+
+
+    @Override
+    protected String getTag() {
+        return MainBinderCommHub.class.getSimpleName();
+    }
 }

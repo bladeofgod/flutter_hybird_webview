@@ -6,6 +6,7 @@ import android.util.Log;
 import remote_webview.IMainMethodChannelBinder;
 import remote_webview.model.MethodModel;
 import remote_webview.service.hub.MainBinderCommHub;
+import remote_webview.utils.LogUtil;
 
 
 /**
@@ -16,7 +17,7 @@ import remote_webview.service.hub.MainBinderCommHub;
 public class MainMethodChannelBinder extends IMainMethodChannelBinder.Stub {
     @Override
     public void invokeMethod(MethodModel model) throws RemoteException {
-        Log.e("Remote Order :", model.toString());
+        LogUtil.logMsg("Remote Call :", model.toString());
         MainBinderCommHub.getInstance().invokeMethod(model);
     }
 }

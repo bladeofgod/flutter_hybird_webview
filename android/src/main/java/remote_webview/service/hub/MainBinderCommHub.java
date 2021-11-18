@@ -157,4 +157,9 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
         cleanAllMethodHandler();
         cleanAllMethodResultCallback();
     }
+
+    @Override
+    protected String getTag() {
+        return MainBinderCommHub.class.getSimpleName();
+    }
 }

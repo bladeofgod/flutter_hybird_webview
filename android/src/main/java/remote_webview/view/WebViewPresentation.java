@@ -140,6 +140,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
      */
     @Override
     public void onMethodCall(@NonNull MockMethodCall methodCall, @NonNull IMockMethodResult result) {
+        LogUtil.logMsg(this.toString(), methodCall.toString());
         switch (methodCall.method) {
             case "loadUrl":
                 loadUrl(methodCall, result);

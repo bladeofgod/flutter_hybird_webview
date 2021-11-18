@@ -8,7 +8,7 @@ public class LogUtil {
     
     public static void logMsg(String tag, String info) {
         logPattern();
-        Log.e(tag,info);
+        Log.d(tag,info);
         logPattern();
     }
     

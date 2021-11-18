@@ -27,6 +27,15 @@ public class MockMethodCall {
         return this.arguments;
     }
 
+    @Override
+    public String toString() {
+        return "MockMethodCall{" +
+                "id=" + id +
+                ", method='" + method + '\'' +
+                ", arguments=" + arguments +
+                '}';
+    }
+
     @Nullable
     public Object argument(String key) {
         if (this.arguments == null) {

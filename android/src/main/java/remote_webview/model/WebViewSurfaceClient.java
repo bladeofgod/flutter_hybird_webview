@@ -150,14 +150,14 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
     }
 
     private void canGoBack(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, null, 0);
+        MethodModel model = buildMethodModel(methodCall, null, 1);
         //cache the result.
         MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
         sendRemoteMethodCall(model);
     }
 
     private void canGoForward(MethodCall methodCall, MethodChannel.Result result) {
-        MethodModel model = buildMethodModel(methodCall, null, 0);
+        MethodModel model = buildMethodModel(methodCall, null, 1);
         //cache the result.
         MainBinderCommHub.getInstance().cacheResultCallback(model.getInvokeTimeStamp(), result);
         sendRemoteMethodCall(model);

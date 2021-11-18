@@ -107,7 +107,7 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
     public void invokeMethod(MethodModel model) {
         final long handlerId = model.getInvokeTimeStamp();
         final MockMethodCall methodCall = new MockMethodCall(model.getId(), model.getMethodName(),model.getArguments());
-        LogUtil.logMsg(this.toString(), model.toString());
+        LogUtil.logMsg(getTag(), model.toString());
         if(model.getNeedCallback() == 1) {
             cacheMethodResultCallback(handlerId, getCallbackHandler(handlerId));
         }
@@ -155,6 +155,9 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
         });
 
     }
+
+
+    protected abstract String getTag();
 
 
 }
