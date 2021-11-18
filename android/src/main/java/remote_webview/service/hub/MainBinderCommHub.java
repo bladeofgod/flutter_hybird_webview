@@ -10,6 +10,7 @@ import java.util.Objects;
 import io.flutter.plugin.common.MethodChannel;
 import remote_webview.garbage_collect.MainGarbageCollector;
 import remote_webview.interfaces.IGarbageCleanListener;
+import remote_webview.interfaces.IMockMethodHandler;
 import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.mock.MockMethodCall;
 import remote_webview.service.decoder.WebViewDecoder;
@@ -59,7 +60,13 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
         MainGarbageCollector.getInstance().registerCollectListener(this);
     }
 
+    public MethodChannel.Result getFlutterResult(long id) {
+        return resultCallbackCache.get(id);
+    }
+
+
     /**
+     * Cache a flutter result-callback.
      * When you call a method to remote-view and wait a result back to flutter side, than you need
      * to cache {@link MethodChannel.Result}
      * @param id invoke timestamp.

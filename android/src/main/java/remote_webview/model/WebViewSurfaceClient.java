@@ -121,9 +121,9 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
     }
 
     /**
-     *
-     * @param methodCall
-     * @param args
+     * Build a common remote-method model.
+     * @param methodCall origin method from flutter
+     * @param args adjust arguments from flutter
      * @param needCallback   1 : true , 0 : false
      * @return
      */
@@ -132,7 +132,18 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
         return new MethodModel(getId(), methodCall.method, args == null ? new HashMap() : args, invokeTimeStamp, (byte) needCallback);
     }
 
+    /**
+     * Flutter's channel method will trigger this method to send to remote-view.
+     *
+     * If {@linkplain MethodModel} needCallback, can use {@linkplain MainBinderCommHub} to cache
+     * a {@linkplain remote_webview.service.hub.MainCallbackHandler}
+     *
+     * @param model method package
+     */
     private void sendRemoteMethodCall(MethodModel model) {
+        if(model.getNeedCallback() == 1) {
+            MainBinderCommHub.getInstance().cacheMethodResultCallback(model.getInvokeTimeStamp());
+        }
         try {
             RemoteServicePresenter.getInstance().getRemoteChannelBinder().invokeMethod(model);
         } catch (RemoteException e) {

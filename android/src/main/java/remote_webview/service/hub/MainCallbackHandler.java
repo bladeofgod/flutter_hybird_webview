@@ -28,36 +28,30 @@ public class MainCallbackHandler implements IMockMethodResult {
 
     @Override
     public void success(@Nullable HashMap var1) {
-//        try {
-//            RemoteServicePresenter.getInstance()
-//                    .getMainResultCallbackBinder()
-//                    .remoteSuccess(id, StringUtil.getMapToString(var1));
-//        } catch (RemoteException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            MainBinderCommHub.getInstance().getFlutterResult(id).success(var1);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
-//        try {
-//            RemoteServicePresenter.getInstance()
-//                    .getMainResultCallbackBinder()
-//                    .remoteError(id,var1,var2,StringUtil.getMapToString(var3));
-//        } catch (RemoteException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            MainBinderCommHub.getInstance().getFlutterResult(id).error(var1, var2, var3);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public void notImplemented() {
-//        try {
-//            RemoteServicePresenter.getInstance()
-//                    .getMainResultCallbackBinder()
-//                    .remoteNotImplemented(id);
-//        } catch (RemoteException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            MainBinderCommHub.getInstance().getFlutterResult(id).notImplemented();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 }

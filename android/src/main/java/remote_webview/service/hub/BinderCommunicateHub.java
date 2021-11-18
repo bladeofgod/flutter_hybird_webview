@@ -56,6 +56,10 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
     }
 
 
+    public void cacheMethodResultCallback(long id) {
+        cacheMethodResultCallback(id, getCallbackHandler(id));
+    }
+
     /**
      * It's a result-callback , pair of invoke-method.
      * It can only use once.
