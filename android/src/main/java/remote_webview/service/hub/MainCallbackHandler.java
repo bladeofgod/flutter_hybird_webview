@@ -10,6 +10,7 @@ import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.model.MethodModel;
 import remote_webview.service.MainServicePresenter;
 import remote_webview.service.RemoteServicePresenter;
+import remote_webview.service.decoder.WebViewDecoder;
 import remote_webview.utils.HandlerUtil;
 import remote_webview.utils.LogUtil;
 import remote_webview.utils.StringUtil;
@@ -35,7 +36,8 @@ public class MainCallbackHandler implements IMockMethodResult {
             public void run() {
                 try {
                     LogUtil.logMsg("Process", " result callback : " +id+ "  "+ var1.toString());
-                    MainBinderCommHub.getInstance().getFlutterResult(id).success(true);
+                    Object flutterResult = WebViewDecoder.decodeToFlutterResult((String)var1.get("methodName"), var1);
+                    MainBinderCommHub.getInstance().getFlutterResult(id).success(flutterResult);
                     MainBinderCommHub.getInstance().removeCacheResultCallback(id);
                 } catch (NullPointerException e) {
                     e.printStackTrace();

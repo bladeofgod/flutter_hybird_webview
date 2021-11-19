@@ -144,6 +144,8 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
                     public void success(@Nullable HashMap var1) {
                         LogUtil.logMsg(this.toString(),"cache size : " + methodResultCallbackSlog.size());
                         if(call.needCallback == 1) {
+                            //add method name for main process to decode to a flutter's result.
+                            var1.put("methodName", call.method);
                             Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
                             removeMethodResultCallbackById(id);
                         }
