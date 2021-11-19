@@ -100,12 +100,13 @@ class _WebViewExampleState extends State<WebViewExample> {
       }),
       floatingActionButton: favoriteButton(),
     ), onWillPop: () async {
-      bool canBack = await webViewController?.canGoBack() ?? false;
-      debugPrint('web view  canBack : $canBack');
-      if(canBack) {
-        webViewController?.goBack();
-      }
-      return Future.value(!canBack);
+      webViewController?.goBack();
+      // bool canBack = await webViewController?.canGoBack() ?? false;
+      // debugPrint('web view  canBack : $canBack');
+      // if(canBack) {
+      //   webViewController?.goBack();
+      // }
+      return Future.value(false);
     });
   }
 

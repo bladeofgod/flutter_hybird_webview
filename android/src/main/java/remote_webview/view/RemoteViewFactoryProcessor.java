@@ -91,6 +91,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        LogUtil.logMsg(this.toString(), "remove cache view : " +id);
         viewCache.remove(id);
     }
 

@@ -35,7 +35,7 @@ public class MainCallbackHandler implements IMockMethodResult {
             public void run() {
                 try {
                     LogUtil.logMsg("Process", " result callback : " +id+ "  "+ var1.toString());
-                    MainBinderCommHub.getInstance().getFlutterResult(id).success(var1);
+                    MainBinderCommHub.getInstance().getFlutterResult(id).success(true);
                     MainBinderCommHub.getInstance().removeCacheResultCallback(id);
                 } catch (NullPointerException e) {
                     e.printStackTrace();

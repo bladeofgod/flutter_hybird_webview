@@ -179,7 +179,6 @@ class RemoteAndroidMotionEventConverter {
 
   void updatePointerPositions(PointerEvent event) {
     final Offset position = _pointTransformer(event.position);
-    debugPrint('side : flutter  $position');
     pointerPositions[event.pointer] = AndroidPointerCoords(
       orientation: event.orientation,
       pressure: event.pressure,

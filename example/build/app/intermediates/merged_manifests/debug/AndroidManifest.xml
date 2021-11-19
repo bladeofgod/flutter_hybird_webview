@@ -27,7 +27,6 @@
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
         android:label="webview_flutter_example"
-        android:testOnly="true"
         android:theme="@android:style/Theme.Translucent.NoTitleBar"
         android:usesCleartextTraffic="true" >
         <meta-data

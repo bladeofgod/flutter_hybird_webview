@@ -14,18 +14,21 @@ public class MainResultCallbackBinder extends IMainResultCallbackBinder.Stub {
     public void remoteSuccess(long id, String result) throws RemoteException {
         MainCallbackHandler handler = MainBinderCommHub.getInstance().fetchCallbackHandler(id);
         handler.success((HashMap) StringUtil.getStringToMap(result));
+        MainBinderCommHub.getInstance().removeMethodResultCallbackById(id);
     }
 
     @Override
     public void remoteError(long id, String var1, String var2, String info) throws RemoteException {
         MainCallbackHandler handler = MainBinderCommHub.getInstance().fetchCallbackHandler(id);
         handler.error(var1, var2, (HashMap) StringUtil.getStringToMap(info));
+        MainBinderCommHub.getInstance().removeMethodResultCallbackById(id);
     }
 
     @Override
     public void remoteNotImplemented(long id) throws RemoteException {
         MainCallbackHandler handler = MainBinderCommHub.getInstance().fetchCallbackHandler(id);
         handler.notImplemented();
+        MainBinderCommHub.getInstance().removeMethodResultCallbackById(id);
 
     }
 }

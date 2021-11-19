@@ -76,7 +76,7 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
      * @param id #{@linkplain #invokeMethod} remote_invoke's timeStamp, to associate
      *           a  result callback .
      */
-    protected void removeMethodResultCallbackById(long id) {
+    public void removeMethodResultCallbackById(long id) {
         methodResultCallbackSlog.remove(id);
     }
     

@@ -73,6 +73,18 @@ public class RemoteZygoteActivity extends FlutterActivity {
     }
 
     @Override
+    protected void onStop() {
+        LogUtil.logMsg(this.toString(), "onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        LogUtil.logMsg(this.toString(), "onDestroy");
+        super.onDestroy();
+    }
+
+    @Override
     public void finish() {
         overridePendingTransition(0, 0);
         super.finish();
