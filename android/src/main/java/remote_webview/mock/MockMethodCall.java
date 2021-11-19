@@ -4,6 +4,8 @@ import androidx.annotation.Nullable;
 
 import java.util.HashMap;
 
+import remote_webview.model.MethodModel;
+
 public class MockMethodCall {
     
     //surface's id.
@@ -12,7 +14,10 @@ public class MockMethodCall {
     public final String method;
 
     public final HashMap arguments;
-    
+
+    /**
+     * @see MethodModel#getNeedCallback() 
+     */
     public final byte needCallback;
 
     public MockMethodCall(long id, String method, HashMap arguments, byte needCallback) {

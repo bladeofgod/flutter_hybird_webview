@@ -119,9 +119,11 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
         try {
             invokeMethodById(handlerId,methodCall);
         }catch (Exception e) {
-            Objects.requireNonNull(methodResultCallbackSlog.get(handlerId)).error("",
-                    "Invoke Method Exception" + this.getClass().getSimpleName(), new HashMap() );
-            removeMethodResultCallbackById(handlerId);
+            if(model.getNeedCallback() == 1) {
+                Objects.requireNonNull(methodResultCallbackSlog.get(handlerId)).error("",
+                        "Invoke Method Exception" + this.getClass().getSimpleName(), new HashMap() );
+                removeMethodResultCallbackById(handlerId);
+            }
             e.printStackTrace();
         }
     }
