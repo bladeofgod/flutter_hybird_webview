@@ -83,17 +83,17 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
         resultCallbackCache.remove(id);
     }
 
-    /**
-     * Remove {@link RemoteCallbackHandler} and {@link MethodChannel.Result} by id (invoke timestamp).
-     *
-     * @see remote_webview.model.MethodModel
-     */
-    protected void removeCallback(long id) {
-        //remove flutter's callback
-        removeCacheResultCallback(id);
-        //remove platform-thread's callback
-        removeMethodResultCallbackById(id);
-    }
+//    /**
+//     * Remove {@link RemoteCallbackHandler} and {@link MethodChannel.Result} by id (invoke timestamp).
+//     *
+//     * @see remote_webview.model.MethodModel
+//     */
+//    protected void removeCallback(long id) {
+//        //remove flutter's callback
+//        removeCacheResultCallback(id);
+//        //remove platform-thread's callback
+//        removeMethodResultCallbackById(id);
+//    }
 
 
     @Override
@@ -132,7 +132,7 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
                         resultCallbackCache.get(id, defaultResultCallback).success(flutterResult);
                         
                         Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
-                        removeCallback(id);
+                        removeMethodResultCallbackById(id);
                     }
 
                     @Override
@@ -140,13 +140,13 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
                         resultCallbackCache.get(id, defaultResultCallback).error(var1, var2, var3);
 
                         Objects.requireNonNull(methodResultCallbackSlog.get(id)).error(var1, var2, var3);
-                        removeCallback(id);
+                        removeMethodResultCallbackById(id);
                     }
 
                     @Override
                     public void notImplemented() {
                         resultCallbackCache.get(id, defaultResultCallback).notImplemented();
-                        removeCallback(id);
+                        removeMethodResultCallbackById(id);
                     }
                 });
             }

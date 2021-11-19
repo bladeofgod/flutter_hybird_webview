@@ -10,6 +10,8 @@ import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.model.MethodModel;
 import remote_webview.service.MainServicePresenter;
 import remote_webview.service.RemoteServicePresenter;
+import remote_webview.utils.HandlerUtil;
+import remote_webview.utils.LogUtil;
 import remote_webview.utils.StringUtil;
 
 public class MainCallbackHandler implements IMockMethodResult {
@@ -27,31 +29,50 @@ public class MainCallbackHandler implements IMockMethodResult {
     }
 
     @Override
-    public void success(@Nullable HashMap var1) {
-        try {
-            MainBinderCommHub.getInstance().getFlutterResult(id).success(var1);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
+    public void success(@Nullable final HashMap var1) {
+        HandlerUtil.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    LogUtil.logMsg("Process", " result callback : " +id+ "  "+ var1.toString());
+                    MainBinderCommHub.getInstance().getFlutterResult(id).success(var1);
+                    MainBinderCommHub.getInstance().removeCacheResultCallback(id);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
-    public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
-        try {
-            MainBinderCommHub.getInstance().getFlutterResult(id).error(var1, var2, var3);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
+    public void error(final String var1, @Nullable final String var2, @Nullable final HashMap var3) {
+        HandlerUtil.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    MainBinderCommHub.getInstance().getFlutterResult(id).error(var1, var2, var3);
+                    MainBinderCommHub.getInstance().removeCacheResultCallback(id);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+                
+            }
+        });
+        
     }
 
     @Override
     public void notImplemented() {
-        try {
-            MainBinderCommHub.getInstance().getFlutterResult(id).notImplemented();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        HandlerUtil.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    MainBinderCommHub.getInstance().getFlutterResult(id).notImplemented();
+                    MainBinderCommHub.getInstance().removeCacheResultCallback(id);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
