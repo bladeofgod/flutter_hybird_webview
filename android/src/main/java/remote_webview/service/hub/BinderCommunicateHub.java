@@ -110,7 +110,8 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
      */
     public void invokeMethod(MethodModel model) {
         final long handlerId = model.getInvokeTimeStamp();
-        final MockMethodCall methodCall = new MockMethodCall(model.getId(), model.getMethodName(),model.getArguments());
+        final MockMethodCall methodCall = new MockMethodCall(model.getId(), 
+                model.getMethodName(),model.getArguments(), model.getNeedCallback());
         LogUtil.logMsg(getTag(), model.toString());
         if(model.getNeedCallback() == 1) {
             cacheMethodResultCallback(handlerId, getCallbackHandler(handlerId));
@@ -140,19 +141,25 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
                     @Override
                     public void success(@Nullable HashMap var1) {
                         LogUtil.logMsg(this.toString(),"cache size : " + methodResultCallbackSlog.size());
-                        Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
-                        removeMethodResultCallbackById(id);
+                        if(call.needCallback == 1) {
+                            Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
+                            removeMethodResultCallbackById(id);
+                        }
                     }
 
                     @Override
                     public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
-                        Objects.requireNonNull(methodResultCallbackSlog.get(id)).error(var1, var2, var3);
-                        removeMethodResultCallbackById(id);
+                        if(call.needCallback == 1) {
+                            Objects.requireNonNull(methodResultCallbackSlog.get(id)).error(var1, var2, var3);
+                            removeMethodResultCallbackById(id);
+                        }
                     }
 
                     @Override
                     public void notImplemented() {
-                        removeMethodResultCallbackById(id);
+                        if(call.needCallback == 1) {
+                            removeMethodResultCallbackById(id);
+                        }
                     }
                 });
             }

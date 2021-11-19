@@ -144,6 +144,7 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
         if(model.getNeedCallback() == 1) {
             MainBinderCommHub.getInstance().cacheMethodResultCallback(model.getInvokeTimeStamp());
         }
+        LogUtil.logMsg(this.toString(), "sendRemoteMethodCall : " + model.toString());
         try {
             RemoteServicePresenter.getInstance().getRemoteChannelBinder().invokeMethod(model);
         } catch (RemoteException e) {

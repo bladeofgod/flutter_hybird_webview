@@ -12,14 +12,17 @@ public class MockMethodCall {
     public final String method;
 
     public final HashMap arguments;
+    
+    public final byte needCallback;
 
-    public MockMethodCall(long id, String method, HashMap arguments) {
+    public MockMethodCall(long id, String method, HashMap arguments, byte needCallback) {
         if (method == null) {
             throw new AssertionError("Parameter method must not be null.");
         } else {
             this.method = method;
             this.arguments = arguments;
             this.id = id;
+            this.needCallback = needCallback;
         }
     }
 
@@ -32,7 +35,8 @@ public class MockMethodCall {
         return "MockMethodCall{" +
                 "id=" + id +
                 ", method='" + method + '\'' +
-                ", arguments=" + arguments +
+                ", arguments=" + arguments + '\'' +
+                ", needCallback=" + needCallback +
                 '}';
     }
 
