@@ -14,52 +14,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79f642e3-31f2-43f0-a703-a88304599c47" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/service/hub/BinderCommunicateHub.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/service/hub/BinderCommunicateHub.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/service/decoder/WebViewDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/service/decoder/WebViewDecoder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/service/hub/MainBinderCommHub.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/service/hub/MainBinderCommHub.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/service/hub/MainCallbackHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../android/src/main/java/remote_webview/service/hub/MainCallbackHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.dart_tool/flutter_build/d77e5aa6cb63f441c321cece163ffbc0/.filecache" beforeDir="false" afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/d77e5aa6cb63f441c321cece163ffbc0/.filecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.dart_tool/flutter_build/d77e5aa6cb63f441c321cece163ffbc0/app.dill" beforeDir="false" afterPath="$PROJECT_DIR$/../.dart_tool/flutter_build/d77e5aa6cb63f441c321cece163ffbc0/app.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/taskHistory/taskHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/4f2a58af27abc49ecf55570043bbf938.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/../build/4f2a58af27abc49ecf55570043bbf938.cache.dill.track.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/intermediates/merged_assets/debug/mergeDebugAssets/out/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/intermediates/merged_assets/debug/mergeDebugAssets/out/flutter_assets/kernel_blob.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/103.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/103.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/104.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/104.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/106.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/106.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/108.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/108.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/109.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/109.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/110.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/110.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/__content__.json" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexBuilder/debug/__content__.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexMerger/debug/0/classes.dex" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexMerger/debug/0/classes.dex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexMerger/debug/__content__.json" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/intermediates/transforms/dexMerger/debug/__content__.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/outputs/apk/debug/app-debug.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/outputs/flutter-apk/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/outputs/flutter-apk/app-debug.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/outputs/flutter-apk/app.apk" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/outputs/flutter-apk/app.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/app/outputs/flutter-apk/app.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/../build/app/outputs/flutter-apk/app.apk.sha1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/intermediates/intermediate-jars/debug/classes.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/intermediates/intermediate-jars/debug/classes.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/mock/MockMethodCall.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/mock/MockMethodCall.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/BinderCommunicateHub$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/BinderCommunicateHub$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/BinderCommunicateHub$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/BinderCommunicateHub$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/BinderCommunicateHub.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/BinderCommunicateHub.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainBinderCommHub$2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainBinderCommHub$2$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainBinderCommHub$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainBinderCommHub$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainBinderCommHub.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainBinderCommHub.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainCallbackHandler$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainCallbackHandler$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainCallbackHandler$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainCallbackHandler$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainCallbackHandler$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainCallbackHandler$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainCallbackHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/intermediates/javac/debug/compileDebugJavaWithJavac/classes/remote_webview/service/hub/MainCallbackHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/intermediates/packaged-classes/debug/classes.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/intermediates/packaged-classes/debug/classes.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../build/webview_flutter/outputs/aar/webview_flutter-debug.aar" beforeDir="false" afterPath="$PROJECT_DIR$/../build/webview_flutter/outputs/aar/webview_flutter-debug.aar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -283,7 +243,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637324525717</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="dev: add method-mark to remote-result-package">
+      <created>1637326387326</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1637326387326</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -303,7 +270,8 @@
     <MESSAGE value="dev: add some test tag" />
     <MESSAGE value="dev: can go back !" />
     <MESSAGE value="dev: fix null pointer exception bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="dev: fix null pointer exception bugs" />
+    <MESSAGE value="dev: add method-mark to remote-result-package" />
+    <option name="LAST_COMMIT_MESSAGE" value="dev: add method-mark to remote-result-package" />
   </component>
   <component name="WindowStateProjectService">
     <state x="765" y="225" key="#com.intellij.ide.util.MemberChooser" timestamp="1637222213505">
@@ -318,42 +286,42 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="530" y="386" width="860" height="274" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1636451835816" />
-    <state x="608" y="166" key="CommitChangelistDialog2" timestamp="1637324525433">
+    <state x="608" y="166" key="CommitChangelistDialog2" timestamp="1637326379940">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="608" y="166" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637324525433" />
+    <state x="608" y="166" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637326379940" />
     <state width="543" height="466" key="DebuggerActiveHint" timestamp="1637295146439">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="543" height="466" key="DebuggerActiveHint/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637295146439" />
-    <state width="1877" height="391" key="GridCell.Tab.0.bottom" timestamp="1637305438314">
+    <state width="1877" height="97" key="GridCell.Tab.0.bottom" timestamp="1637326399134">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="391" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637305438314" />
-    <state width="1877" height="391" key="GridCell.Tab.0.center" timestamp="1637305438314">
+    <state width="1877" height="97" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637326399134" />
+    <state width="1877" height="97" key="GridCell.Tab.0.center" timestamp="1637326399133">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="391" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637305438314" />
-    <state width="1877" height="391" key="GridCell.Tab.0.left" timestamp="1637305438313">
+    <state width="1877" height="97" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637326399133" />
+    <state width="1877" height="97" key="GridCell.Tab.0.left" timestamp="1637326399133">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="391" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637305438313" />
-    <state width="1877" height="391" key="GridCell.Tab.0.right" timestamp="1637305438314">
+    <state width="1877" height="97" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637326399133" />
+    <state width="1877" height="97" key="GridCell.Tab.0.right" timestamp="1637326399133">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="391" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637305438314" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1637324535616">
+    <state width="1877" height="97" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637326399133" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1637326397233">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637324535616" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637326397233" />
     <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1637226585428">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637226585428" />
-    <state x="763" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1637324528676">
+    <state x="763" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1637326391659">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="763" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637324528676" />
+    <state x="763" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1637326391659" />
     <state x="328" y="0" width="1425" height="1000" key="dock-window-1" timestamp="1637225218077">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -376,7 +344,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/../../android/src/main/java/remote_webview/service/hub/MainBinderCommHub.java</url>
-          <line>63</line>
+          <line>76</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

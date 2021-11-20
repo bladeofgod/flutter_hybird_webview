@@ -2,7 +2,7 @@ package remote_webview.service.decoder;
 
 import java.util.HashMap;
 
-public class WebViewDecoder {
+public class WebViewDecoder extends PackageDecoder {
 
     /**
      * When get a package(HashMap) from remote web-view, need to decode it as same as flutter-web.
@@ -10,7 +10,8 @@ public class WebViewDecoder {
      * @param rawArgs args from remote, type is HashMap.
      * @return
      */
-    public static Object decodeToFlutterResult(String methodName, HashMap rawArgs) {
+    @Override
+    public Object decodeToFlutterResult(String methodName, HashMap rawArgs) {
         switch (methodName) {
             case "canGoBack":
                 String canGoBack = (String) rawArgs.get("canGoBack");
@@ -43,6 +44,7 @@ public class WebViewDecoder {
             default:
                 return null;
         }
+
     }
 
 }

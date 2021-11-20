@@ -36,7 +36,9 @@ public class MainCallbackHandler implements IMockMethodResult {
             public void run() {
                 try {
                     LogUtil.logMsg("Process", " result callback : " +id+ "  "+ var1.toString());
-                    Object flutterResult = WebViewDecoder.decodeToFlutterResult((String)var1.get("methodName"), var1);
+                    Object flutterResult = MainBinderCommHub.getInstance()
+                            .getDecoder()
+                            .decodeToFlutterResult((String)var1.get("methodName"), var1);
                     MainBinderCommHub.getInstance().getFlutterResult(id).success(flutterResult);
                     MainBinderCommHub.getInstance().removeCacheResultCallback(id);
                 } catch (NullPointerException e) {

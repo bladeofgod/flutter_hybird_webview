@@ -13,6 +13,7 @@ import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.interfaces.IMockMethodHandler;
 import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.mock.MockMethodCall;
+import remote_webview.service.decoder.PackageDecoder;
 import remote_webview.service.decoder.WebViewDecoder;
 import remote_webview.utils.HandlerUtil;
 
@@ -29,6 +30,21 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
             }
         }
         return singleton;
+    }
+
+    private MainBinderCommHub() {
+        decoder = new WebViewDecoder();
+        MainGarbageCollector.getInstance().registerCollectListener(this);
+    }
+
+    private PackageDecoder decoder;
+
+    public void setDecoder(PackageDecoder decoder) {
+        this.decoder = decoder;
+    }
+
+    public PackageDecoder getDecoder() {
+        return decoder;
     }
 
     /**
@@ -55,10 +71,7 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
     //Cache the flutter-methodCall's resultCallback
     private final LongSparseArray<MethodChannel.Result> resultCallbackCache
             = new LongSparseArray<MethodChannel.Result>();
-    
-    private MainBinderCommHub() {
-        MainGarbageCollector.getInstance().registerCollectListener(this);
-    }
+
 
     public MethodChannel.Result getFlutterResult(long id) {
         return resultCallbackCache.get(id);
@@ -132,7 +145,7 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
                             return;
                         }
                         //result to flutter
-                        Object flutterResult = WebViewDecoder.decodeToFlutterResult(call.method, var1);
+                        Object flutterResult = decoder.decodeToFlutterResult(call.method, var1);
                         resultCallbackCache.get(id, defaultResultCallback).success(flutterResult);
                         
                         Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
