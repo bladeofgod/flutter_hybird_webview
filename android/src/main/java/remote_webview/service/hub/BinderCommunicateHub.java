@@ -39,7 +39,9 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
      * @param handler     control web-view.
      */
     public void plugInMethodHandler(long id, IMockMethodHandler handler) {
-        methodHandlerSlot.put(id,handler);
+        synchronized (methodHandlerSlot) {
+            methodHandlerSlot.put(id,handler);
+        }
     }
 
 
@@ -48,7 +50,9 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
      * @param id surface's id
      */
     public void plugOutMethodHandler(long id) {
-        methodHandlerSlot.remove(id);
+        synchronized (methodHandlerSlot) {
+            methodHandlerSlot.remove(id);
+        }
     }
     
     protected void cleanAllMethodHandler() {
@@ -68,7 +72,9 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
      * @param result
      */
     protected void cacheMethodResultCallback(long id, C result) {
-        methodResultCallbackSlog.put(id, result);
+        synchronized (methodResultCallbackSlog) {
+            methodResultCallbackSlog.put(id, result);
+        }
     }
 
     /**
@@ -77,17 +83,23 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
      *           a  result callback .
      */
     public void removeMethodResultCallbackById(long id) {
-        methodResultCallbackSlog.remove(id);
+        synchronized (methodResultCallbackSlog) {
+            methodResultCallbackSlog.remove(id);
+        }
     }
     
     protected void cleanAllMethodResultCallback() {
-        methodResultCallbackSlog.clear();
+        synchronized (methodResultCallbackSlog) {
+            methodResultCallbackSlog.clear();
+        }
     }
     
     protected abstract C getCallbackHandler(long id);
     
     public C fetchCallbackHandler(long id) {
-        return methodResultCallbackSlog.get(id);
+        synchronized (methodResultCallbackSlog) {
+            return methodResultCallbackSlog.get(id);
+        }
     }
     
 
