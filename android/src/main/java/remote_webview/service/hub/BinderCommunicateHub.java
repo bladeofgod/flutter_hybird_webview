@@ -95,6 +95,7 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
      * @param result
      */
     protected void cacheMethodResultCallback(long id, C result) {
+        LogUtil.logMsg(this.toString(),"callback handler cache size : " + methodResultCallbackSlog.size());
         synchronized (methodResultCallbackSlog) {
             methodResultCallbackSlog.put(id, result);
         }
@@ -122,6 +123,24 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
     public C fetchCallbackHandler(long id) {
         synchronized (methodResultCallbackSlog) {
             return methodResultCallbackSlog.get(id);
+        }
+    }
+
+    /**
+     * Clean invalid {@linkplain #methodResultCallbackSlog}.
+     * Normally only few handler cached, so didn't need a new thread to do this.
+     *
+     * @see BaseCallbackHandler
+     */
+    protected synchronized void cleanInvalidMethodCallback() {
+        try {
+            for(int i = 0; i < methodResultCallbackSlog.size(); i++) {
+                if(methodResultCallbackSlog.valueAt(i).isInvalid()) {
+                    methodResultCallbackSlog.removeAt(i);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     
@@ -161,6 +180,7 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
             }
             e.printStackTrace();
         }
+        cleanInvalidMethodCallback();
     }
 
 
@@ -181,33 +201,34 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
                     Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call,
                             emptyResultCallback);
                 }
-                Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {
-                    @Override
-                    public void success(@Nullable HashMap var1) {
-                        LogUtil.logMsg(this.toString(),"cache size : " + methodResultCallbackSlog.size());
-                        if(call.needCallback == 1) {
-                            //add method name for main process to decode to a flutter's result.
-                            var1.put("methodName", call.method);
-                            Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
-                            removeMethodResultCallbackById(id);
-                        }
-                    }
-
-                    @Override
-                    public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
-                        if(call.needCallback == 1) {
-                            Objects.requireNonNull(methodResultCallbackSlog.get(id)).error(var1, var2, var3);
-                            removeMethodResultCallbackById(id);
-                        }
-                    }
-
-                    @Override
-                    public void notImplemented() {
-                        if(call.needCallback == 1) {
-                            removeMethodResultCallbackById(id);
-                        }
-                    }
-                });
+                //todo need delete after test
+//                Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {
+//                    @Override
+//                    public void success(@Nullable HashMap var1) {
+//
+//                        if(call.needCallback == 1) {
+//                            //add method name for main process to decode to a flutter's result.
+//                            var1.put("methodName", call.method);
+//                            Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
+//                            removeMethodResultCallbackById(id);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
+//                        if(call.needCallback == 1) {
+//                            Objects.requireNonNull(methodResultCallbackSlog.get(id)).error(var1, var2, var3);
+//                            removeMethodResultCallbackById(id);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void notImplemented() {
+//                        if(call.needCallback == 1) {
+//                            removeMethodResultCallbackById(id);
+//                        }
+//                    }
+//                });
             }
         });
 
