@@ -162,7 +162,7 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
      * invoke-timestamp its always created at main-process.
      * @param model method model.
      */
-    public void invokeMethod(MethodModel model) {
+    public final void invokeMethod(MethodModel model) {
         final long handlerId = model.getInvokeTimeStamp();
         final MockMethodCall methodCall = new MockMethodCall(model.getId(), 
                 model.getMethodName(),model.getArguments(), model.getNeedCallback());
