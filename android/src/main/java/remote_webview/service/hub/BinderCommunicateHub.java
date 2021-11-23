@@ -14,7 +14,7 @@ import remote_webview.model.MethodModel;
 import remote_webview.utils.HandlerUtil;
 import remote_webview.utils.LogUtil;
 
-abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
+abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
 
     /**
      * register webView's method handler.
@@ -31,6 +31,29 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
      * remove after {@link IMockMethodResult} called.
      */
     protected final LongSparseArray<C> methodResultCallbackSlog = new LongSparseArray<>();
+
+    /**
+     * In some case, {@linkplain #invokeMethod(MethodModel)} don't need result callback,
+     * and use this callback for view do empty-call.
+     * 
+     * @see #invokeMethodById(long, MockMethodCall) 
+     */
+    protected final IMockMethodResult emptyResultCallback = new IMockMethodResult() {
+        @Override
+        public void success(@Nullable HashMap var1) {
+            
+        }
+
+        @Override
+        public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
+
+        }
+
+        @Override
+        public void notImplemented() {
+
+        }
+    };
 
 
     /**
@@ -151,6 +174,13 @@ abstract public class BinderCommunicateHub<C extends IMockMethodResult> {
         HandlerUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if(call.needCallback == 1) {
+                    Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, 
+                            Objects.requireNonNull(methodResultCallbackSlog.get(id)));
+                } else {
+                    Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call,
+                            emptyResultCallback);
+                }
                 Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {
                     @Override
                     public void success(@Nullable HashMap var1) {

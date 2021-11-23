@@ -11,7 +11,7 @@ import remote_webview.model.MethodModel;
 import remote_webview.service.MainServicePresenter;
 import remote_webview.utils.StringUtil;
 
-public class RemoteCallbackHandler implements IMockMethodResult {
+public class RemoteCallbackHandler extends BaseCallbackHandler {
 
     /**
      * identifier this handle and link to a {@link MethodModel}
@@ -27,6 +27,7 @@ public class RemoteCallbackHandler implements IMockMethodResult {
 
     @Override
     public void success(@Nullable HashMap var1) {
+        super.success(var1);
         try {
             MainServicePresenter.getInstance()
                     .getMainResultCallbackBinder()
@@ -39,10 +40,11 @@ public class RemoteCallbackHandler implements IMockMethodResult {
 
     @Override
     public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
+        super.error(var1, var2, var3);
         try {
             MainServicePresenter.getInstance()
                     .getMainResultCallbackBinder()
-                    .remoteError(id,var1,var2,StringUtil.getMapToString(var3));
+                    .remoteError(id, var1, var2, StringUtil.getMapToString(var3));
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -51,6 +53,7 @@ public class RemoteCallbackHandler implements IMockMethodResult {
 
     @Override
     public void notImplemented() {
+        super.notImplemented();
         try {
             MainServicePresenter.getInstance()
                     .getMainResultCallbackBinder()

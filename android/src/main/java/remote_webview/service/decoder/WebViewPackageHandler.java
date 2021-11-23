@@ -2,7 +2,9 @@ package remote_webview.service.decoder;
 
 import java.util.HashMap;
 
-public class WebViewDecoder extends PackageDecoder {
+public class WebViewPackageHandler extends PackageHandler {
+    
+    static final private String METHOD_NAME = "methodName";
 
     /**
      * When get a package(HashMap) from remote web-view, need to decode it as same as flutter-web.
@@ -45,6 +47,13 @@ public class WebViewDecoder extends PackageDecoder {
                 return null;
         }
 
+    }
+
+    @Override
+    public HashMap markPackageWithMethodName(String methodName, HashMap rawArgs) {
+        HashMap ripeArgs = new HashMap(rawArgs);
+        ripeArgs.put(METHOD_NAME, methodName);
+        return ripeArgs;
     }
 
 }

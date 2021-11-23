@@ -33,6 +33,8 @@ import remote_webview.mock.MockMethodCall;
 import remote_webview.mock.MockMethodChannel;
 import remote_webview.mock.RemoteJavaScriptChannel;
 import remote_webview.model.WebViewCreationParamsModel;
+import remote_webview.service.decoder.PackageHandler;
+import remote_webview.service.decoder.WebViewPackageHandler;
 import remote_webview.service.hub.RemoteBinderCommHub;
 import remote_webview.utils.LogUtil;
 
@@ -45,6 +47,8 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
     private final Handler platformThreadHandler;
 
     private WebViewCreationParamsModel initialParams;
+    
+    private final PackageHandler packageHandler = new WebViewPackageHandler();
 
     public WebViewPresentation(Context outerContext, WebViewCreationParamsModel creationParamsModel,
                                Display display, long surfaceId,
@@ -149,10 +153,10 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
                 updateSettings(methodCall, result);
                 break;
             case "canGoBack":
-                canGoBack(result);
+                canGoBack(methodCall, result);
                 break;
             case "canGoForward":
-                canGoForward(result);
+                canGoForward(methodCall, result);
                 break;
             case "goBack":
                 goBack(result);
@@ -164,7 +168,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
                 reload(result);
                 break;
             case "currentUrl":
-                currentUrl(result);
+                currentUrl(methodCall, result);
                 break;
             case "evaluateJavascript":
                 evaluateJavaScript(methodCall, result);
@@ -179,7 +183,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
                 clearCache(result);
                 break;
             case "getTitle":
-                getTitle(result);
+                getTitle(methodCall, result);
                 break;
             case "scrollTo":
                 scrollTo(methodCall, result);
@@ -188,10 +192,10 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
                 scrollBy(methodCall, result);
                 break;
             case "getScrollX":
-                getScrollX(result);
+                getScrollX(methodCall, result);
                 break;
             case "getScrollY":
-                getScrollY(result);
+                getScrollY(methodCall, result);
                 break;
             default:
                 result.notImplemented();
@@ -211,16 +215,16 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         result.success(null);
     }
 
-    private void canGoBack(IMockMethodResult result) {
+    private void canGoBack(MockMethodCall methodCall, IMockMethodResult result) {
         HashMap<String,String> p = new HashMap<>();
         p.put("canGoBack",getWebView().canGoBack()? "true" : "false");
-        result.success(p);
+        result.success(packageHandler.markPackageWithMethodName(methodCall.method, p));
     }
 
-    private void canGoForward(IMockMethodResult result) {
+    private void canGoForward(MockMethodCall methodCall, IMockMethodResult result) {
         HashMap<String,String> p = new HashMap<>();
         p.put("canGoForward",getWebView().canGoForward()? "true" : "false");
-        result.success(p);
+        result.success(packageHandler.markPackageWithMethodName(methodCall.method, p));
     }
 
     private void goBack(IMockMethodResult result) {
@@ -242,10 +246,10 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         result.success(null);
     }
 
-    private void currentUrl(IMockMethodResult result) {
+    private void currentUrl(MockMethodCall methodCall, IMockMethodResult result) {
         HashMap<String,String> p = new HashMap<>();
         p.put("currentUrl",getWebView().getUrl());
-        result.success(p);
+        result.success(packageHandler.markPackageWithMethodName(methodCall.method, p));
     }
 
     @SuppressWarnings("unchecked")
@@ -255,7 +259,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void evaluateJavaScript(MockMethodCall methodCall, final IMockMethodResult result) {
+    private void evaluateJavaScript(final MockMethodCall methodCall, final IMockMethodResult result) {
         String jsString = (String) methodCall.arguments.get("jsString");
         if (jsString == null) {
             throw new UnsupportedOperationException("JavaScript string cannot be null");
@@ -267,7 +271,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
                     public void onReceiveValue(String value) {
                         HashMap<String,String> p = new HashMap<>();
                         p.put("evaluateJavaScript",value);
-                        result.success(p);
+                        result.success(packageHandler.markPackageWithMethodName(methodCall.method, p));
                     }
                 });
     }
@@ -294,10 +298,10 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         result.success(null);
     }
 
-    private void getTitle(IMockMethodResult result) {
+    private void getTitle(MockMethodCall methodCall, IMockMethodResult result) {
         HashMap<String,String> p = new HashMap<>();
         p.put("getTitle",getWebView().getTitle());
-        result.success(p);
+        result.success(packageHandler.markPackageWithMethodName(methodCall.method, p));
     }
 
     private void scrollTo(MockMethodCall methodCall, IMockMethodResult result) {
@@ -319,16 +323,16 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         result.success(null);
     }
 
-    private void getScrollX(IMockMethodResult result) {
+    private void getScrollX(MockMethodCall methodCall, IMockMethodResult result) {
         HashMap<String,String> p = new HashMap<>();
         p.put("getScrollX",getWebView().getScrollX() + "");
-        result.success(p);
+        result.success(packageHandler.markPackageWithMethodName(methodCall.method, p));
     }
 
-    private void getScrollY(IMockMethodResult result) {
+    private void getScrollY(MockMethodCall methodCall, IMockMethodResult result) {
         HashMap<String,String> p = new HashMap<>();
         p.put("getScrollY",getWebView().getScrollY() + "");
-        result.success(p);
+        result.success(packageHandler.markPackageWithMethodName(methodCall.method, p));
     }
 
     private void applySettings(Map<String, Object> settings) {

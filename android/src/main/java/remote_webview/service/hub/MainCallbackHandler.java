@@ -1,21 +1,15 @@
 package remote_webview.service.hub;
 
-import android.os.RemoteException;
-
 import androidx.annotation.Nullable;
 
 import java.util.HashMap;
 
 import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.model.MethodModel;
-import remote_webview.service.MainServicePresenter;
-import remote_webview.service.RemoteServicePresenter;
-import remote_webview.service.decoder.WebViewDecoder;
 import remote_webview.utils.HandlerUtil;
 import remote_webview.utils.LogUtil;
-import remote_webview.utils.StringUtil;
 
-public class MainCallbackHandler implements IMockMethodResult {
+public class MainCallbackHandler extends BaseCallbackHandler {
 
     /**
      * identifier this handle and link to a {@link MethodModel}
@@ -31,14 +25,15 @@ public class MainCallbackHandler implements IMockMethodResult {
 
     @Override
     public void success(@Nullable final HashMap var1) {
+        super.success(var1);
         HandlerUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    LogUtil.logMsg("Process", " result callback : " +id+ "  "+ var1.toString());
+                    LogUtil.logMsg("Process", " result callback : " + id + "  " + var1.toString());
                     Object flutterResult = MainBinderCommHub.getInstance()
                             .getDecoder()
-                            .decodeToFlutterResult((String)var1.get("methodName"), var1);
+                            .decodeToFlutterResult((String) var1.get("methodName"), var1);
                     MainBinderCommHub.getInstance().getFlutterResult(id).success(flutterResult);
                     MainBinderCommHub.getInstance().removeCacheResultCallback(id);
                 } catch (NullPointerException e) {
@@ -50,6 +45,7 @@ public class MainCallbackHandler implements IMockMethodResult {
 
     @Override
     public void error(final String var1, @Nullable final String var2, @Nullable final HashMap var3) {
+        super.error(var1, var2, var3);
         HandlerUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -59,14 +55,15 @@ public class MainCallbackHandler implements IMockMethodResult {
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
-                
+
             }
         });
-        
+
     }
 
     @Override
     public void notImplemented() {
+        super.notImplemented();
         HandlerUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {

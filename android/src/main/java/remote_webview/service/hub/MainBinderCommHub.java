@@ -10,11 +10,10 @@ import java.util.Objects;
 import io.flutter.plugin.common.MethodChannel;
 import remote_webview.garbage_collect.MainGarbageCollector;
 import remote_webview.interfaces.IGarbageCleanListener;
-import remote_webview.interfaces.IMockMethodHandler;
 import remote_webview.interfaces.IMockMethodResult;
 import remote_webview.mock.MockMethodCall;
-import remote_webview.service.decoder.PackageDecoder;
-import remote_webview.service.decoder.WebViewDecoder;
+import remote_webview.service.decoder.PackageHandler;
+import remote_webview.service.decoder.WebViewPackageHandler;
 import remote_webview.utils.HandlerUtil;
 
 public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler> implements IGarbageCleanListener {
@@ -33,17 +32,17 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
     }
 
     private MainBinderCommHub() {
-        decoder = new WebViewDecoder();
+        decoder = new WebViewPackageHandler();
         MainGarbageCollector.getInstance().registerCollectListener(this);
     }
 
-    private PackageDecoder decoder;
+    private PackageHandler decoder;
 
-    public void setDecoder(PackageDecoder decoder) {
+    public void setDecoder(PackageHandler decoder) {
         this.decoder = decoder;
     }
 
-    public PackageDecoder getDecoder() {
+    public PackageHandler getDecoder() {
         return decoder;
     }
 
