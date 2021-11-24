@@ -36,6 +36,7 @@ import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.service.decoder.PackageHandler;
 import remote_webview.service.decoder.WebViewPackageHandler;
 import remote_webview.service.hub.RemoteBinderCommHub;
+import remote_webview.utils.HandlerUtil;
 import remote_webview.utils.LogUtil;
 
 public class WebViewPresentation extends RemoteViewPresentation implements IMockMethodHandler {
@@ -76,10 +77,16 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
     @Override
     public void dispose() {
         plugOutHub();
+        HandlerUtil.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
 //        if (getWebView() instanceof InputAwareWebView) {
 //            ((InputAwareWebView) webView).dispose();
 //        }
-        getWebView().destroy();
+                getWebView().destroy();
+                dismiss();
+            }
+        });
     }
 
     private WebView createWebView() {

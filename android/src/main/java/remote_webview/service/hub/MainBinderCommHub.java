@@ -15,6 +15,7 @@ import remote_webview.mock.MockMethodCall;
 import remote_webview.service.decoder.PackageHandler;
 import remote_webview.service.decoder.WebViewPackageHandler;
 import remote_webview.utils.HandlerUtil;
+import remote_webview.utils.LogUtil;
 
 public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler> implements IGarbageCleanListener {
     
@@ -150,7 +151,10 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
 
     @Override
     public void cleanGarbage(long id) {
+        LogUtil.logMsg(this.toString(),"start cleanGarbage id : %s  size %s"
+                ,String.valueOf(id),String.valueOf(methodHandlerSlot.size()));
         plugOutMethodHandler(id);
+        LogUtil.logMsg(this.toString(),"after cleanGarbage ,methodHandlerSlot size: " + methodHandlerSlot.size());
     }
 
     @Override

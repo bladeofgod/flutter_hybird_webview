@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import remote_webview.garbage_collect.MainGarbageCollector;
 import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.model.ViewSurfaceModel;
 import remote_webview.model.WebViewCreationParamsModel;
@@ -27,6 +28,7 @@ public class WebViewSurfaceProducer implements IGarbageCleanListener {
     public static WebViewSurfaceProducer producer = new WebViewSurfaceProducer();
 
     private WebViewSurfaceProducer() {
+        MainGarbageCollector.getInstance().registerCollectListener(this);
     }
 
     private FlutterPlugin.FlutterPluginBinding flutterPluginBinding;

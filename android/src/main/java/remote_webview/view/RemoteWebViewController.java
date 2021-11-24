@@ -48,6 +48,7 @@ public class RemoteWebViewController extends RemoteViewTouchController {
     public void dispose(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result) {
         super.dispose(methodCall, result);
         long viewId = getViewId(methodCall);
+        LogUtil.logMsg(this.toString(),"Call dispose");
         if(viewId == -1) {
             LogUtil.logMsg("Dispose","view not found!");
         } else {

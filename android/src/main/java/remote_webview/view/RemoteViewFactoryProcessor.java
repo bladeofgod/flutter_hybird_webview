@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import remote_webview.RemoteZygoteActivity;
+import remote_webview.garbage_collect.RemoteGarbageCollector;
 import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.utils.LogUtil;
@@ -37,7 +38,9 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
         return singleton;
     }
 
-    private RemoteViewFactoryProcessor() {}
+    private RemoteViewFactoryProcessor() {
+        RemoteGarbageCollector.getInstance().registerCollectListener(this);
+    }
 
     private final HashMap<Long, RemoteViewPresentation> viewCache = new HashMap<>();
 

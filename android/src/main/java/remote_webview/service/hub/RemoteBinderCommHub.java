@@ -3,6 +3,7 @@ package remote_webview.service.hub;
 
 import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.garbage_collect.RemoteGarbageCollector;
+import remote_webview.utils.LogUtil;
 
 /**
  * view's private-binder hub.
@@ -29,7 +30,11 @@ public class RemoteBinderCommHub extends BinderCommunicateHub<RemoteCallbackHand
 
     @Override
     public void cleanGarbage(long id) {
+        LogUtil.logMsg(this.toString(),"start cleanGarbage id : %s  methodHandlerSlot size %s"
+                ,String.valueOf(id),String.valueOf(methodHandlerSlot.size()));
         plugOutMethodHandler(id);
+        LogUtil.logMsg(this.toString(),"after cleanGarbage ,methodHandlerSlot size: "
+                + methodHandlerSlot.size());
     }
 
     @Override
