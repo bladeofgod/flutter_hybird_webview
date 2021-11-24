@@ -143,44 +143,6 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
                     Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call,
                             emptyResultCallback);
                 }
-                //todo need delete after test
-//                Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {
-//                    @Override
-//                    public void success(@Nullable HashMap var1) {
-//                        if(call.needCallback == 0) {
-//                            //didn't need callback, so is not cache callback.
-//                            return;
-//                        }
-//                        //result to flutter
-//                        Object flutterResult = decoder.decodeToFlutterResult(call.method, var1);
-//                        resultCallbackCache.get(id, defaultResultCallback).success(flutterResult);
-//                        
-//                        Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
-//                        removeMethodResultCallbackById(id);
-//                    }
-//
-//                    @Override
-//                    public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
-//                        if(call.needCallback == 0) {
-//                            //didn't need callback, so is not cache callback.
-//                            return;
-//                        }
-//                        resultCallbackCache.get(id, defaultResultCallback).error(var1, var2, var3);
-//
-//                        Objects.requireNonNull(methodResultCallbackSlog.get(id)).error(var1, var2, var3);
-//                        removeMethodResultCallbackById(id);
-//                    }
-//
-//                    @Override
-//                    public void notImplemented() {
-//                        if(call.needCallback == 0) {
-//                            //didn't need callback, so is not cache callback.
-//                            return;
-//                        }
-//                        resultCallbackCache.get(id, defaultResultCallback).notImplemented();
-//                        removeMethodResultCallbackById(id);
-//                    }
-//                });
             }
         });
 

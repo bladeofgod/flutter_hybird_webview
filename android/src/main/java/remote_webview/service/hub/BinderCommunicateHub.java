@@ -201,34 +201,6 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
                     Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call,
                             emptyResultCallback);
                 }
-                //todo need delete after test
-//                Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, new IMockMethodResult() {
-//                    @Override
-//                    public void success(@Nullable HashMap var1) {
-//
-//                        if(call.needCallback == 1) {
-//                            //add method name for main process to decode to a flutter's result.
-//                            var1.put("methodName", call.method);
-//                            Objects.requireNonNull(methodResultCallbackSlog.get(id)).success(var1);
-//                            removeMethodResultCallbackById(id);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void error(String var1, @Nullable String var2, @Nullable HashMap var3) {
-//                        if(call.needCallback == 1) {
-//                            Objects.requireNonNull(methodResultCallbackSlog.get(id)).error(var1, var2, var3);
-//                            removeMethodResultCallbackById(id);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void notImplemented() {
-//                        if(call.needCallback == 1) {
-//                            removeMethodResultCallbackById(id);
-//                        }
-//                    }
-//                });
             }
         });
 
