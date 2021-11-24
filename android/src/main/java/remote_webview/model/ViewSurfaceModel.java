@@ -4,20 +4,22 @@ import android.view.Surface;
 
 import androidx.annotation.CallSuper;
 
+import io.flutter.view.TextureRegistry;
+
 
 abstract public class ViewSurfaceModel {
-    
-    private final long id;
-    
-    private final Surface surface;
 
-    protected ViewSurfaceModel(long id, Surface surface) {
-        this.id = id;
+    private TextureRegistry.SurfaceTextureEntry entry;
+
+    private Surface surface;
+
+    protected ViewSurfaceModel(TextureRegistry.SurfaceTextureEntry entry, Surface surface) {
+        this.entry = entry;
         this.surface = surface;
     }
 
     public long getId() {
-        return id;
+        return entry.id();
     }
 
     public Surface getSurface() {

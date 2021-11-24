@@ -55,10 +55,10 @@ public class WebViewSurfaceProducer implements IGarbageCleanListener {
 
         int pHeight = (int) params.get("physicalHeight");
         
-        WebViewSurfaceClient surfaceModel = new WebViewSurfaceClient.Builder(flutterPluginBinding.getApplicationContext())
-                .init(flutterPluginBinding.getTextureRegistry().createSurfaceTexture())
+        WebViewSurfaceClient surfaceModel = new WebViewSurfaceClient.Builder(flutterPluginBinding)
+                .create(flutterPluginBinding.getTextureRegistry())
                 .setSurfaceDefaultBufferSize(pWidth,pHeight)
-                .build(flutterPluginBinding);
+                .build();
 
         try {
             RemoteServicePresenter.getInstance().getRemoteViewFactoryBinder()
@@ -192,6 +192,7 @@ public class WebViewSurfaceProducer implements IGarbageCleanListener {
 
     @Override
     public void cleanGarbage(long id) {
+        LogUtil.logMsg(this.toString(),"remove surface model  id : %s", String.valueOf(id));
         removeViewSurfaceModel(id);
     }
 

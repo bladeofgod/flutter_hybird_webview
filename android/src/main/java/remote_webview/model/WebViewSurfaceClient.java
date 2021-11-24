@@ -40,8 +40,11 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
 
     private final MethodChannel methodChannel;
 
-    protected WebViewSurfaceClient(long id, Surface surface, BinaryMessenger binaryMessenger) {
-        super(id, surface);
+    protected WebViewSurfaceClient(TextureRegistry.SurfaceTextureEntry entry,
+                                   long id,
+                                   Surface surface,
+                                   BinaryMessenger binaryMessenger) {
+        super(entry, surface);
         methodChannel = new MethodChannel(binaryMessenger,CHANNEL_NAME_HEAD+id);
         methodChannel.setMethodCallHandler(this);
         MainBinderCommHub.getInstance().plugInMethodHandler(id, this);
@@ -308,20 +311,25 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
 
         private final Context mPppContext;
 
-        public Builder(Context appContext) {
-            this.mPppContext = appContext;
+        private final FlutterPlugin.FlutterPluginBinding flutterPluginBinding;
+
+        public Builder(FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
+            this.mPppContext = flutterPluginBinding.getApplicationContext();
+            this.flutterPluginBinding = flutterPluginBinding;
         }
 
 
         private long id;
 
+        private TextureRegistry.SurfaceTextureEntry entry;
+
         private SurfaceTexture mSurfaceTexture;
 
         private Surface mSurface;
 
-        public Builder init(TextureRegistry.SurfaceTextureEntry textureEntry) {
-            mSurfaceTexture = textureEntry.surfaceTexture();
-            id = textureEntry.id();
+        public Builder create(TextureRegistry registry) {
+            entry = registry.createSurfaceTexture();
+            mSurfaceTexture = entry.surfaceTexture();
             return this;
         }
 
@@ -345,11 +353,11 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
             return this;
         }
 
-        public WebViewSurfaceClient build(FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
+        public WebViewSurfaceClient build() {
             LogUtil.logMsg(TAG," size : " + width + "  " + height);
             mSurfaceTexture.setDefaultBufferSize(width, height);
             mSurface = new Surface(mSurfaceTexture);
-            return new WebViewSurfaceClient(id, mSurface, flutterPluginBinding.getBinaryMessenger());
+            return new WebViewSurfaceClient(entry, id, mSurface, flutterPluginBinding.getBinaryMessenger());
         }
 
         //will cause event miss location
