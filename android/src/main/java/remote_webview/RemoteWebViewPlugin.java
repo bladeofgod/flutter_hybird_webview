@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.os.RemoteException;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.Map;
 
@@ -31,6 +32,24 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
     public RemoteWebViewPlugin(Activity mActivity) {
         this.mActivity = mActivity;
     }
+
+    //do nothing ,like dolt.
+    private final MethodChannel.Result idleResult = new MethodChannel.Result() {
+        @Override
+        public void success(@Nullable Object result) {
+
+        }
+
+        @Override
+        public void error(String errorCode, @Nullable String errorMessage, @Nullable Object errorDetails) {
+
+        }
+
+        @Override
+        public void notImplemented() {
+
+        }
+    };
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
@@ -61,7 +80,8 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
-
+        remoteWebViewController.disposeAll(new MethodCall("onDetachedFromEngine", null)
+                , idleResult);
     }
 
     @Override
@@ -83,7 +103,6 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
                 remoteWebViewController.create(methodCall, result);
                 break;
             case "touch":
-                //todo need test
                 remoteWebViewController.touch(methodCall, result);
                 break;
                 

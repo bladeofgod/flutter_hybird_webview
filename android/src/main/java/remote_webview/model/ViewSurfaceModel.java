@@ -28,7 +28,7 @@ abstract public class ViewSurfaceModel {
 
     @CallSuper
     public void release() {
-        surface.release();
+        entry.release();
     }
 
 }

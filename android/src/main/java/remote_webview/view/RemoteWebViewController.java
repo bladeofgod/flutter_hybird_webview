@@ -49,17 +49,36 @@ public class RemoteWebViewController extends RemoteViewTouchController {
         super.dispose(methodCall, result);
         long viewId = getViewId(methodCall);
         LogUtil.logMsg(this.toString(),"Call dispose");
+        //1.clean main
         if(viewId == -1) {
             LogUtil.logMsg("Dispose","view not found!");
         } else {
             MainGarbageCollector.getInstance().notifyClean(viewId);
         }
+        //2.clean remote
+        try {
+            RemoteServicePresenter.getInstance()
+                    .getRemoteViewFactoryBinder()
+                    .dispose(viewId);
+        } catch (RemoteException e) {
+            result.error("-2001","dispose view by id failed.",e.getMessage());
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void disposeAll(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result) {
         super.disposeAll(methodCall, result);
         MainGarbageCollector.getInstance().notifyCleanAll();
+        try {
+            RemoteServicePresenter.getInstance()
+                    .getRemoteViewFactoryBinder()
+                    .disposeAll();
+        } catch (RemoteException e) {
+            result.error("-2002","dispose all view failed.",e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
 
