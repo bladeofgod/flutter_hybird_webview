@@ -343,6 +343,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
     }
 
     private void applySettings(Map<String, Object> settings) {
+        //TODO
 //        for (String key : settings.keySet()) {
 //            switch (key) {
 //                case "jsMode":
@@ -357,13 +358,13 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
 //                    final WebViewClient webViewClient =
 //                            flutterWebViewClient.createWebViewClient(hasNavigationDelegate);
 //
-//                    webView.setWebViewClient(webViewClient);
+//                    getWebView().setWebViewClient(webViewClient);
 //                    break;
 //                case "debuggingEnabled":
 //                    final boolean debuggingEnabled = (boolean) settings.get(key);
 //
 //                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//                        webView.setWebContentsDebuggingEnabled(debuggingEnabled);
+//                        getWebView().setWebContentsDebuggingEnabled(debuggingEnabled);
 //                    }
 //                    break;
 //                case "hasProgressTracking":

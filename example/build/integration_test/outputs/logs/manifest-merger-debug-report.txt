@@ -1,19 +1,19 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\flutter\flutter2.0\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:5:1-7:12
-INJECTED from D:\flutter\flutter2.0\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:5:1-7:12
-INJECTED from D:\flutter\flutter2.0\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:5:1-7:12
+ADDED from I:\flutter\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:5:1-7:12
+INJECTED from I:\flutter\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:5:1-7:12
+INJECTED from I:\flutter\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:5:1-7:12
 	package
-		ADDED from D:\flutter\flutter2.0\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:6:3-41
-		INJECTED from D:\flutter\flutter2.0\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
-		INJECTED from D:\flutter\flutter2.0\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
+		ADDED from I:\flutter\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:6:3-41
+		INJECTED from I:\flutter\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
+		INJECTED from I:\flutter\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\flutter\flutter2.0\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:5:11-69
+		ADDED from I:\flutter\flutter\packages\integration_test\android\src\main\AndroidManifest.xml:5:11-69
 uses-sdk
-INJECTED from D:\flutter\flutter2.0\flutter\packages\integration_test\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from D:\flutter\flutter2.0\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
-INJECTED from D:\flutter\flutter2.0\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
+INJECTED from I:\flutter\flutter\packages\integration_test\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from I:\flutter\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
+INJECTED from I:\flutter\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from D:\flutter\flutter2.0\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
-		ADDED from D:\flutter\flutter2.0\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
-		INJECTED from D:\flutter\flutter2.0\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
+		INJECTED from I:\flutter\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
+		ADDED from I:\flutter\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
+		INJECTED from I:\flutter\flutter\packages\integration_test\android\src\main\AndroidManifest.xml
