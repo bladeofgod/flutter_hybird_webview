@@ -10,6 +10,7 @@ import android.view.Surface;
 import android.webkit.WebStorage;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -303,7 +304,29 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
      */
     @Override
     public void onMethodCall(@NonNull MockMethodCall methodCall, @NonNull IMockMethodResult result) {
-        methodChannel.invokeMethod(methodCall.method, methodCall.arguments);
+        if(methodCall.needCallback == 0) {
+            methodChannel.invokeMethod(methodCall.method, methodCall.arguments);
+        } else {
+            //need result back to remote-view
+            methodChannel.invokeMethod(methodCall.method, methodCall.arguments, new MethodChannel.Result() {
+                @Override
+                public void success(@Nullable Object r) {
+                    //todo need refactor result
+                    result.success(new HashMap());
+                }
+
+                @Override
+                public void error(String errorCode, @Nullable String errorMessage, @Nullable Object errorDetails) {
+                    result.error(errorCode, errorMessage, new HashMap());
+                }
+
+                @Override
+                public void notImplemented() {
+                    result.notImplemented();
+                }
+            });
+        }
+
     }
 
     public static class Builder{
