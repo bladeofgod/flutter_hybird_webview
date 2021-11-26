@@ -146,7 +146,7 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
      */
     private void sendRemoteMethodCall(MethodModel model) {
         if(model.getNeedCallback() == 1) {
-            MainBinderCommHub.getInstance().cacheMethodResultCallback(model.getInvokeTimeStamp());
+            MainBinderCommHub.getInstance().cacheMethodResultFlutterCallback(model.getInvokeTimeStamp());
         }
         LogUtil.logMsg(this.toString(), "sendRemoteMethodCall : " + model.toString());
         try {

@@ -30,7 +30,7 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
      * cache a {@link IMockMethodResult} when called {@link #invokeMethodById} temporary.
      * remove after {@link IMockMethodResult} called.
      */
-    protected final LongSparseArray<C> methodResultCallbackSlog = new LongSparseArray<>();
+    protected final LongSparseArray<BaseCallbackHandler> methodResultCallbackSlog = new LongSparseArray<>();
 
     /**
      * In some case, {@linkplain #invokeMethod(MethodModel)} don't need result callback,
@@ -83,9 +83,9 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
     }
 
 
-    public void cacheMethodResultCallback(long id) {
-        cacheMethodResultCallback(id, getCallbackHandler(id));
-    }
+//    public void cacheMethodResultCallback(long id) {
+//        cacheMethodResultCallback(id, getCallbackHandler(id));
+//    }
 
     /**
      * It's a result-callback , pair of invoke-method.
@@ -94,7 +94,7 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
      *           a  result callback .
      * @param result
      */
-    protected void cacheMethodResultCallback(long id, C result) {
+    protected void cacheMethodResultCallback(long id, BaseCallbackHandler result) {
         LogUtil.logMsg(this.toString(),"callback handler cache size : " + methodResultCallbackSlog.size());
         synchronized (methodResultCallbackSlog) {
             methodResultCallbackSlog.put(id, result);
@@ -120,9 +120,9 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
     
     protected abstract C getCallbackHandler(long id);
     
-    public C fetchCallbackHandler(long id) {
+    public C fetchCallbackHandler(long id) throws ClassCastException {
         synchronized (methodResultCallbackSlog) {
-            return methodResultCallbackSlog.get(id);
+            return (C)methodResultCallbackSlog.get(id);
         }
     }
 

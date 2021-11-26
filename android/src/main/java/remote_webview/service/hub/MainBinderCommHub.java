@@ -109,10 +109,31 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
 //    }
 
 
+    /**
+     * This is for remote invoke,and back a result to remote by {@link MainCallbackHandler}
+     * @param id identifier a method call.
+     * @return a handler for send result to remote
+     */
     @Override
     protected MainCallbackHandler getCallbackHandler(long id) {
         return new MainCallbackHandler(id);
     }
+
+
+    /**
+     * This is for remote callback,and back a result to flutter by {@link FlutterCallbackHandler}
+     * @param id identifier a method call.
+     * @return a handler for send result to flutter
+     */
+    protected FlutterCallbackHandler getFlutterCallbackHandler(long id) {
+        return new FlutterCallbackHandler(id);
+    }
+
+
+    public void cacheMethodResultFlutterCallback(long id) {
+        cacheMethodResultCallback(id, getFlutterCallbackHandler(id));
+    }
+
 
     /**
      * In main process, the invoke-method's resultCallback will pass 2 thread

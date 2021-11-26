@@ -15,12 +15,14 @@ import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 
 import remote_webview.IBinderPool;
+import remote_webview.IMainResultCallbackBinder;
 import remote_webview.IRemoteMethodChannelBinder;
 import remote_webview.IRemoteProcessBinder;
 import remote_webview.IRemoteViewFactoryBinder;
 import remote_webview.model.MethodModel;
 import remote_webview.service.binders.RemoteMethodChannelBinder;
 import remote_webview.service.binders.RemoteProcessBinder;
+import remote_webview.service.binders.RemoteResultCallbackBinder;
 import remote_webview.service.binders.RemoteViewFactoryBinder;
 import remote_webview.utils.LogUtil;
 import remote_webview.view.RemoteWebViewActivity;
@@ -42,6 +44,8 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
     public static final int BINDER_VIEW_FACTORY = 609;
 
     public static final int BINDER_REMOTE_PROCESS = 619;
+
+    public static final int BINDER_REMOTE_RESULT_CALLBACK = 629;
 
     private static volatile RemoteServicePresenter singleton;
 
@@ -123,6 +127,21 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
     }
 
 
+    /**
+     * Get remote result callback binder, for send result back to remote-view.
+     * @return result callback binder
+     */
+    public IMainResultCallbackBinder getRemoteResultCallbackBinder() {
+        IMainResultCallbackBinder binder = null;
+        try {
+            binder = IMainResultCallbackBinder.Stub.asInterface(mBinderPool.queryBinder(BINDER_REMOTE_RESULT_CALLBACK));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return binder;
+    }
+
+
     public static class RemoteBinderPoolImpl extends IBinderPool.Stub{
 
         private Context context;
@@ -145,6 +164,8 @@ public class RemoteServicePresenter extends ProcessServicePresenter {
                 case BINDER_REMOTE_PROCESS:
                     binder = new RemoteProcessBinder();
                     break;
+                case BINDER_REMOTE_RESULT_CALLBACK:
+                    binder = new RemoteResultCallbackBinder();
             }
             return binder;
         }

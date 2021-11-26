@@ -12,23 +12,35 @@ import remote_webview.utils.StringUtil;
 public class MainResultCallbackBinder extends IMainResultCallbackBinder.Stub {
     @Override
     public void remoteSuccess(long id, String result) throws RemoteException {
-        MainCallbackHandler handler = MainBinderCommHub.getInstance().fetchCallbackHandler(id);
-        handler.success((HashMap) StringUtil.getStringToMap(result));
-        MainBinderCommHub.getInstance().removeMethodResultCallbackById(id);
+        try {
+            MainCallbackHandler handler = MainBinderCommHub.getInstance().fetchCallbackHandler(id);
+            handler.success((HashMap) StringUtil.getStringToMap(result));
+            MainBinderCommHub.getInstance().removeMethodResultCallbackById(id);
+        }catch (ClassCastException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void remoteError(long id, String var1, String var2, String info) throws RemoteException {
-        MainCallbackHandler handler = MainBinderCommHub.getInstance().fetchCallbackHandler(id);
-        handler.error(var1, var2, (HashMap) StringUtil.getStringToMap(info));
-        MainBinderCommHub.getInstance().removeMethodResultCallbackById(id);
+        try {
+            MainCallbackHandler handler = MainBinderCommHub.getInstance().fetchCallbackHandler(id);
+            handler.error(var1, var2, (HashMap) StringUtil.getStringToMap(info));
+            MainBinderCommHub.getInstance().removeMethodResultCallbackById(id);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void remoteNotImplemented(long id) throws RemoteException {
-        MainCallbackHandler handler = MainBinderCommHub.getInstance().fetchCallbackHandler(id);
-        handler.notImplemented();
-        MainBinderCommHub.getInstance().removeMethodResultCallbackById(id);
+        try {
+            MainCallbackHandler handler = MainBinderCommHub.getInstance().fetchCallbackHandler(id);
+            handler.notImplemented();
+            MainBinderCommHub.getInstance().removeMethodResultCallbackById(id);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }
