@@ -26,6 +26,7 @@ public class RemoteZygoteActivity extends FlutterActivity {
     public static RemoteZygoteActivity zygoteActivity;
     
     public static void startZygoteActivity() {
+        if(zygoteActivity != null) return;
         Intent intent = new Intent(MainServicePresenter.getInstance().getContext()
                 , RemoteZygoteActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

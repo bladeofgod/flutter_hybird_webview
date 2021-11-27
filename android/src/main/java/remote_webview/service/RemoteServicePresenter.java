@@ -33,7 +33,6 @@ import remote_webview.view.RemoteWebViewActivity;
  * 
  * communicate with remote-process will by this presenter.
  *
- * Tip: this is run on main-app's UI-thread, do not block it!
  */
 
 public class RemoteServicePresenter extends ProcessServicePresenter {

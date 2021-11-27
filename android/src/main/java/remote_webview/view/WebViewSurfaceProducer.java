@@ -15,6 +15,7 @@ import remote_webview.model.ViewSurfaceModel;
 import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.model.WebViewSurfaceClient;
 import remote_webview.service.RemoteServicePresenter;
+import remote_webview.service.manager.RemoteViewModuleManager;
 import remote_webview.utils.LogUtil;
 
 /**
@@ -118,7 +119,7 @@ public class WebViewSurfaceProducer implements IGarbageCleanListener {
 
         return new WebViewCreationParamsModel(id,usesHybridComposition,
                 settings,names,autoMediaPlaybackPolicy
-                ,userAgent,url, pWidth, pHeight);
+                ,userAgent,url, pWidth, pHeight, RemoteViewModuleManager.getInstance().getSavedInstance());
     }
 
 

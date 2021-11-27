@@ -130,6 +130,16 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
     }
 
 
+    /**
+     * Cache a method-result callback for handle the result from remote-view,
+     * and send it to flutter.
+     *
+     * @see FlutterCallbackHandler
+     *
+     * @see #cacheMethodResultCallback(long, BaseCallbackHandler)
+     *
+     * @param id method's id
+     */
     public void cacheMethodResultFlutterCallback(long id) {
         cacheMethodResultCallback(id, getFlutterCallbackHandler(id));
     }

@@ -26,6 +26,9 @@ public class WebViewCreationParamsModel implements Parcelable {
     
     int physicalHeight;
 
+    //for restore view's status.
+    HashMap<String, String> savedInstance;
+
     public WebViewCreationParamsModel(long surfaceId, 
                                       boolean usesHybridComposition, 
                                       HashMap<String, String> settings, 
@@ -34,7 +37,8 @@ public class WebViewCreationParamsModel implements Parcelable {
                                       String userAgent, 
                                       String url,
                                       int physicalWidth,
-                                      int physicalHeight) {
+                                      int physicalHeight,
+                                      HashMap<String, String> savedInstance) {
         this.surfaceId = surfaceId;
         this.usesHybridComposition = usesHybridComposition;
         this.settings = settings;
@@ -44,6 +48,7 @@ public class WebViewCreationParamsModel implements Parcelable {
         this.url = url;
         this.physicalWidth = physicalWidth;
         this.physicalHeight = physicalHeight;
+        this.savedInstance = savedInstance;
     }
 
     public long getSurfaceId() {
@@ -92,6 +97,7 @@ public class WebViewCreationParamsModel implements Parcelable {
         url = in.readString();
         physicalWidth = in.readInt();
         physicalHeight = in.readInt();
+        savedInstance = in.readHashMap(HashMap.class.getClassLoader());
     }
 
     @Override
@@ -105,6 +111,7 @@ public class WebViewCreationParamsModel implements Parcelable {
         dest.writeString(url);
         dest.writeInt(physicalWidth);
         dest.writeInt(physicalHeight);
+        dest.writeMap(savedInstance);
     }
 
     @Override
