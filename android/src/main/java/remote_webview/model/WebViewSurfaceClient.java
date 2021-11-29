@@ -303,7 +303,7 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
      * @param result result call back, must ensure call it after method-call.
      */
     @Override
-    public void onMethodCall(@NonNull MockMethodCall methodCall, @NonNull IMockMethodResult result) {
+    public void onMethodCall(@NonNull MockMethodCall methodCall, @NonNull final IMockMethodResult result) {
         if(methodCall.needCallback == 0) {
             methodChannel.invokeMethod(methodCall.method, methodCall.arguments);
         } else {
@@ -311,7 +311,6 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
             methodChannel.invokeMethod(methodCall.method, methodCall.arguments, new MethodChannel.Result() {
                 @Override
                 public void success(@Nullable Object r) {
-                    //todo need refactor result
                     result.success(new HashMap());
                 }
 

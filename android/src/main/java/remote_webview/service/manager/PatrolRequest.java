@@ -1,5 +1,7 @@
 package remote_webview.service.manager;
 
+import androidx.annotation.WorkerThread;
+
 import java.util.HashMap;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
@@ -25,7 +27,8 @@ public abstract class PatrolRequest implements Delayed {
         this.reportTime = System.currentTimeMillis() + patrolTime;
         this.questType = questType;
     }
-    
+
+    @WorkerThread
     public abstract HashMap doCheck();
 
     @Override

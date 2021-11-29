@@ -16,6 +16,7 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import remote_webview.service.RemoteServicePresenter;
+import remote_webview.service.manager.RemoteViewModuleManager;
 import remote_webview.utils.LogUtil;
 import remote_webview.view.RemoteWebViewController;
 import remote_webview.view.WebViewSurfaceProducer;
@@ -58,30 +59,17 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
         WebViewSurfaceProducer.producer.holdFlutterBinding(flutterPluginBinding);
         mMethodChannel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), CHANNEL_NAME);
         mMethodChannel.setMethodCallHandler(this);
+        RemoteViewModuleManager.getInstance().linkPluginChannel(mMethodChannel);
 
-        RemoteServicePresenter.getInstance().holdContext(flutterPluginBinding.getApplicationContext());
-        RemoteServicePresenter.getInstance().initConnectService();
+        RemoteViewModuleManager.getInstance().onAttachedToEngine(flutterPluginBinding);
 
-
-
-        //todo test code
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    int isAlive = RemoteServicePresenter.getInstance().getRemoteProcessBinder().isZygoteActivityAlive();
-                    LogUtil.logMsg("RemoteServicePresenter"," is alive "  + isAlive);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-            }
-        },4000);
     }
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
         remoteWebViewController.disposeAll(new MethodCall("onDetachedFromEngine", null)
                 , idleResult);
+        RemoteViewModuleManager.getInstance().onDetachedFromEngine(flutterPluginBinding);
     }
 
     @Override

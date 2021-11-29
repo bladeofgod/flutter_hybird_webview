@@ -1,6 +1,7 @@
 package remote_webview.service.manager;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
 
@@ -13,6 +14,8 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.plugin.common.MethodChannel;
 import remote_webview.service.RemoteServicePresenter;
 import remote_webview.utils.LogUtil;
 
@@ -50,6 +53,13 @@ public class RemoteViewModuleManager {
         handler = new Handler(callback);
     }
 
+    //plugin channel
+    MethodChannel pluginChannel;
+
+    public void linkPluginChannel(MethodChannel channel) {
+        pluginChannel = channel;
+    }
+
 
     private Handler.Callback callback = new Handler.Callback() {
         @Override
@@ -76,20 +86,50 @@ public class RemoteViewModuleManager {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        LogUtil.logMsg(getClass().getName(),"patrol report :  " + isAlive);
         //todo notify result
     }
 
+    public void onAttachedToEngine(@NonNull FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
+        RemoteServicePresenter.getInstance().holdContext(flutterPluginBinding.getApplicationContext());
+        startConnectRemoteService();
+        
+    }
 
+    public void onDetachedFromEngine(@NonNull FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
+        dog.clearTask();
+    }
+    
+    private void startConnectRemoteService() {
+        RemoteServicePresenter.getInstance().initConnectService();
+    }
+
+
+    /**
+     * Check the child-process is alive.
+     * e.g service cannot connect anyway, {@linkplain remote_webview.RemoteZygoteActivity}
+     *      cannot restart.
+     *      
+     * Patrol every 5 seconds.
+     */
     public void checkChildProcessAlive() {
         LogUtil.logMsg(getClass().getName(), "patrol : checkChildProcessAlive");
         dog.enqueue(new ChildProcessCheckRequest(this, 5*1000, PATROL_CP_ALIVE));
     }
 
 
+    /**
+     *
+     * @return get last saved view status.
+     */
     public HashMap getSavedInstance() {
         return savedInstance.getSavedInstance();
     }
 
+    /**
+     * Save a view status when it destroy in unpurposed.
+     * @param status
+     */
     public void setSavedInstance(HashMap status) {
         savedInstance.setSavedInstance(status);
     }
@@ -168,7 +208,7 @@ public class RemoteViewModuleManager {
                 e.printStackTrace();
                 return;
             }
-
+            LogUtil.logMsg(getClass().getName(),"do check...");
             HashMap result = request.doCheck();
 
             Message.obtain(request.manager.handler, request.questType, result).sendToTarget();
@@ -183,6 +223,10 @@ public class RemoteViewModuleManager {
 
         public void enqueue(PatrolRequest request) {
             mQueue.put(request);
+        }
+        
+        public void clearTask() {
+            mQueue.clear();
         }
     }
 

@@ -2,6 +2,7 @@ package remote_webview.service.hub;
 
 import android.util.LongSparseArray;
 
+import androidx.annotation.BinderThread;
 import androidx.annotation.Nullable;
 
 import java.util.HashMap;
@@ -162,6 +163,7 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
      * invoke-timestamp its always created at main-process.
      * @param model method model.
      */
+    @BinderThread
     public final void invokeMethod(MethodModel model) {
         final long handlerId = model.getInvokeTimeStamp();
         final MockMethodCall methodCall = new MockMethodCall(model.getId(), 
