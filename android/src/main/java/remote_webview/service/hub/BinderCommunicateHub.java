@@ -121,9 +121,9 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
     
     protected abstract C getCallbackHandler(long id);
     
-    public C fetchCallbackHandler(long id) throws ClassCastException {
+    public BaseCallbackHandler fetchCallbackHandler(long id) throws ClassCastException {
         synchronized (methodResultCallbackSlog) {
-            return (C)methodResultCallbackSlog.get(id);
+            return methodResultCallbackSlog.get(id);
         }
     }
 

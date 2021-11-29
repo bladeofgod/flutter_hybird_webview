@@ -93,7 +93,7 @@ public class RemoteViewModuleManager {
     public void onAttachedToEngine(@NonNull FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
         RemoteServicePresenter.getInstance().holdContext(flutterPluginBinding.getApplicationContext());
         startConnectRemoteService();
-        
+        checkChildProcessAlive();
     }
 
     public void onDetachedFromEngine(@NonNull FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
