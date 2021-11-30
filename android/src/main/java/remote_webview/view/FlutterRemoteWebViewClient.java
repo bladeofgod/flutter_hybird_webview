@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.WebResourceError;
@@ -21,6 +22,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
+import remote_webview.mock.MockMethodChannel;
 
 /**
  * @author LiJiaqi
@@ -34,13 +36,12 @@ import io.flutter.plugin.common.MethodChannel;
 // be broken when a navigationDelegate is set on Android version earlier than N.
 class FlutterRemoteWebViewClient {
     private static final String TAG = "FlutterWebViewClient";
-    //todo mock a channel can call to flutter(and can have a result)
-    //private final MethodChannel methodChannel;
+    private final MockMethodChannel methodChannel;
     private boolean hasNavigationDelegate;
     boolean hasProgressTracking;
 
-    FlutterRemoteWebViewClient(MethodChannel methodChannel) {
-
+    FlutterRemoteWebViewClient(MockMethodChannel methodChannel) {
+        this.methodChannel = methodChannel;
     }
 
     static String errorCodeToString(int errorCode) {
@@ -122,33 +123,49 @@ class FlutterRemoteWebViewClient {
     }
 
     private void onPageStarted(WebView view, String url) {
-        Map<String, Object> args = new HashMap<>();
+        HashMap<String, Object> args = new HashMap<>();
         args.put("url", url);
-        //todo methodChannel.invokeMethod("onPageStarted", args);
+        try {
+            methodChannel.invokeMethod("onPageStarted", args);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     private void onPageFinished(WebView view, String url) {
-        Map<String, Object> args = new HashMap<>();
+        HashMap<String, Object> args = new HashMap<>();
         args.put("url", url);
-        //todo methodChannel.invokeMethod("onPageFinished", args);
+        try {
+            methodChannel.invokeMethod("onPageFinished", args);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     void onLoadingProgress(int progress) {
         if (hasProgressTracking) {
-            Map<String, Object> args = new HashMap<>();
+            HashMap<String, Object> args = new HashMap<>();
             args.put("progress", progress);
-            //todo methodChannel.invokeMethod("onProgress", args);
+            try {
+                methodChannel.invokeMethod("onProgress", args);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private void onWebResourceError(
             final int errorCode, final String description, final String failingUrl) {
-        final Map<String, Object> args = new HashMap<>();
+        final HashMap<String, Object> args = new HashMap<>();
         args.put("errorCode", errorCode);
         args.put("description", description);
         args.put("errorType", FlutterRemoteWebViewClient.errorCodeToString(errorCode));
         args.put("failingUrl", failingUrl);
-        //todo methodChannel.invokeMethod("onWebResourceError", args);
+        try {
+            methodChannel.invokeMethod("onWebResourceError", args);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     private void notifyOnNavigationRequest(

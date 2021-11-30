@@ -7,12 +7,15 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
@@ -26,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.flutter.plugins.webviewflutter.FlutterWebView;
 import remote_webview.RemoteZygoteActivity;
 import remote_webview.interfaces.IMockMethodHandler;
 import remote_webview.interfaces.IMockMethodResult;
@@ -51,6 +55,8 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
     
     private final PackageHandler packageHandler = new WebViewPackageHandler();
 
+    private final FlutterRemoteWebViewClient flutterWebViewClient;
+
     public WebViewPresentation(Context outerContext, WebViewCreationParamsModel creationParamsModel,
                                Display display, long surfaceId,
                                RemoteAccessibilityEventsDelegate accessibilityEventsDelegate,
@@ -59,6 +65,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         initialParams = creationParamsModel;
         this.methodChannel = new MockMethodChannel(surfaceId);
         platformThreadHandler = new Handler(outerContext.getMainLooper());
+        flutterWebViewClient = new FlutterRemoteWebViewClient(methodChannel);
 
         plugInHub();
     }
@@ -88,7 +95,84 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         });
     }
 
-    private WebView createWebView() {
+    // Verifies that a url opened by `Window.open` has a secure url.
+    private class FlutterWebChromeClient extends WebChromeClient {
+
+        @Override
+        public boolean onCreateWindow(
+                final WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
+            final WebViewClient webViewClient =
+                    new WebViewClient() {
+                        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                        @Override
+                        public boolean shouldOverrideUrlLoading(
+                                @NonNull WebView view, @NonNull WebResourceRequest request) {
+                            final String url = request.getUrl().toString();
+                            if (!flutterWebViewClient.shouldOverrideUrlLoading(
+                                    getWebView(), request)) {
+                                getWebView().loadUrl(url);
+                            }
+                            return true;
+                        }
+
+                        @Override
+                        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                            if (!flutterWebViewClient.shouldOverrideUrlLoading(
+                                    getWebView(), url)) {
+                                getWebView().loadUrl(url);
+                            }
+                            return true;
+                        }
+                    };
+
+            final WebView newWebView = new WebView(view.getContext());
+            newWebView.setWebViewClient(webViewClient);
+
+            final WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+            transport.setWebView(newWebView);
+            resultMsg.sendToTarget();
+
+            return true;
+        }
+
+        @Override
+        public void onProgressChanged(WebView view, int progress) {
+            flutterWebViewClient.onLoadingProgress(progress);
+        }
+    }
+
+    private static WebView createWebView(RemoteWebViewBuilder webViewBuilder, WebChromeClient webChromeClient) {
+        webViewBuilder
+                .setDomStorageEnabled(true) // Always enable DOM storage API.
+                .setJavaScriptCanOpenWindowsAutomatically(
+                        true) // Always allow automatically opening of windows.
+                .setSupportMultipleWindows(true) // Always support multiple windows.
+                .setWebChromeClient(
+                        webChromeClient);
+        return webViewBuilder.build();
+    }
+
+    public void showWithUrl() {
+        LogUtil.logMsg(TAG,"showWithUrl");
+        if(initialParams.getUrl() != null && !initialParams.getUrl().isEmpty()) {
+            getWebView().loadUrl(initialParams.getUrl());
+        }
+        show();
+    }
+
+    private WebView getWebView() {
+        return (WebView) state.childView;
+    }
+
+
+    @Override
+    public View createChildView() {
+        return createTestWebView();
+        //return createWebView(new RemoteWebViewBuilder(RemoteZygoteActivity.zygoteActivity), new FlutterWebChromeClient());
+    }
+
+    //todo will cause a new window for H5, set it false for dev.
+    private WebView createTestWebView() {
         WebView webView = new WebView(RemoteZygoteActivity.zygoteActivity);
         //todo update web view init params  see -> WebViewCreationParamsModel
         WebSettings settings = webView.getSettings();
@@ -108,24 +192,6 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
             }
         });
         return webView;
-    }
-
-    public void showWithUrl() {
-        LogUtil.logMsg(TAG,"showWithUrl");
-        if(initialParams.getUrl() != null && !initialParams.getUrl().isEmpty()) {
-            getWebView().loadUrl(initialParams.getUrl());
-        }
-        show();
-    }
-
-    private WebView getWebView() {
-        return (WebView) state.childView;
-    }
-
-
-    @Override
-    public View createChildView() {
-        return createWebView();
     }
 
 //    @Override
