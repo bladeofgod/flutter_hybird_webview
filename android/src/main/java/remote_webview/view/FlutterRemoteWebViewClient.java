@@ -122,7 +122,7 @@ class FlutterRemoteWebViewClient {
         return true;
     }
 
-    private void onPageStarted(WebView view, String url) {
+    public void onPageStarted(WebView view, String url) {
         HashMap<String, Object> args = new HashMap<>();
         args.put("url", url);
         try {
@@ -132,7 +132,7 @@ class FlutterRemoteWebViewClient {
         }
     }
 
-    private void onPageFinished(WebView view, String url) {
+    public void onPageFinished(WebView view, String url) {
         HashMap<String, Object> args = new HashMap<>();
         args.put("url", url);
         try {

@@ -183,12 +183,14 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 Log.e("webview","onPageStarted  " + url);
+                flutterWebViewClient.onPageStarted(view, url);
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 Log.e("webview","onPageFinished  " + url);
+                flutterWebViewClient.onPageFinished(view, url);
             }
         });
         return webView;
