@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import androidx.annotation.BinderThread;
+import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -78,7 +79,10 @@ public abstract class RemoteViewPresentation extends Presentation {
     abstract protected void plugOutHub();
 
     @BinderThread
-    abstract public void dispose();
+    @CallSuper
+    public void dispose() {
+        detachState();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

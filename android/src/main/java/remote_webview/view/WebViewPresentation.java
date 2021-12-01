@@ -82,6 +82,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
 
     @Override
     public void dispose() {
+        super.dispose();
         plugOutHub();
         HandlerUtil.runOnUiThread(new Runnable() {
             @Override

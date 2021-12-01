@@ -46,6 +46,8 @@ class _WebViewExampleState extends State<WebViewExample> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   WebViewController? webViewController;
+  String baidu = 'https://baidu.com';
+  String jd = 'https://jd.com';
 
   @override
   void initState() {
@@ -69,7 +71,7 @@ class _WebViewExampleState extends State<WebViewExample> {
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
         return WebView(
-          initialUrl: 'https://jd.com',
+          initialUrl: baidu,
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             this.webViewController = webViewController;
