@@ -1,13 +1,13 @@
 # WebView for Flutter
 
-[![pub package](https://img.shields.io/pub/v/webview_flutter.svg)](https://pub.dev/packages/webview_flutter)
+This is based on [webview_flutter](https://pub.dev/packages/webview_flutter) development.
 
-A Flutter plugin that provides a WebView widget.
+And expanded a remote-hybird-webview, for decrease main-process's memory usage.
 
-On iOS the WebView widget is backed by a [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview);
-On Android the WebView widget is backed by a [WebView](https://developer.android.com/reference/android/webkit/WebView).
+For now, it only supported on android.
 
 ## Usage
+
 Add `webview_flutter` as a [dependency in your pubspec.yaml file](https://flutter.dev/docs/development/platform-integration/platform-channels). If you are targeting Android, make sure to read the *Android Platform Views* section below to choose the platform view mode that best suits your needs.
 
 You can now include a WebView widget in your widget tree. See the
@@ -45,6 +45,36 @@ android {
 }
 ```
 
+### Using Remote-Hybrid WebView
+
+For example:
+
+    ```dart
+    import 'dart:io';
+    
+    import 'package:webview_flutter/webview_flutter.dart';
+
+    class WebViewExample extends StatefulWidget {
+      @override
+      WebViewExampleState createState() => WebViewExampleState();
+    }
+    
+    class WebViewExampleState extends State<WebViewExample> {
+      @override
+      void initState() {
+        super.initState();
+            // Enable remote-hybrid web view.
+    if (Platform.isAndroid) WebView.platform = TextureAndroidWebView();
+      }
+
+      @override
+      Widget build(BuildContext context) {
+        return WebView(
+          initialUrl: 'https://flutter.dev',
+        );
+      }
+    }
+    ```
 
 ### Using Hybrid Composition
 
