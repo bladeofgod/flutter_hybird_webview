@@ -176,8 +176,8 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
             invokeMethodById(handlerId,methodCall);
         }catch (Exception e) {
             if(model.getNeedCallback() == 1) {
-                Objects.requireNonNull(methodResultCallbackSlog.get(handlerId)).error("",
-                        "Invoke Method Exception" + this.getClass().getSimpleName(), new HashMap() );
+//                Objects.requireNonNull(methodResultCallbackSlog.get(handlerId)).error("",
+//                        "Invoke Method Exception" + this.getClass().getSimpleName(), new HashMap() );
                 removeMethodResultCallbackById(handlerId);
             }
             e.printStackTrace();
@@ -192,16 +192,22 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
      *           @see MethodModel#getInvokeTimeStamp()
      * @param call an invoke with method-name, arguments.
      */
-    protected void invokeMethodById(final long id, final MockMethodCall call) throws NullPointerException {
+    protected void invokeMethodById(final long id, final MockMethodCall call) {
         HandlerUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(call.needCallback == 1) {
-                    Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call, 
-                            Objects.requireNonNull(methodResultCallbackSlog.get(id)));
-                } else {
-                    Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call,
-                            emptyResultCallback);
+                try {
+                    if(call.needCallback == 1) {
+                        Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call,
+                                Objects.requireNonNull(methodResultCallbackSlog.get(id)));
+                    } else {
+                        Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call,
+                                emptyResultCallback);
+                    }
+                }catch (Exception e) {
+                    if(call.needCallback == 1) {
+                        removeMethodResultCallbackById(id);
+                    }
                 }
             }
         });

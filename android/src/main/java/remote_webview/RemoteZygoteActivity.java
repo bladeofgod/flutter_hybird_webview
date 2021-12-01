@@ -50,7 +50,6 @@ public class RemoteZygoteActivity extends FlutterActivity {
         DisplayManager displayManager = (DisplayManager) zygoteActivity.getSystemService(Context.DISPLAY_SERVICE);
         final VirtualDisplay vd = displayManager.createVirtualDisplay("remote_web_view_" + creationParams.getSurfaceId(),
                 creationParams.getPhysicalWidth(), creationParams.getPhysicalHeight(), densityDpi, surface, 0);
-        //todo method channel
         return new WebViewPresentation(zygoteActivity, creationParams, vd.getDisplay(), creationParams.getSurfaceId(),
                 zygoteActivity.remoteAccessibilityEventsDelegate);
     }

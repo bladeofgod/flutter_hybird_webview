@@ -34,11 +34,14 @@ import io.flutter.plugin.platform.PlatformView;
 import remote_webview.service.hub.RemoteBinderCommHub;
 import remote_webview.utils.LogUtil;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
 
 public abstract class RemoteViewPresentation extends Presentation {
+    
+    private static final String TAG = "RemoteViewPresentation";
 
     private final RemoteAccessibilityEventsDelegate accessibilityEventsDelegate;
-    private final View.OnFocusChangeListener focusChangeListener;
     protected long viewId;
     //not useful
     //private Object createParams;
@@ -48,11 +51,21 @@ public abstract class RemoteViewPresentation extends Presentation {
     private boolean startFocused = false;
     private final Context outerContext;
 
-    public RemoteViewPresentation(Context outerContext, Display display,  RemoteAccessibilityEventsDelegate accessibilityEventsDelegate, long viewId, View.OnFocusChangeListener focusChangeListener) {
+    private final View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            LogUtil.logMsg(TAG," has focus : " + hasFocus);
+            //todo send focus to flutter side
+//            if(hasFocus) {
+//                setInputConnectionTarget(state.childView);
+//            }
+        }
+    };
+
+    public RemoteViewPresentation(Context outerContext, Display display,  RemoteAccessibilityEventsDelegate accessibilityEventsDelegate, long viewId, boolean startFocused) {
         super(new ImmContext(outerContext), display);
         this.accessibilityEventsDelegate = accessibilityEventsDelegate;
         this.viewId = viewId;
-        this.focusChangeListener = focusChangeListener;
         this.outerContext = outerContext;
         this.state = new PresentationState();
         this.getWindow()
@@ -61,13 +74,13 @@ public abstract class RemoteViewPresentation extends Presentation {
         if (Build.VERSION.SDK_INT >= 19) {
             this.getWindow().setType(WindowManager.LayoutParams.TYPE_PRIVATE_PRESENTATION);
         }
+        this.startFocused = startFocused;
     }
 
-    public RemoteViewPresentation(Context outerContext, Display display, RemoteAccessibilityEventsDelegate accessibilityEventsDelegate, PresentationState state, View.OnFocusChangeListener focusChangeListener, boolean startFocused) {
+    public RemoteViewPresentation(Context outerContext, Display display, RemoteAccessibilityEventsDelegate accessibilityEventsDelegate, PresentationState state, boolean startFocused) {
         super(new ImmContext(outerContext), display);
         this.accessibilityEventsDelegate = accessibilityEventsDelegate;
         this.state = state;
-        this.focusChangeListener = focusChangeListener;
         this.outerContext = outerContext;
         this.getWindow()
                 .setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
@@ -101,7 +114,7 @@ public abstract class RemoteViewPresentation extends Presentation {
         this.container = new FrameLayout(this.getContext());
         Context context = new PresentationContext(this.getContext(), this.state.windowManagerHandler, this.outerContext);
         if (this.state.childView == null) {
-            this.state.childView = createChildView();
+            this.state.childView = createChildView(container);
         }
 
         View embeddedView = this.state.childView;
@@ -118,7 +131,6 @@ public abstract class RemoteViewPresentation extends Presentation {
         }
 
         this.setContentView(this.rootView);
-        state.childView.setOnFocusChangeListener(focusChangeListener);
     }
 
     public PresentationState detachState() {
@@ -131,7 +143,7 @@ public abstract class RemoteViewPresentation extends Presentation {
         return this.state.childView == null ? null : this.state.childView;
     }
 
-    abstract public View createChildView();
+    abstract public View createChildView(View containerView);
 
     private static class AccessibilityDelegatingFrameLayout extends FrameLayout {
         private final RemoteAccessibilityEventsDelegate accessibilityEventsDelegate;

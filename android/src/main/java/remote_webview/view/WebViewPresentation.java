@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -60,13 +61,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
     public WebViewPresentation(Context outerContext, WebViewCreationParamsModel creationParamsModel,
                                Display display, long surfaceId,
                                RemoteAccessibilityEventsDelegate accessibilityEventsDelegate) {
-        super(outerContext, display, accessibilityEventsDelegate, surfaceId , new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                LogUtil.logMsg(getClass().getName()," has focus : " + hasFocus);
-                //todo send focus to flutter side
-            }
-        });
+        super(outerContext, display, accessibilityEventsDelegate, surfaceId , true);
         initialParams = creationParamsModel;
         this.methodChannel = new MockMethodChannel(surfaceId);
         platformThreadHandler = new Handler(outerContext.getMainLooper());
@@ -171,14 +166,15 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
 
 
     @Override
-    public View createChildView() {
-        return createTestWebView();
+    public View createChildView(final View containerView) {
+
+        return createTestWebView(containerView);
         //return createWebView(new RemoteWebViewBuilder(RemoteZygoteActivity.zygoteActivity), new FlutterWebChromeClient());
     }
 
     //todo will cause a new window for H5, set it false for dev.
-    private WebView createTestWebView() {
-        WebView webView = new WebView(RemoteZygoteActivity.zygoteActivity);
+    private RemoteInputAwareWebView createTestWebView(View containerView) {
+        RemoteInputAwareWebView webView = new RemoteInputAwareWebView(RemoteZygoteActivity.zygoteActivity, containerView);
         //todo update web view init params  see -> WebViewCreationParamsModel
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
