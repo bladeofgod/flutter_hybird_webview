@@ -32,6 +32,7 @@ import io.flutter.Log;
 
 import io.flutter.plugin.platform.PlatformView;
 import remote_webview.service.hub.RemoteBinderCommHub;
+import remote_webview.utils.LogUtil;
 
 
 public abstract class RemoteViewPresentation extends Presentation {
@@ -117,6 +118,7 @@ public abstract class RemoteViewPresentation extends Presentation {
         }
 
         this.setContentView(this.rootView);
+        state.childView.setOnFocusChangeListener(focusChangeListener);
     }
 
     public PresentationState detachState() {

@@ -52,12 +52,7 @@ public class RemoteZygoteActivity extends FlutterActivity {
                 creationParams.getPhysicalWidth(), creationParams.getPhysicalHeight(), densityDpi, surface, 0);
         //todo method channel
         return new WebViewPresentation(zygoteActivity, creationParams, vd.getDisplay(), creationParams.getSurfaceId(),
-                zygoteActivity.remoteAccessibilityEventsDelegate, new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                //todo
-            }
-        });
+                zygoteActivity.remoteAccessibilityEventsDelegate);
     }
 
     @Override

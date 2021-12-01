@@ -59,14 +59,18 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
 
     public WebViewPresentation(Context outerContext, WebViewCreationParamsModel creationParamsModel,
                                Display display, long surfaceId,
-                               RemoteAccessibilityEventsDelegate accessibilityEventsDelegate,
-                               View.OnFocusChangeListener focusChangeListener) {
-        super(outerContext, display, accessibilityEventsDelegate, surfaceId , focusChangeListener);
+                               RemoteAccessibilityEventsDelegate accessibilityEventsDelegate) {
+        super(outerContext, display, accessibilityEventsDelegate, surfaceId , new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                LogUtil.logMsg(getClass().getName()," has focus : " + hasFocus);
+                //todo send focus to flutter side
+            }
+        });
         initialParams = creationParamsModel;
         this.methodChannel = new MockMethodChannel(surfaceId);
         platformThreadHandler = new Handler(outerContext.getMainLooper());
         flutterWebViewClient = new FlutterRemoteWebViewClient(methodChannel);
-
         plugInHub();
     }
 
