@@ -20,12 +20,14 @@ public class ThreadedInputConnectionProxyAdapterView extends View {
     private boolean isLocked = false;
     private InputConnection cachedConnection;
 
-    ThreadedInputConnectionProxyAdapterView(View containerView, View targetView, Handler imeHandler) {
+    ThreadedInputConnectionProxyAdapterView(View containerView, View targetView, Handler imeHandler
+            , IBinder windowToken) {
         super(containerView.getContext());
         this.imeHandler = imeHandler;
         this.containerView = containerView;
         this.targetView = targetView;
-        windowToken = containerView.getWindowToken();
+        //windowToken = containerView.getWindowToken();
+        this.windowToken = windowToken;
         rootView = containerView.getRootView();
         setFocusable(true);
         setFocusableInTouchMode(true);

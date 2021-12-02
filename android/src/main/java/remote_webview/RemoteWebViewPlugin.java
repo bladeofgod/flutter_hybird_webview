@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.RemoteException;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,13 +18,16 @@ import java.util.Map;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
+import remote_webview.interfaces.IWindowTokenExtractor;
 import remote_webview.service.RemoteServicePresenter;
 import remote_webview.service.manager.RemoteViewModuleManager;
 import remote_webview.utils.LogUtil;
 import remote_webview.view.RemoteWebViewController;
 import remote_webview.view.WebViewSurfaceProducer;
 
-public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodCallHandler {
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
+public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodCallHandler, IWindowTokenExtractor {
 
     private static final String CHANNEL_NAME = "remote_webview_plugin";
 
@@ -32,6 +38,7 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
 
     public RemoteWebViewPlugin(Activity mActivity) {
         this.mActivity = mActivity;
+        RemoteViewModuleManager.getInstance().setTokenExtractor(this);
     }
 
     //do nothing ,like dolt.
@@ -62,6 +69,20 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
         RemoteViewModuleManager.getInstance().linkPluginChannel(mMethodChannel);
 
         RemoteViewModuleManager.getInstance().onAttachedToEngine(flutterPluginBinding);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                InputMethodManager imm =
+//                        (InputMethodManager) mActivity.getSystemService(INPUT_METHOD_SERVICE);
+//                View v = mActivity.getWindow().getDecorView();
+//                v.requestFocus();
+//                LogUtil.logMsg(getClass().getSimpleName(),"====================");
+//                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+//                //imm.showSoftInput(v,0);
+//            }
+//        }, 4000);
+
+
 
     }
 
@@ -70,6 +91,7 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
         remoteWebViewController.disposeAll(new MethodCall("onDetachedFromEngine", null)
                 , idleResult);
         RemoteViewModuleManager.getInstance().onDetachedFromEngine(flutterPluginBinding);
+        RemoteViewModuleManager.getInstance().setTokenExtractor(null);
     }
 
     @Override
@@ -104,5 +126,12 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
                 break;
         }
 
+    }
+
+    @Override
+    public IBinder extractorToken() {
+        LogUtil.logMsg(getClass().getSimpleName(),"extractorToken window token : "
+                + (mActivity.getWindow().getDecorView().getWindowToken() == null) );
+        return mActivity.getWindow().getDecorView().getWindowToken();
     }
 }

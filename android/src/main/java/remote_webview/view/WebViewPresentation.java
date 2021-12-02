@@ -3,6 +3,7 @@ package remote_webview.view;
 import android.annotation.TargetApi;
 import android.app.Presentation;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import java.util.Collections;
@@ -81,18 +83,12 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
 
     @Override
     public void dispose() {
-        super.dispose();
         plugOutHub();
-        HandlerUtil.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-//        if (getWebView() instanceof InputAwareWebView) {
+        //        if (getWebView() instanceof InputAwareWebView) {
 //            ((InputAwareWebView) webView).dispose();
 //        }
-                getWebView().destroy();
-                dismiss();
-            }
-        });
+        getWebView().destroy();
+        super.dispose();
     }
 
     // Verifies that a url opened by `Window.open` has a secure url.
@@ -153,7 +149,6 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
     }
 
     public void showWithUrl() {
-        LogUtil.logMsg(TAG,"showWithUrl");
         if(initialParams.getUrl() != null && !initialParams.getUrl().isEmpty()) {
             getWebView().loadUrl(initialParams.getUrl());
         }
@@ -162,6 +157,11 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
 
     private WebView getWebView() {
         return (WebView) state.childView;
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
     }
 
 

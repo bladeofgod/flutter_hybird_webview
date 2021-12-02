@@ -20,6 +20,7 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.BinderThread;
 import androidx.annotation.CallSuper;
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -32,6 +33,7 @@ import io.flutter.Log;
 
 import io.flutter.plugin.platform.PlatformView;
 import remote_webview.service.hub.RemoteBinderCommHub;
+import remote_webview.utils.HandlerUtil;
 import remote_webview.utils.LogUtil;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -92,10 +94,15 @@ public abstract class RemoteViewPresentation extends Presentation {
 
     abstract protected void plugOutHub();
 
-    @BinderThread
+    @MainThread
     @CallSuper
     public void dispose() {
         detachState();
+        dismiss();
+    }
+
+    protected View getContainerView() {
+        return container;
     }
 
     @Override

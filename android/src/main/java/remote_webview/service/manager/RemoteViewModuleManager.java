@@ -1,6 +1,7 @@
 package remote_webview.service.manager;
 
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.RemoteException;
@@ -16,6 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodChannel;
+import remote_webview.interfaces.IWindowTokenExtractor;
 import remote_webview.service.RemoteServicePresenter;
 import remote_webview.utils.LogUtil;
 
@@ -42,6 +44,24 @@ public class RemoteViewModuleManager {
         }
         return instance;
     }
+
+    private IWindowTokenExtractor tokenExtractor;
+
+    public void setTokenExtractor(IWindowTokenExtractor tokenExtractor) {
+        this.tokenExtractor = tokenExtractor;
+    }
+
+    public IBinder getToken() {
+        if(tokenExtractor == null) return null;
+        return tokenExtractor.extractorToken();
+    }
+
+    //    private IBinder token;
+//
+//    public void updateToken(IBinder token) {
+//        LogUtil.logMsg(getClass().getSimpleName(),"window token : " + (token==null) );
+//        this.token = token;
+//    }
 
     private PatrolDog dog = PatrolDog.getInstance();
 

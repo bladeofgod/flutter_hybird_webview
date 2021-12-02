@@ -3,6 +3,7 @@ package remote_webview.view;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -10,6 +11,8 @@ import android.webkit.WebView;
 import android.widget.ListPopupWindow;
 
 
+import remote_webview.service.MainServicePresenter;
+import remote_webview.utils.LogUtil;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -98,11 +101,13 @@ public class RemoteInputAwareWebView extends WebView {
         // We've never seen this before, so we make the assumption that this is WebView's
         // ThreadedInputConnectionProxyView. We are making the assumption that the only view that could
         // possibly be interacting with the IMM here is WebView's ThreadedInputConnectionProxyView.
+        IBinder mainToken = MainServicePresenter.getInstance().getMainWindowToken();
+        LogUtil.logMsg(getClass().getSimpleName(),"window token : " + (mainToken==null) );
         proxyAdapterView =
                 new ThreadedInputConnectionProxyAdapterView(
                         /*containerView=*/ containerView,
                         /*targetView=*/ view,
-                        /*imeHandler=*/ view.getHandler());
+                        /*imeHandler=*/ view.getHandler(), mainToken);
         setInputConnectionTarget(/*targetView=*/ proxyAdapterView);
         return super.checkInputConnectionProxy(view);
     }

@@ -88,9 +88,14 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
     
 
     @Override
-    public void cleanGarbage(long id) {
+    public void cleanGarbage(final long id) {
         try {
-            Objects.requireNonNull(viewCache.get(id)).dispose();
+            HandlerUtil.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Objects.requireNonNull(viewCache.get(id)).dispose();
+                }
+            });
         }catch (Exception e) {
             e.printStackTrace();
         }

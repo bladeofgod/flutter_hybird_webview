@@ -12,6 +12,7 @@ import remote_webview.IMainResultCallbackBinder;
 import remote_webview.IRemoteMethodChannelBinder;
 import remote_webview.service.binders.MainMethodChannelBinder;
 import remote_webview.service.binders.MainResultCallbackBinder;
+import remote_webview.service.manager.RemoteViewModuleManager;
 
 
 /**
@@ -23,6 +24,8 @@ import remote_webview.service.binders.MainResultCallbackBinder;
 public class MainServicePresenter extends ProcessServicePresenter {
 
     public static final int BINDER_MAIN_RESULT_CALLBACK = 809;
+
+    public static final int BINDER_MAIN_WINDOW_TOKEN = 810;
 
     private static volatile MainServicePresenter singleton;
 
@@ -81,6 +84,17 @@ public class MainServicePresenter extends ProcessServicePresenter {
     }
 
 
+    public IBinder getMainWindowToken() {
+        IBinder binder = null;
+        try {
+            binder = mBinderPool.queryBinder(BINDER_MAIN_WINDOW_TOKEN);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return binder;
+    }
+
+
     public static class MainBinderPoolImpl extends IBinderPool.Stub{
 
         private Context context;
@@ -98,6 +112,9 @@ public class MainServicePresenter extends ProcessServicePresenter {
                     break;
                 case BINDER_MAIN_RESULT_CALLBACK:
                     binder = new MainResultCallbackBinder();
+                    break;
+                case BINDER_MAIN_WINDOW_TOKEN:
+                    binder = RemoteViewModuleManager.getInstance().getToken();
                     break;
             }
             return binder;
