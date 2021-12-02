@@ -52,7 +52,7 @@ public class RemoteZygoteActivity extends FlutterActivity {
     };
     public RemoteZygoteActivity() {
         zygoteActivity = this;
-        InputMethodHolder.registerListener(onInputMethodListener);
+        //InputMethodHolder.registerListener(onInputMethodListener);
     }
 
     final RemoteAccessibilityEventsDelegate remoteAccessibilityEventsDelegate = new RemoteAccessibilityEventsDelegate();
@@ -72,7 +72,7 @@ public class RemoteZygoteActivity extends FlutterActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        InputMethodHolder.init(this);
+        //InputMethodHolder.init(this);
         LogUtil.logMsg("RemoteZygoteActivity", "protected onCreate");
     }
 
