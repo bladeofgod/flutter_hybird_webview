@@ -84,9 +84,6 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
     @Override
     public void dispose() {
         plugOutHub();
-        //        if (getWebView() instanceof InputAwareWebView) {
-//            ((InputAwareWebView) webView).dispose();
-//        }
         getWebView().destroy();
         super.dispose();
     }
@@ -173,8 +170,8 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
     }
 
     //todo will cause a new window for H5, set it false for dev.
-    private RemoteInputAwareWebView createTestWebView(View containerView) {
-        RemoteInputAwareWebView webView = new RemoteInputAwareWebView(RemoteZygoteActivity.zygoteActivity, containerView);
+    private WebView createTestWebView(View containerView) {
+        WebView webView = new WebView(RemoteZygoteActivity.zygoteActivity);
         //todo update web view init params  see -> WebViewCreationParamsModel
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
