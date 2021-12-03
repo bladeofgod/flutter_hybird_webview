@@ -8,15 +8,18 @@ import android.hardware.display.VirtualDisplay;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Surface;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import io.flutter.embedding.android.FlutterActivity;
 import remote_webview.input_hook.InputMethodHolder;
 import remote_webview.input_hook.OnInputMethodListener;
+import remote_webview.input_hook.util.ReflectUtil;
 import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.service.MainServicePresenter;
 import remote_webview.utils.LogUtil;
@@ -55,6 +58,12 @@ public class RemoteZygoteActivity extends FlutterActivity {
         //InputMethodHolder.registerListener(onInputMethodListener);
     }
 
+    @Override
+    public Object getSystemService(@NonNull String name) {
+        LogUtil.logMsg("RemoteZygoteActivity","getSystemService ====  ",name);
+        return super.getSystemService(name);
+    }
+
     final RemoteAccessibilityEventsDelegate remoteAccessibilityEventsDelegate = new RemoteAccessibilityEventsDelegate();
 
     public static WebViewPresentation generateWebViewPresentation(WebViewCreationParamsModel creationParams, Surface surface) throws Exception {
@@ -65,6 +74,13 @@ public class RemoteZygoteActivity extends FlutterActivity {
         DisplayManager displayManager = (DisplayManager) zygoteActivity.getSystemService(Context.DISPLAY_SERVICE);
         final VirtualDisplay vd = displayManager.createVirtualDisplay("remote_web_view_" + creationParams.getSurfaceId(),
                 creationParams.getPhysicalWidth(), creationParams.getPhysicalHeight(), densityDpi, surface, 0);
+        LogUtil.logMsg("RemoteZygoteActivity","VirtualDisplay old display id : "
+                + vd.getDisplay().getDisplayId());
+//        //Display display = (Display) ReflectUtil.getFiled(Display.class,"mDisplay",vd);
+//        ReflectUtil.setFiled(Display.class,"mDisplayId",vd.getDisplay(), 0);
+//        LogUtil.logMsg("RemoteZygoteActivity","VirtualDisplay new display id : "
+//                + vd.getDisplay().getDisplayId());
+
         return new WebViewPresentation(zygoteActivity, creationParams, vd.getDisplay(), creationParams.getSurfaceId(),
                 zygoteActivity.remoteAccessibilityEventsDelegate);
     }
@@ -74,6 +90,8 @@ public class RemoteZygoteActivity extends FlutterActivity {
         super.onCreate(savedInstanceState);
         //InputMethodHolder.init(this);
         LogUtil.logMsg("RemoteZygoteActivity", "protected onCreate");
+        LogUtil.logMsg(getClass().getSimpleName(),"display id : " 
+                + getWindowManager().getDefaultDisplay().getDisplayId());
     }
 
     @Override
