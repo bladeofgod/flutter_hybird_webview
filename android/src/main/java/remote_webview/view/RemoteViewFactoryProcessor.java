@@ -5,6 +5,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 
+import androidx.annotation.BinderThread;
 import androidx.annotation.RequiresApi;
 
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.utils.LogUtil;
 import remote_webview.utils.HandlerUtil;
+import remote_webview.view.factory.RemoteWebViewFactory;
 
 /**
  * the {@link remote_webview.service.binders.RemoteViewFactoryBinder} processor.
@@ -44,6 +46,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
 
     private final HashMap<Long, RemoteViewPresentation> viewCache = new HashMap<>();
 
+    @BinderThread
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void createWithSurface(final WebViewCreationParamsModel creationParams, final Surface surface) {
         HandlerUtil.runOnUiThread(new Runnable() {
@@ -52,8 +55,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
                 try {
                     final long surfaceId = creationParams.getSurfaceId();
                     LogUtil.logMsg("view factory", " createWithSurface  id " + surfaceId);
-                    WebViewPresentation presentation = RemoteZygoteActivity.generateWebViewPresentation(creationParams,surface);
-
+                    WebViewPresentation presentation = RemoteWebViewFactory.singleton.generateWebViewPresentation(creationParams,surface);
                     viewCache.put(surfaceId, presentation);
                     presentation.create();
                     presentation.showWithUrl();

@@ -25,6 +25,7 @@ import remote_webview.service.MainServicePresenter;
 import remote_webview.utils.LogUtil;
 import remote_webview.view.RemoteAccessibilityEventsDelegate;
 import remote_webview.view.WebViewPresentation;
+import remote_webview.view.factory.RemoteWebViewFactory;
 
 
 public class RemoteZygoteActivity extends FlutterActivity {
@@ -55,6 +56,7 @@ public class RemoteZygoteActivity extends FlutterActivity {
     };
     public RemoteZygoteActivity() {
         zygoteActivity = this;
+        RemoteWebViewFactory.singleton.initFactory(zygoteActivity);
         //InputMethodHolder.registerListener(onInputMethodListener);
     }
 
@@ -63,27 +65,7 @@ public class RemoteZygoteActivity extends FlutterActivity {
         LogUtil.logMsg("RemoteZygoteActivity","getSystemService ====  ",name);
         return super.getSystemService(name);
     }
-
-    final RemoteAccessibilityEventsDelegate remoteAccessibilityEventsDelegate = new RemoteAccessibilityEventsDelegate();
-
-    public static WebViewPresentation generateWebViewPresentation(WebViewCreationParamsModel creationParams, Surface surface) throws Exception {
-        final DisplayMetrics dm = zygoteActivity.getResources().getDisplayMetrics();
-//        int sw = dm.widthPixels;
-//        int sh = dm.heightPixels;
-        int densityDpi = dm.densityDpi;
-        DisplayManager displayManager = (DisplayManager) zygoteActivity.getSystemService(Context.DISPLAY_SERVICE);
-        final VirtualDisplay vd = displayManager.createVirtualDisplay("remote_web_view_" + creationParams.getSurfaceId(),
-                creationParams.getPhysicalWidth(), creationParams.getPhysicalHeight(), densityDpi, surface, 0);
-        LogUtil.logMsg("RemoteZygoteActivity","VirtualDisplay old display id : "
-                + vd.getDisplay().getDisplayId());
-//        //Display display = (Display) ReflectUtil.getFiled(Display.class,"mDisplay",vd);
-//        ReflectUtil.setFiled(Display.class,"mDisplayId",vd.getDisplay(), 0);
-//        LogUtil.logMsg("RemoteZygoteActivity","VirtualDisplay new display id : "
-//                + vd.getDisplay().getDisplayId());
-
-        return new WebViewPresentation(zygoteActivity, creationParams, vd.getDisplay(), creationParams.getSurfaceId(),
-                zygoteActivity.remoteAccessibilityEventsDelegate);
-    }
+    
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
