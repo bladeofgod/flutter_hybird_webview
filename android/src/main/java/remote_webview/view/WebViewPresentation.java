@@ -145,11 +145,12 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         return webViewBuilder.build();
     }
 
-    public void showWithUrl() {
+    @Override
+    public void show() {
         if(initialParams.getUrl() != null && !initialParams.getUrl().isEmpty()) {
             getWebView().loadUrl(initialParams.getUrl());
         }
-        show();
+        super.show();
     }
 
     private WebView getWebView() {

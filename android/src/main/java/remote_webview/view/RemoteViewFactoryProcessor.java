@@ -11,7 +11,6 @@ import androidx.annotation.RequiresApi;
 import java.util.HashMap;
 import java.util.Objects;
 
-import remote_webview.RemoteZygoteActivity;
 import remote_webview.garbage_collect.RemoteGarbageCollector;
 import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.model.WebViewCreationParamsModel;
@@ -57,8 +56,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
                     LogUtil.logMsg("view factory", " createWithSurface  id " + surfaceId);
                     WebViewPresentation presentation = RemoteWebViewFactory.singleton.generateWebViewPresentation(creationParams,surface);
                     viewCache.put(surfaceId, presentation);
-                    presentation.create();
-                    presentation.showWithUrl();
+                    HandlerUtil.runOnUiThread(new ViewTrigger(surfaceId));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -118,6 +116,32 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
         }
         viewCache.clear();
     }
+
+
+    class ViewTrigger implements Runnable{
+        final long viewId;
+
+        //maybe need object pool
+        ViewTrigger(long viewId) {
+            this.viewId = viewId;
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public void run() {
+            try {
+                viewCache.get(viewId).create();
+                viewCache.get(viewId).show();
+            }catch (NullPointerException e) {
+                //todo maybe need notify main-process
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
 }
 
 
