@@ -165,10 +165,10 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
      */
     @Override
     protected void invokeMethodById(final long id, final MockMethodCall call) throws NullPointerException {
+        LogUtil.logMsg(getClass().getSimpleName(),"invokeMethodById e : " +id," ",call.toString());
         HandlerUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LogUtil.logMsg(getClass().getSimpleName(),"invokeMethodById e : " +id," ",call.toString());
                 try {
                     if(call.needCallback == 1) {
                         Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call,

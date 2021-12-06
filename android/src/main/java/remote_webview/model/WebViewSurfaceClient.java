@@ -42,13 +42,12 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
     private final MethodChannel methodChannel;
 
     protected WebViewSurfaceClient(TextureRegistry.SurfaceTextureEntry entry,
-                                   long id,
                                    Surface surface,
                                    BinaryMessenger binaryMessenger) {
         super(entry, surface);
-        methodChannel = new MethodChannel(binaryMessenger,CHANNEL_NAME_HEAD+id);
+        methodChannel = new MethodChannel(binaryMessenger,CHANNEL_NAME_HEAD+entry.id());
         methodChannel.setMethodCallHandler(this);
-        MainBinderCommHub.getInstance().plugInMethodHandler(id, this);
+        MainBinderCommHub.getInstance().plugInMethodHandler(entry.id(), this);
     }
 
     @Override
@@ -340,9 +339,6 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
             this.flutterPluginBinding = flutterPluginBinding;
         }
 
-
-        private long id;
-
         private TextureRegistry.SurfaceTextureEntry entry;
 
         private SurfaceTexture mSurfaceTexture;
@@ -376,10 +372,10 @@ public class WebViewSurfaceClient extends ViewSurfaceModel
         }
 
         public WebViewSurfaceClient build() {
-            LogUtil.logMsg(TAG," size : " + width + "  " + height);
+            LogUtil.logMsg(TAG,"view size : " + width + "  " + height);
             mSurfaceTexture.setDefaultBufferSize(width, height);
             mSurface = new Surface(mSurfaceTexture);
-            return new WebViewSurfaceClient(entry, id, mSurface, flutterPluginBinding.getBinaryMessenger());
+            return new WebViewSurfaceClient(entry, mSurface, flutterPluginBinding.getBinaryMessenger());
         }
 
         //will cause event miss location

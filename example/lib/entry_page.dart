@@ -69,7 +69,6 @@ class WebPageState extends State<WebPage> {
       ),
     ), onWillPop: () async {
       bool canBack = await webViewController?.canGoBack() ?? false;
-      debugPrint('web view  canBack : $canBack');
       if(canBack) {
         webViewController?.goBack();
       }

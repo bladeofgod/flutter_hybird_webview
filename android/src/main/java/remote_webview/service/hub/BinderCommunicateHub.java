@@ -63,6 +63,7 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
      * @param handler     control web-view.
      */
     public void plugInMethodHandler(long id, IMockMethodHandler handler) {
+        LogUtil.logMsg("hub","plug in  " + id);
         synchronized (methodHandlerSlot) {
             methodHandlerSlot.put(id,handler);
         }
@@ -74,6 +75,7 @@ abstract public class BinderCommunicateHub<C extends BaseCallbackHandler> {
      * @param id surface's id
      */
     public void plugOutMethodHandler(long id) {
+        LogUtil.logMsg("hub","plug out  " + id);
         synchronized (methodHandlerSlot) {
             methodHandlerSlot.remove(id);
         }
