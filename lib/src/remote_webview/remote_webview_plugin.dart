@@ -27,7 +27,7 @@ class RemoteWebViewPlugin{
   ///Dispose the view
   ///[id] textureId
   static Future<void> dispose(int id) async {
-    return await _channel.invokeMethod('dispose', {'viewId':id});
+    return await _channel.invokeMethod('dispose', {'viewId':'$id'});
   }
 
   ///Dispose all remote-view.

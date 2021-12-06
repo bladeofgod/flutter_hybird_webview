@@ -61,7 +61,7 @@ abstract public class BaseRemoteViewController {
     protected long getViewId(@NonNull MethodCall methodCall) {
         long viewId = -1;
         try {
-            viewId = (long)methodCall.argument("viewId");
+            viewId = Long.parseLong(methodCall.argument("viewId"));
         }catch (Exception e) {
             e.printStackTrace();
         }
