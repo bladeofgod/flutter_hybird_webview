@@ -1,12 +1,14 @@
 package remote_webview.view;
 
 import android.os.Build;
+import android.os.Message;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 
 import androidx.annotation.BinderThread;
 import androidx.annotation.RequiresApi;
+import androidx.core.util.Pools;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -58,14 +60,14 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
                     LogUtil.logMsg("view factory", " createWithSurface  id " + surfaceId);
                     WebViewPresentation presentation = RemoteWebViewFactory.singleton.generateWebViewPresentation(creationParams,surface);
                     viewCache.put(surfaceId, presentation);
-                    HandlerUtil.runOnUiThread(new ViewTrigger(surfaceId));
+                    ViewTrigger trigger = ViewTrigger.obtain(surfaceId);
+                    ViewTrigger.initView(trigger);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             }
         });
-
     }
 
     public void dispatchTouchEvent(String surfaceId, MotionEvent event) {
@@ -120,24 +122,52 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
     }
 
 
-    class ViewTrigger implements Runnable{
-        final long viewId;
+    static class ViewTrigger implements Runnable{
 
-        //maybe need object pool
-        ViewTrigger(long viewId) {
-            this.viewId = viewId;
+        static long NULL_LONG = -9999;
+
+        private static Pools.SynchronizedPool<ViewTrigger> mViewTriggerPool = new Pools.SynchronizedPool<>(10);
+
+        public static ViewTrigger obtain(long viewId) {
+            ViewTrigger trigger = mViewTriggerPool.acquire();
+            if(trigger == null) {
+                trigger = new ViewTrigger();
+            }
+            trigger.viewId = viewId;
+            return trigger;
         }
+
+        public static void releaseTrigger(ViewTrigger trigger) {
+            trigger.viewId = NULL_LONG;
+            mViewTriggerPool.release(trigger);
+        }
+
+        public static void initView(ViewTrigger trigger) {
+            HandlerUtil.runOnUiThread(trigger);
+        }
+
+        ViewTrigger() {
+        }
+
+
+        long viewId;
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void run() {
             try {
-                viewCache.get(viewId).create();
-                viewCache.get(viewId).show();
+                RemoteViewFactoryProcessor
+                        .getInstance()
+                        .viewCache.get(viewId).create();
+                RemoteViewFactoryProcessor
+                        .getInstance()
+                        .viewCache.get(viewId).show();
             }catch (NullPointerException e) {
                 //todo maybe need notify main-process
                 e.printStackTrace();
             }
+            
+            releaseTrigger(this);
         }
     }
 
