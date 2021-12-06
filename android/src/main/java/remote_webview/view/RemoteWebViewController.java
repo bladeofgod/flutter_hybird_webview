@@ -23,6 +23,7 @@ import io.flutter.plugin.platform.PlatformViewsController;
 import remote_webview.garbage_collect.MainGarbageCollector;
 import remote_webview.service.RemoteServicePresenter;
 import remote_webview.utils.LogUtil;
+import remote_webview.view.controller.RemoteViewInputController;
 import remote_webview.view.controller.RemoteViewTouchController;
 
 /**
@@ -30,7 +31,7 @@ import remote_webview.view.controller.RemoteViewTouchController;
  * Design reference {@linkplain PlatformViewsController} and {@link PlatformViewsChannel}
  */
 
-public class RemoteWebViewController extends RemoteViewTouchController {
+public class RemoteWebViewController extends RemoteViewInputController {
     
 
     public RemoteWebViewController(Context context) {

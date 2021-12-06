@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.RemoteException;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -18,6 +19,8 @@ import java.util.Map;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
+import remote_webview.activity.RemoteWebActivity;
+import remote_webview.interfaces.IActivityKeyEventCallback;
 import remote_webview.interfaces.IWindowTokenExtractor;
 import remote_webview.service.RemoteServicePresenter;
 import remote_webview.service.manager.RemoteViewModuleManager;
@@ -27,17 +30,19 @@ import remote_webview.view.WebViewSurfaceProducer;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
-public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodCallHandler, IWindowTokenExtractor {
+public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodCallHandler
+        , IWindowTokenExtractor, IActivityKeyEventCallback {
 
     private static final String CHANNEL_NAME = "remote_webview_plugin";
 
     private RemoteWebViewController remoteWebViewController;
     private Context mAppContext;
-    private Activity mActivity;
+    private RemoteWebActivity mActivity;
     private MethodChannel mMethodChannel;
 
-    public RemoteWebViewPlugin(Activity mActivity) {
+    public RemoteWebViewPlugin(RemoteWebActivity mActivity) {
         this.mActivity = mActivity;
+        mActivity.setKeyEventCallback(this);
         RemoteViewModuleManager.getInstance().setTokenExtractor(this);
     }
 
@@ -133,5 +138,15 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
         LogUtil.logMsg(getClass().getSimpleName(),"extractorToken window token : "
                 + (mActivity.getWindow().getDecorView().getWindowToken() == null) );
         return mActivity.getWindow().getDecorView().getWindowToken();
+    }
+
+    @Override
+    public void dispatchKeyEvent(KeyEvent event) {
+        remoteWebViewController.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public boolean consumeKeyEvent() {
+        return remoteWebViewController.hasInputConsumer();
     }
 }

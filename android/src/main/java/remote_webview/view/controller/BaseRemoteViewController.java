@@ -1,7 +1,9 @@
 package remote_webview.view.controller;
 
 import android.os.Build;
+import android.view.KeyEvent;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 
 import java.io.PrintWriter;
@@ -23,6 +25,7 @@ abstract public class BaseRemoteViewController {
      * @param methodCall
      * @param result
      */
+    @MainThread
     abstract public void create(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result);
 
     /**
@@ -30,7 +33,18 @@ abstract public class BaseRemoteViewController {
      * @param methodCall
      * @param result
      */
+    @MainThread
     abstract public void touch(@NonNull MethodCall methodCall, @NonNull MethodChannel.Result result);
+
+    /**
+     * Key event from main-activity, and dispatch to remote-view.
+     *
+     * @see remote_webview.interfaces.IActivityKeyEventCallback
+     *
+     * @param keyEvent Key event from main activity
+     */
+    @MainThread
+    abstract public void dispatchKeyEvent(@NonNull KeyEvent keyEvent);
 
     /**
      * Dispose a view module that contains in main and remote process.
@@ -61,7 +75,7 @@ abstract public class BaseRemoteViewController {
     protected long getViewId(@NonNull MethodCall methodCall) {
         long viewId = -1;
         try {
-            viewId = Long.parseLong(methodCall.argument("viewId"));
+            viewId = Long.parseLong((String)methodCall.argument("viewId"));
         }catch (Exception e) {
             e.printStackTrace();
         }

@@ -6,10 +6,10 @@ package io.flutter.plugins.webviewflutterexample;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.engine.FlutterEngine;
-import remote_webview.view.RemoteWebViewActivity;
+import remote_webview.activity.RemoteWebActivity;
 
 // Extends FlutterActivity to make the FlutterEngine accessible for testing.
-public class WebViewTestActivity extends RemoteWebViewActivity {
+public class WebViewTestActivity extends RemoteWebActivity {
   public FlutterEngine engine;
 
   @Override
