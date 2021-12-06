@@ -19,8 +19,10 @@ import remote_webview.utils.HandlerUtil;
 import remote_webview.view.factory.RemoteWebViewFactory;
 
 /**
- * the {@link remote_webview.service.binders.RemoteViewFactoryBinder} processor.
- * receive the order from binder and to create a real-view .
+ * The {@link remote_webview.service.binders.RemoteViewFactoryBinder} processor.
+ * receive the order from (main)binder and to dispatch to view.
+ *
+ * e.g create a real-view, dispatch event.
  *
  */
 
