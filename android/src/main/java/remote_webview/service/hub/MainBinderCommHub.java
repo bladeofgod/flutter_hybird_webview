@@ -168,12 +168,17 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
         HandlerUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(call.needCallback == 1) {
-                    Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call,
-                            Objects.requireNonNull(methodResultCallbackSlog.get(id)));
-                } else {
-                    Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call,
-                            emptyResultCallback);
+                LogUtil.logMsg(getClass().getSimpleName(),"invokeMethodById e : " +id," ",call.toString());
+                try {
+                    if(call.needCallback == 1) {
+                        Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call,
+                                Objects.requireNonNull(methodResultCallbackSlog.get(id)));
+                    } else {
+                        Objects.requireNonNull(methodHandlerSlot.get(call.id)).onMethodCall(call,
+                                emptyResultCallback);
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });

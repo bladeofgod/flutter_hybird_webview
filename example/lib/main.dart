@@ -22,6 +22,11 @@ void main() {
   runApp(MaterialApp(home: WebViewExample()));
 }
 
+String baidu = 'https://baidu.com';
+String jd = 'https://jd.com';
+String zhihu = 'https://zhuanlan.zhihu.com/founderchip2';
+String meituan = 'https://bj.meituan.com/';
+
 const String kNavigationExamplePage = '''
 <!DOCTYPE html><html>
 <head><title>Navigation Delegate Example</title></head>
@@ -46,8 +51,7 @@ class _WebViewExampleState extends State<WebViewExample> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   WebViewController? webViewController;
-  String baidu = 'https://baidu.com';
-  String jd = 'https://jd.com';
+
 
   @override
   void initState() {
@@ -123,20 +127,34 @@ class _WebViewExampleState extends State<WebViewExample> {
   }
 
   Widget favoriteButton() {
-    return FutureBuilder<WebViewController>(
-        future: _controller.future,
-        builder: (BuildContext context,
-            AsyncSnapshot<WebViewController> controller) {
-          if (controller.hasData) {
-            return FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_)=>TestPage(symbol: '123')));
-              },
-              child: const Icon(Icons.favorite),
-            );
-          }
-          return Container();
+    return FloatingActionButton(
+      onPressed: () {
+        showModalBottomSheet(context: context, builder: (ctx) {
+          return Material(
+            color: Colors.white,
+            child: Container(
+              color: Colors.yellowAccent,
+              child: WebPage(url: jd,),
+            ),
+          );
         });
+      },
+      child: const Icon(Icons.favorite),
+    );
+    // return FutureBuilder<WebViewController>(
+    //     future: _controller.future,
+    //     builder: (BuildContext context,
+    //         AsyncSnapshot<WebViewController> controller) {
+    //       if (controller.hasData) {
+    //         return FloatingActionButton(
+    //           onPressed: () {
+    //             Navigator.of(context).push(MaterialPageRoute(builder: (_)=>TestPage(symbol: '123')));
+    //           },
+    //           child: const Icon(Icons.favorite),
+    //         );
+    //       }
+    //       return Container();
+    //     });
   }
 }
 

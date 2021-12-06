@@ -195,7 +195,7 @@ public class RemoteViewModuleManager {
                         .getRemoteProcessBinder()
                         .isZygoteActivityAlive() == 1;
                 result.put(isAlive_Key, isAlive);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 result.put(isAlive_Key, false);
                 e.printStackTrace();
             }
