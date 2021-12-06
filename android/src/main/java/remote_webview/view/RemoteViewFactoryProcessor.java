@@ -30,6 +30,8 @@ import remote_webview.view.factory.RemoteWebViewFactory;
 
 public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
 
+    private static final String TAG = "RemoteViewFactoryProcessor";
+
     private static volatile RemoteViewFactoryProcessor singleton;
 
     public static RemoteViewFactoryProcessor getInstance() {
@@ -93,20 +95,24 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
 
     @Override
     public void cleanGarbage(final long id) {
-        try {
-            HandlerUtil.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Objects.requireNonNull(viewCache.get(id)).dispose();
-                }
-            });
-        }catch (Exception e) {
-            e.printStackTrace();
+        //somehow clean notify will duplicate invoke
+        if(viewCache.containsKey(id)) {
+            try {
+                HandlerUtil.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Objects.requireNonNull(viewCache.get(id)).dispose();
+                    }
+                });
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+            LogUtil.logMsg(this.toString(), "remove cache view : " +id);
+            viewCache.remove(id);
+            LogUtil.logMsg(this.toString(),"after cleanGarbage ,viewCache size: "
+                    + viewCache.size());
         }
-        LogUtil.logMsg(this.toString(), "remove cache view : " +id);
-        viewCache.remove(id);
-        LogUtil.logMsg(this.toString(),"after cleanGarbage ,viewCache size: "
-                + viewCache.size());
+
     }
 
     @Override
