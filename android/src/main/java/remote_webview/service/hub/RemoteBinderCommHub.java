@@ -30,7 +30,7 @@ public class RemoteBinderCommHub extends BinderCommunicateHub<RemoteCallbackHand
 
     @Override
     public void cleanGarbage(long id) {
-        LogUtil.logMsg(this.toString(),"start cleanGarbage id : %s  methodHandlerSlot size %s"
+        LogUtil.logMsg(this.toString(),"start cleanGarbage id :   methodHandlerSlot size "
                 ,String.valueOf(id),String.valueOf(methodHandlerSlot.size()));
         plugOutMethodHandler(id);
         LogUtil.logMsg(this.toString(),"after cleanGarbage ,methodHandlerSlot size: "

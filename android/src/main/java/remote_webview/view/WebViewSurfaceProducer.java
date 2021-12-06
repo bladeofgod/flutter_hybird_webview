@@ -193,7 +193,7 @@ public class WebViewSurfaceProducer implements IGarbageCleanListener {
 
     @Override
     public void cleanGarbage(long id) {
-        LogUtil.logMsg(this.toString(),"remove surface model  id : %s", String.valueOf(id));
+        LogUtil.logMsg(this.toString(),"remove surface model  id : ", String.valueOf(id));
         removeViewSurfaceModel(id);
     }
 

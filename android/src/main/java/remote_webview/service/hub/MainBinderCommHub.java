@@ -187,7 +187,7 @@ public class MainBinderCommHub extends BinderCommunicateHub<MainCallbackHandler>
 
     @Override
     public void cleanGarbage(long id) {
-        LogUtil.logMsg(this.toString(),"start cleanGarbage id : %s  size %s"
+        LogUtil.logMsg(this.toString(),"start cleanGarbage id :   size "
                 ,String.valueOf(id),String.valueOf(methodHandlerSlot.size()));
         plugOutMethodHandler(id);
         LogUtil.logMsg(this.toString(),"after cleanGarbage ,methodHandlerSlot size: " + methodHandlerSlot.size());
