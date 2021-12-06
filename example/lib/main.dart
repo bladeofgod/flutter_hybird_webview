@@ -10,6 +10,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_example/list_btn_page.dart';
 import 'package:webview_flutter_example/test_page.dart';
 
 import 'entry_page.dart';
@@ -129,15 +130,16 @@ class _WebViewExampleState extends State<WebViewExample> {
   Widget favoriteButton() {
     return FloatingActionButton(
       onPressed: () {
-        showModalBottomSheet(context: context, builder: (ctx) {
-          return Material(
-            color: Colors.white,
-            child: Container(
-              color: Colors.yellowAccent,
-              child: WebPage(url: jd,),
-            ),
-          );
-        });
+        Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ListBtnPage()));
+        // showModalBottomSheet(context: context, builder: (ctx) {
+        //   return Material(
+        //     color: Colors.white,
+        //     child: Container(
+        //       color: Colors.yellowAccent,
+        //       child: WebPage(url: jd,),
+        //     ),
+        //   );
+        // });
       },
       child: const Icon(Icons.favorite),
     );

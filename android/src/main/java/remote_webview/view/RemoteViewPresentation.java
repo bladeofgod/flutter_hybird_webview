@@ -98,7 +98,6 @@ public abstract class RemoteViewPresentation extends Presentation {
     @CallSuper
     public void dispose() {
         detachState();
-        dismiss();
     }
 
     protected View getContainerView() {

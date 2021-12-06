@@ -86,6 +86,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         plugOutHub();
         getWebView().destroy();
         super.dispose();
+        dismiss();
     }
 
     // Verifies that a url opened by `Window.open` has a secure url.

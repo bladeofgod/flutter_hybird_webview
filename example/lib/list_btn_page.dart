@@ -21,42 +21,41 @@ class ListBtnPageState extends State<ListBtnPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('list btn page', style: TextStyle(color: Colors.black),),
-        ),
-        body: Container(
-          color: Colors.lightBlueAccent,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              buildBnt('open drawer', () {
-                Scaffold.of(context).openDrawer();
-              }),
-              SizedBox(height: 30,),
-              buildBnt('open zhihu web', () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WebPage(url: zhihu)));
-              }),
-              SizedBox(height: 30,),
-              buildBnt('open meituan web', () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WebPage(url: zhihu)));
-              }),
-            ],
-          ),
-        ),
-        drawer: Drawer(
-          elevation: 16,
-          child: Stack(
-            children: [
-              WebView(
-                initialUrl: zhihu,
-              ),
-            ],
-          ),
-        ),
-
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('list btn page', style: TextStyle(color: Colors.black),),
       ),
+      body: Container(
+        width: double.infinity,
+        color: Colors.lightBlueAccent,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildBnt('open drawer', () {
+              Scaffold.of(context).openDrawer();
+            }),
+            SizedBox(height: 30,),
+            buildBnt('open zhihu web', () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WebPage(url: zhihu)));
+            }),
+            SizedBox(height: 30,),
+            buildBnt('open meituan web', () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WebPage(url: zhihu)));
+            }),
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        elevation: 16,
+        child: Stack(
+          children: [
+            WebView(
+              initialUrl: zhihu,
+            ),
+          ],
+        ),
+      ),
+
     );
   }
 
