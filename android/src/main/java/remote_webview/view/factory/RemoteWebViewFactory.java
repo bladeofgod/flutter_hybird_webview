@@ -47,10 +47,6 @@ public class RemoteWebViewFactory {
                 creationParams.getPhysicalWidth(), creationParams.getPhysicalHeight(), densityDpi, surface, 0);
         LogUtil.logMsg("RemoteZygoteActivity","VirtualDisplay old display id : "
                 + vd.getDisplay().getDisplayId());
-//        //Display display = (Display) ReflectUtil.getFiled(Display.class,"mDisplay",vd);
-//        ReflectUtil.setFiled(Display.class,"mDisplayId",vd.getDisplay(), 0);
-//        LogUtil.logMsg("RemoteZygoteActivity","VirtualDisplay new display id : "
-//                + vd.getDisplay().getDisplayId());
 
         return new WebViewPresentation(context, creationParams, vd.getDisplay(), creationParams.getSurfaceId(),
                 remoteAccessibilityEventsDelegate);

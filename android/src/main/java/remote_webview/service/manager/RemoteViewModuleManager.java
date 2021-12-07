@@ -1,5 +1,6 @@
 package remote_webview.service.manager;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -24,7 +25,7 @@ import remote_webview.utils.LogUtil;
 /**
  * @author LiJiaqi
  * @date 2021/11/27
- * Description: Manage all remote-view module.
+ * Description: Manage all remote-view module, run on main process.
  */
 
 public class RemoteViewModuleManager {
@@ -142,7 +143,7 @@ public class RemoteViewModuleManager {
      *
      * @return get last saved view status.
      */
-    public HashMap getSavedInstance() {
+    public Bundle getSavedInstance() {
         return savedInstance.getSavedInstance();
     }
 
@@ -150,7 +151,7 @@ public class RemoteViewModuleManager {
      * Save a view status when it destroy in unpurposed.
      * @param status
      */
-    public void setSavedInstance(HashMap status) {
+    public void setSavedInstance(Bundle status) {
         savedInstance.setSavedInstance(status);
     }
 
@@ -162,17 +163,17 @@ public class RemoteViewModuleManager {
 
         private AtomicBoolean isValid = new AtomicBoolean(false);
 
-        private HashMap savedInstance;
+        private Bundle savedInstance;
 
         public boolean isValid() {
             return isValid.get();
         }
 
-        public HashMap getSavedInstance() {
-            return isValid.getAndSet(false) ? savedInstance : new HashMap();
+        public Bundle getSavedInstance() {
+            return isValid.getAndSet(false) ? savedInstance : new Bundle();
         }
 
-        public void setSavedInstance(HashMap savedInstance) {
+        public void setSavedInstance(Bundle savedInstance) {
             isValid.set(true);
             this.savedInstance = savedInstance;
         }

@@ -1,5 +1,6 @@
 package remote_webview.model;
 
+import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -27,7 +28,7 @@ public class WebViewCreationParamsModel implements Parcelable {
     int physicalHeight;
 
     //for restore view's status.
-    HashMap<String, String> savedInstance;
+    Bundle savedInstance;
 
     public WebViewCreationParamsModel(long surfaceId, 
                                       boolean usesHybridComposition, 
@@ -38,7 +39,7 @@ public class WebViewCreationParamsModel implements Parcelable {
                                       String url,
                                       int physicalWidth,
                                       int physicalHeight,
-                                      HashMap<String, String> savedInstance) {
+                                      Bundle savedInstance) {
         this.surfaceId = surfaceId;
         this.usesHybridComposition = usesHybridComposition;
         this.settings = settings;
@@ -87,6 +88,10 @@ public class WebViewCreationParamsModel implements Parcelable {
         return physicalHeight;
     }
 
+    public Bundle getSavedInstance() {
+        return savedInstance;
+    }
+
     protected WebViewCreationParamsModel(Parcel in) {
         surfaceId = in.readLong();
         usesHybridComposition = in.readByte() != 0;
@@ -97,7 +102,7 @@ public class WebViewCreationParamsModel implements Parcelable {
         url = in.readString();
         physicalWidth = in.readInt();
         physicalHeight = in.readInt();
-        savedInstance = in.readHashMap(HashMap.class.getClassLoader());
+        savedInstance = in.readBundle();
     }
 
     @Override
@@ -111,7 +116,7 @@ public class WebViewCreationParamsModel implements Parcelable {
         dest.writeString(url);
         dest.writeInt(physicalWidth);
         dest.writeInt(physicalHeight);
-        dest.writeMap(savedInstance);
+        dest.writeBundle(savedInstance);
     }
 
     @Override
