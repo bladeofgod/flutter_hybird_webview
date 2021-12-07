@@ -8,9 +8,11 @@ import android.util.Log;
 
 import remote_webview.IBinderPool;
 import remote_webview.IMainMethodChannelBinder;
+import remote_webview.IMainProcessBinder;
 import remote_webview.IMainResultCallbackBinder;
 import remote_webview.IRemoteMethodChannelBinder;
 import remote_webview.service.binders.MainMethodChannelBinder;
+import remote_webview.service.binders.MainProcessBinder;
 import remote_webview.service.binders.MainResultCallbackBinder;
 import remote_webview.service.manager.RemoteViewModuleManager;
 
@@ -26,6 +28,8 @@ public class MainServicePresenter extends ProcessServicePresenter {
     public static final int BINDER_MAIN_RESULT_CALLBACK = 809;
 
     public static final int BINDER_MAIN_WINDOW_TOKEN = 810;
+
+    public static final int BINDER_MAIN_PROCESS = 811;
 
     private static volatile MainServicePresenter singleton;
 
@@ -83,6 +87,21 @@ public class MainServicePresenter extends ProcessServicePresenter {
         return binder;
     }
 
+    /**
+     * Get a binder from main process, and send some request.
+     *
+     * @return main-process binder
+     */
+    public IMainProcessBinder getMainProcessBinder() {
+        IMainProcessBinder binder = null;
+        try {
+            binder = IMainProcessBinder.Stub.asInterface(mBinderPool.queryBinder(BINDER_MAIN_PROCESS));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return binder;
+    }
+
 
     public IBinder getMainWindowToken() {
         IBinder binder = null;
@@ -115,6 +134,9 @@ public class MainServicePresenter extends ProcessServicePresenter {
                     break;
                 case BINDER_MAIN_WINDOW_TOKEN:
                     binder = RemoteViewModuleManager.getInstance().getToken();
+                    break;
+                case BINDER_MAIN_PROCESS:
+                    binder = new MainProcessBinder();
                     break;
             }
             return binder;

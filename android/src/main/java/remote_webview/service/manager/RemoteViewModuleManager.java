@@ -3,21 +3,18 @@ package remote_webview.service.manager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.Message;
-import android.os.RemoteException;
 
 import androidx.annotation.NonNull;
 
 import java.util.HashMap;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.DelayQueue;
-import java.util.concurrent.Delayed;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodChannel;
+import remote_webview.interfaces.IMainProcessBinderAction;
+import remote_webview.interfaces.ISoftInputCallback;
 import remote_webview.interfaces.IWindowTokenExtractor;
 import remote_webview.service.RemoteServicePresenter;
 import remote_webview.utils.LogUtil;
@@ -25,13 +22,17 @@ import remote_webview.utils.LogUtil;
 /**
  * @author LiJiaqi
  * @date 2021/11/27
- * Description: Manage all remote-view module, run on main process.
+ * Description: Manage all remote-view module, run on main process and handle request from remote.
  */
 
-public class RemoteViewModuleManager {
+public class RemoteViewModuleManager implements IMainProcessBinderAction {
 
     //check child-process is alive.
     public static final int PATROL_CP_ALIVE = 7000;
+
+    public static final int SHOW_SOFT_INPUT = 7010;
+
+    public static final int HIDE_SOFT_INPUT = 7020;
 
     private static RemoteViewModuleManager instance;
 
@@ -45,6 +46,7 @@ public class RemoteViewModuleManager {
         }
         return instance;
     }
+
 
     private IWindowTokenExtractor tokenExtractor;
 
@@ -64,23 +66,29 @@ public class RemoteViewModuleManager {
 //        this.token = token;
 //    }
 
+    @NonNull
+    private ISoftInputCallback iSoftInputCallback;
+
     private PatrolDog dog = PatrolDog.getInstance();
 
     private ViewSavedInstance savedInstance = new ViewSavedInstance();
 
-    Handler handler;
+    private final Handler handler;
+
+    //plugin channel
+    MethodChannel pluginChannel;
 
     private RemoteViewModuleManager() {
         handler = new Handler(callback);
     }
 
-    //plugin channel
-    MethodChannel pluginChannel;
-
     public void linkPluginChannel(MethodChannel channel) {
         pluginChannel = channel;
     }
 
+    public void setSoftInputCallback(ISoftInputCallback iSoftInputCallback) {
+        this.iSoftInputCallback = iSoftInputCallback;
+    }
 
     private Handler.Callback callback = new Handler.Callback() {
         @Override
@@ -90,6 +98,12 @@ public class RemoteViewModuleManager {
                     handleCPCheckRequest(message);
 
                     checkChildProcessAlive();
+                    break;
+                case SHOW_SOFT_INPUT:
+                    iSoftInputCallback.showSoftInput((long)message.obj);
+                    break;
+                case HIDE_SOFT_INPUT:
+                    iSoftInputCallback.hideSoftInput((long)message.obj);
                     break;
             }
             return true;
@@ -139,10 +153,21 @@ public class RemoteViewModuleManager {
     }
 
 
+    @Override
+    public void showSoftInput(long viewId) {
+        Message.obtain(handler, SHOW_SOFT_INPUT, viewId).sendToTarget();
+    }
+
+    @Override
+    public void hideSoftInput(long viewId) {
+        Message.obtain(handler, HIDE_SOFT_INPUT, viewId).sendToTarget();
+    }
+
     /**
      *
      * @return get last saved view status.
      */
+    @Override
     public Bundle getSavedInstance() {
         return savedInstance.getSavedInstance();
     }
@@ -151,6 +176,7 @@ public class RemoteViewModuleManager {
      * Save a view status when it destroy in unpurposed.
      * @param status
      */
+    @Override
     public void setSavedInstance(Bundle status) {
         savedInstance.setSavedInstance(status);
     }

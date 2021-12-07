@@ -72,6 +72,7 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
         mMethodChannel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), CHANNEL_NAME);
         mMethodChannel.setMethodCallHandler(this);
         RemoteViewModuleManager.getInstance().linkPluginChannel(mMethodChannel);
+        RemoteViewModuleManager.getInstance().setSoftInputCallback(remoteWebViewController);
 
         RemoteViewModuleManager.getInstance().onAttachedToEngine(flutterPluginBinding);
 //        new Handler().postDelayed(new Runnable() {
