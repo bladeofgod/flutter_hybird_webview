@@ -25,10 +25,13 @@ import remote_webview.service.MainServicePresenter;
 import remote_webview.utils.LogUtil;
 import remote_webview.view.RemoteAccessibilityEventsDelegate;
 import remote_webview.view.WebViewPresentation;
+import remote_webview.view.controller.InputToggleDelegate;
 import remote_webview.view.factory.RemoteWebViewFactory;
 
 
 public class RemoteZygoteActivity extends FlutterActivity {
+
+    static final String TAG = "RemoteZygoteActivity";
 
     public static RemoteZygoteActivity zygoteActivity;
     
@@ -42,6 +45,7 @@ public class RemoteZygoteActivity extends FlutterActivity {
                 .getContext()
                 .startActivity(intent);
     }
+
     static OnInputMethodListener onInputMethodListener = new OnInputMethodListener() {
         @Override
         public void onShow(boolean result) {
@@ -54,6 +58,9 @@ public class RemoteZygoteActivity extends FlutterActivity {
             Toast.makeText(zygoteActivity, "Hide input method! " + result, Toast.LENGTH_SHORT).show();
         }
     };
+
+    private final InputToggleDelegate inputToggleDelegate = new InputToggleDelegate();
+
     public RemoteZygoteActivity() {
         zygoteActivity = this;
         RemoteWebViewFactory.singleton.initFactory(zygoteActivity);
@@ -63,6 +70,9 @@ public class RemoteZygoteActivity extends FlutterActivity {
     @Override
     public Object getSystemService(@NonNull String name) {
         LogUtil.logMsg("RemoteZygoteActivity","getSystemService ====  ",name);
+        if(name.equals(Context.INPUT_METHOD_SERVICE)) {
+            inputToggleDelegate.inputServiceCall();
+        }
         return super.getSystemService(name);
     }
     

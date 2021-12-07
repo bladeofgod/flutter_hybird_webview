@@ -10,7 +10,9 @@ public class LogUtil {
     
     public static void logMsg(String tag, String ...info) {
         logPattern();
-        Log.d(tag, Arrays.toString(info));
+        for(String s : info) {
+            Log.d(tag, s + '\n');
+        }
         logPattern();
     }
     
