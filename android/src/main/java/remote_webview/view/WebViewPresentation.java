@@ -196,20 +196,6 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         return webView;
     }
 
-//    @Override
-//    public boolean dispatchTouchEvent(@NonNull MotionEvent ev) {
-//        webView.dispatchTouchEvent(ev);
-//        //return super.dispatchTouchEvent(ev);
-//        return true;
-//    }
-
-
-//    @Override
-//    public boolean dispatchKeyEvent(@NonNull KeyEvent event) {
-//        webView.dispatchKeyEvent(event);
-//        //return super.dispatchKeyEvent(event);
-//        return true;
-//    }
 
     /**
      * 
