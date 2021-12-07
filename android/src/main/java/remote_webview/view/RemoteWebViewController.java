@@ -1,5 +1,6 @@
 package remote_webview.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.RemoteException;
@@ -34,7 +35,7 @@ import remote_webview.view.controller.RemoteViewTouchController;
 public class RemoteWebViewController extends RemoteViewInputController {
     
 
-    public RemoteWebViewController(Context context) {
+    public RemoteWebViewController(Activity context) {
         super(context, new FlutterViewAdapter());
     }
 
