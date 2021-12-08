@@ -6,9 +6,9 @@ import androidx.annotation.MainThread;
 public interface ISoftInputCallback {
 
     @MainThread
-    void showSoftInput(long viewId);
+    void showSoftInput();
 
     @MainThread
-    void hideSoftInput(long viewId);
+    void hideSoftInput();
 
 }

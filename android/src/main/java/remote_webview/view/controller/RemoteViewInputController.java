@@ -13,11 +13,13 @@ import android.widget.Toast;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import remote_webview.interfaces.ISoftInputCallback;
 import remote_webview.service.RemoteServicePresenter;
+import remote_webview.service.manager.RemoteViewModuleManager;
 import remote_webview.utils.LogUtil;
 import remote_webview.view.WebViewSurfaceProducer;
 
@@ -25,10 +27,17 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 
 abstract public class RemoteViewInputController extends RemoteViewTouchController
     implements ISoftInputCallback {
+
     private static final String TAG = "RemoteViewInputController";
+
     private static long NON_CONSUMER = -999;
 
     private Activity mActivity;
+
+    private boolean isSoftInputShow = false;
+
+    //The remote-view's id that who wanna consume key event.
+    private long consumeViewId;
 
     public RemoteViewInputController(Activity context, FlutterViewAdapter adapter) {
         super(context, adapter);
@@ -36,20 +45,54 @@ abstract public class RemoteViewInputController extends RemoteViewTouchControlle
         setListenerToRootView();
     }
 
-    //The remote-view's id that who wanna consume key event.
-    private long consumeViewId;
+    private MethodChannel.Result topViewIdCallback = new MethodChannel.Result() {
+        @Override
+        public void success(@Nullable Object o) {
+            try {
+                consumeViewId = (long)o;
+            }catch (Exception e) {
+                resetInputConsumer();
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void error(String s, @Nullable String s1, @Nullable Object o) {
+
+        }
+
+        @Override
+        public void notImplemented() {
+
+        }
+    };
+
+
+    /**
+     * Fetch the top view's id from flutter side.
+     */
+    private void updateTopViewId() {
+        try {
+            RemoteViewModuleManager.getInstance()
+                    .getFlutterPluginProxy()
+                    .checkTopViewId(topViewIdCallback);
+        }catch (Exception e) {
+            resetInputConsumer();
+            e.printStackTrace();
+        }
+    }
 
     @Override
-    public void showSoftInput(long viewId) {
-        consumeViewId = viewId;
-        //todo show shot keyboard
+    public void showSoftInput() {
+        updateTopViewId();
+        //although toggleSoftInput() maybe run before topViewIdCallback,
+        //but keyEvent dispatch is after it.
         toggleSoftInput();
     }
 
     @Override
-    public void hideSoftInput(long viewId) {
+    public void hideSoftInput() {
         resetInputConsumer();
-        //todo
         toggleSoftInput();
     }
 
@@ -86,9 +129,6 @@ abstract public class RemoteViewInputController extends RemoteViewTouchControlle
 
     @Override
     public void dispatchKeyEvent(@NonNull KeyEvent keyEvent) {
-        InputMethodManager imm =
-                (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
-        LogUtil.logMsg(TAG, "is input active : " + imm.isActive());
         if(WebViewSurfaceProducer.producer.checkViewExists(consumeViewId)) {
             try {
                 RemoteServicePresenter.getInstance().getRemoteViewFactoryBinder()
@@ -109,10 +149,12 @@ abstract public class RemoteViewInputController extends RemoteViewTouchControlle
             public void onGlobalLayout() {
                 boolean mKeyboardUp = isKeyboardShown(rootView);
                 if (mKeyboardUp) {
-                    //键盘弹出
+                    //show
+                    isSoftInputShow = true;
 
                 } else {
-                    //键盘收起
+                    //hide
+                    isSoftInputShow = false;
                     resetInputConsumer();
                 }
             }

@@ -99,10 +99,14 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
 
   TextureAndroidRemoteController? _remoteController;
 
+  late WebDisposableContext _webDisposableContext;
+
   @override
   void initState() {
     super.initState();
+    _webDisposableContext = WebDisposableContext(this);
     _createWebView();
+    webViewRegister.registerContext(_webDisposableContext);
   }
 
   void _createWebView() {
@@ -145,6 +149,8 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
 
   @override
   void dispose() {
+    _webDisposableContext.dispose();
+    webViewRegister.unRegisterContext(_webDisposableContext);
     _remoteController?.dispose();
     super.dispose();
   }

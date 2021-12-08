@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 
 import java.util.HashMap;
@@ -23,6 +24,11 @@ import remote_webview.utils.LogUtil;
  * @author LiJiaqi
  * @date 2021/11/27
  * Description: Manage all remote-view module, run on main process and handle request from remote.
+ * 
+ *              There is link a plugin method-channel that connect to flutter's side, so make both 
+ *              side can transport manage-order.
+ *              
+ * @see RemoteViewModuleManager#linkPluginChannel(MethodChannel) 
  */
 
 public class RemoteViewModuleManager implements IMainProcessBinderAction {
@@ -75,8 +81,10 @@ public class RemoteViewModuleManager implements IMainProcessBinderAction {
 
     private final Handler handler;
 
+    private FlutterPluginProxy pluginProxy = new FlutterPluginProxy();
+
     //plugin channel
-    MethodChannel pluginChannel;
+    private MethodChannel pluginChannel;
 
     private RemoteViewModuleManager() {
         handler = new Handler(callback);
@@ -84,6 +92,11 @@ public class RemoteViewModuleManager implements IMainProcessBinderAction {
 
     public void linkPluginChannel(MethodChannel channel) {
         pluginChannel = channel;
+    }
+    
+    @MainThread
+    public FlutterPluginProxy getFlutterPluginProxy() {
+        return pluginProxy;
     }
 
     public void setSoftInputCallback(ISoftInputCallback iSoftInputCallback) {
@@ -100,10 +113,10 @@ public class RemoteViewModuleManager implements IMainProcessBinderAction {
                     checkChildProcessAlive();
                     break;
                 case SHOW_SOFT_INPUT:
-                    iSoftInputCallback.showSoftInput((long)message.obj);
+                    iSoftInputCallback.showSoftInput();
                     break;
                 case HIDE_SOFT_INPUT:
-                    iSoftInputCallback.hideSoftInput((long)message.obj);
+                    iSoftInputCallback.hideSoftInput();
                     break;
             }
             return true;
@@ -133,6 +146,8 @@ public class RemoteViewModuleManager implements IMainProcessBinderAction {
 
     public void onDetachedFromEngine(@NonNull FlutterPlugin.FlutterPluginBinding flutterPluginBinding) {
         dog.clearTask();
+        setTokenExtractor(null);
+        linkPluginChannel(null);
     }
     
     private void startConnectRemoteService() {
@@ -154,13 +169,13 @@ public class RemoteViewModuleManager implements IMainProcessBinderAction {
 
 
     @Override
-    public void showSoftInput(long viewId) {
-        Message.obtain(handler, SHOW_SOFT_INPUT, viewId).sendToTarget();
+    public void showSoftInput() {
+        Message.obtain(handler, SHOW_SOFT_INPUT).sendToTarget();
     }
 
     @Override
-    public void hideSoftInput(long viewId) {
-        Message.obtain(handler, HIDE_SOFT_INPUT, viewId).sendToTarget();
+    public void hideSoftInput() {
+        Message.obtain(handler, HIDE_SOFT_INPUT).sendToTarget();
     }
 
     /**
@@ -181,6 +196,12 @@ public class RemoteViewModuleManager implements IMainProcessBinderAction {
         savedInstance.setSavedInstance(status);
     }
 
+
+    public class FlutterPluginProxy{
+        public void checkTopViewId(MethodChannel.Result result) {
+            pluginChannel.invokeMethod("getTopWebId", result);
+        }
+    }
 
     /**
      * Hold the view's saved instance for restore status in need.

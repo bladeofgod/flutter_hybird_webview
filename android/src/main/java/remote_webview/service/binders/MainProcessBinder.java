@@ -8,13 +8,13 @@ import remote_webview.service.manager.RemoteViewModuleManager;
 
 public class MainProcessBinder extends IMainProcessBinder.Stub {
     @Override
-    public void showSoftInput(long viewId) throws RemoteException {
-        RemoteViewModuleManager.getInstance().showSoftInput(viewId);
+    public void showSoftInput() throws RemoteException {
+        RemoteViewModuleManager.getInstance().showSoftInput();
     }
 
     @Override
-    public void hideSoftInput(long viewId) throws RemoteException {
-        RemoteViewModuleManager.getInstance().hideSoftInput(viewId);
+    public void hideSoftInput() throws RemoteException {
+        RemoteViewModuleManager.getInstance().hideSoftInput();
     }
 
     @Override

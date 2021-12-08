@@ -5,9 +5,9 @@ package remote_webview;
 
 interface IMainProcessBinder {
 
-    void showSoftInput(long viewId);
+    void showSoftInput();
 
-    void hideSoftInput(long viewId);
+    void hideSoftInput();
 
     Bundle getSavedInstance();
 

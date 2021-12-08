@@ -40,7 +40,7 @@ public class InputToggleDelegate {
     private void requestToggleSoftInput() {
         //todo test id : 0
         try {
-            MainServicePresenter.getInstance().getMainProcessBinder().showSoftInput(0);
+            MainServicePresenter.getInstance().getMainProcessBinder().showSoftInput();
         } catch (RemoteException e) {
             e.printStackTrace();
         }

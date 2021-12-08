@@ -13,10 +13,10 @@ import androidx.annotation.BinderThread;
 public interface IMainProcessBinderAction {
 
     @BinderThread
-    void showSoftInput(long viewId);
+    void showSoftInput();
 
     @BinderThread
-    void hideSoftInput(long viewId);
+    void hideSoftInput();
 
     @BinderThread
     Bundle getSavedInstance();

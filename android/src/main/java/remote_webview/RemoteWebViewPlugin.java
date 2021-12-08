@@ -97,7 +97,6 @@ public class RemoteWebViewPlugin implements FlutterPlugin, MethodChannel.MethodC
         remoteWebViewController.disposeAll(new MethodCall("onDetachedFromEngine", null)
                 , idleResult);
         RemoteViewModuleManager.getInstance().onDetachedFromEngine(flutterPluginBinding);
-        RemoteViewModuleManager.getInstance().setTokenExtractor(null);
     }
 
     @Override
