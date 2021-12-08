@@ -104,6 +104,7 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
   @override
   void initState() {
     super.initState();
+    RemoteWebViewPlugin.getInstance();
     _webDisposableContext = WebDisposableContext(this);
     _createWebView();
     webViewRegister.registerContext(_webDisposableContext);
@@ -131,7 +132,7 @@ class RemoteAndroidWebViewState extends State<RemoteAndroidWebView> {
         'physicalWidth' : physicalWidthP,
         'physicalHeight' : physicalHeightP,
       })).then((value) {
-        debugPrint('surface id  $value');
+        _webDisposableContext.setViewId(value);
         _remoteController = TextureAndroidRemoteController(textureId: value);
         setState(() {
           textureId = value;

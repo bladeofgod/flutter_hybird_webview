@@ -198,8 +198,10 @@ public class RemoteViewModuleManager implements IMainProcessBinderAction {
 
 
     public class FlutterPluginProxy{
+        @MainThread
         public void checkTopViewId(MethodChannel.Result result) {
-            pluginChannel.invokeMethod("getTopWebId", result);
+            LogUtil.logMsg(getClass().getSimpleName(),"checkTopViewId  call");
+            pluginChannel.invokeMethod("getTopViewId", null ,result);
         }
     }
 

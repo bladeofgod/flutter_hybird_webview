@@ -9,10 +9,13 @@ const String webViewTag = 'viewId';
 
 _WebViewRegister webViewRegister = _WebViewRegister();
 
+
 class RemoteWebViewPlugin{
   static const MethodChannel _channel = MethodChannel('remote_webview_plugin');
 
-  RemoteWebViewPlugin() {
+  static RemoteWebViewPlugin getInstance() => RemoteWebViewPlugin._();
+
+  RemoteWebViewPlugin._() {
     _channel.setMethodCallHandler(_onMethodCall);
   }
 
@@ -48,8 +51,8 @@ class RemoteWebViewPlugin{
 
   Future<dynamic> _onMethodCall(MethodCall call) async {
     switch(call.method) {
-      case "getTopWebId" :
-        return webViewRegister.getTopWebId();
+      case 'getTopViewId' :
+        return '${webViewRegister.getTopWebId()}';
     }
   }
 
@@ -68,6 +71,10 @@ class WebDisposableContext extends DisposableBuildContext{
 
   int getViewId() {
     return context == null ? -20 : _setting[webViewTag];
+  }
+
+  void setViewId(int id) {
+    _setting[webViewTag] = id;
   }
 
 }

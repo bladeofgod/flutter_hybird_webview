@@ -49,7 +49,8 @@ abstract public class RemoteViewInputController extends RemoteViewTouchControlle
         @Override
         public void success(@Nullable Object o) {
             try {
-                consumeViewId = (long)o;
+                consumeViewId = Long.valueOf((String)o);
+                LogUtil.logMsg(TAG,"top view id  : " + consumeViewId);
             }catch (Exception e) {
                 resetInputConsumer();
                 e.printStackTrace();
@@ -58,7 +59,7 @@ abstract public class RemoteViewInputController extends RemoteViewTouchControlle
 
         @Override
         public void error(String s, @Nullable String s1, @Nullable Object o) {
-
+            LogUtil.logMsg(TAG,s,"  ",s1);
         }
 
         @Override
