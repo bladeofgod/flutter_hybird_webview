@@ -3,11 +3,16 @@ package remote_webview.view.factory;
 import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
+import android.os.Build;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.Surface;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
+import remote_webview.interfaces.IRemoteView;
 import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.utils.LogUtil;
 import remote_webview.view.RemoteAccessibilityEventsDelegate;
@@ -30,14 +35,48 @@ public class RemoteWebViewFactory {
 
     final RemoteAccessibilityEventsDelegate remoteAccessibilityEventsDelegate = new RemoteAccessibilityEventsDelegate();
 
-
     public void initFactory(Context context) {
         this.context = context;
+    }
+
+    public static class RemoteViewModel implements IRemoteView {
+        
+        private final WebViewPresentation presentation;
+        
+        private final VirtualDisplay vd;
+
+        public RemoteViewModel(WebViewPresentation presentation, VirtualDisplay vd) {
+            this.presentation = presentation;
+            this.vd = vd;
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public void init() {
+            presentation.create();
+            presentation.show();
+        }
+
+        @Override
+        public void release() {
+            presentation.dispose();
+            vd.release();
+        }
+
+        @Override
+        public void dispatchTouchEvent(MotionEvent event) {
+            presentation.dispatchTouchEvent(event);
+        }
+
+        @Override
+        public void dispatchKeyEvent(KeyEvent keyEvent) {
+            presentation.dispatchKeyEvent(keyEvent);
+        }
     }
     
     
 
-    public WebViewPresentation generateWebViewPresentation(WebViewCreationParamsModel creationParams, Surface surface) throws Exception {
+    public RemoteViewModel generateWebViewPresentation(WebViewCreationParamsModel creationParams, Surface surface) throws Exception {
         final DisplayMetrics dm = context.getResources().getDisplayMetrics();
 //        int sw = dm.widthPixels;
 //        int sh = dm.heightPixels;
@@ -45,11 +84,11 @@ public class RemoteWebViewFactory {
         DisplayManager displayManager = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
         final VirtualDisplay vd = displayManager.createVirtualDisplay("remote_web_view_" + creationParams.getSurfaceId(),
                 creationParams.getPhysicalWidth(), creationParams.getPhysicalHeight(), densityDpi, surface, 0);
-        LogUtil.logMsg("RemoteZygoteActivity","VirtualDisplay old display id : "
-                + vd.getDisplay().getDisplayId());
 
-        return new WebViewPresentation(context, creationParams, vd.getDisplay(), creationParams.getSurfaceId(),
-                remoteAccessibilityEventsDelegate);
+        RemoteViewModel remoteViewModel = new RemoteViewModel(new WebViewPresentation(context, creationParams, vd.getDisplay(), creationParams.getSurfaceId(),
+                remoteAccessibilityEventsDelegate), vd);
+
+        return remoteViewModel;
     }
 
 }

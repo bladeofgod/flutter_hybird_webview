@@ -9,9 +9,9 @@ import io.flutter.view.TextureRegistry;
 
 abstract public class ViewSurfaceModel {
 
-    private TextureRegistry.SurfaceTextureEntry entry;
+    private final TextureRegistry.SurfaceTextureEntry entry;
 
-    private Surface surface;
+    private final Surface surface;
 
     protected ViewSurfaceModel(TextureRegistry.SurfaceTextureEntry entry, Surface surface) {
         this.entry = entry;

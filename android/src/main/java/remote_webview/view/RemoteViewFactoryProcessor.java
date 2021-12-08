@@ -15,6 +15,7 @@ import java.util.Objects;
 
 import remote_webview.garbage_collect.RemoteGarbageCollector;
 import remote_webview.interfaces.IGarbageCleanListener;
+import remote_webview.interfaces.IRemoteView;
 import remote_webview.model.WebViewCreationParamsModel;
 import remote_webview.utils.LogUtil;
 import remote_webview.utils.HandlerUtil;
@@ -49,7 +50,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
         RemoteGarbageCollector.getInstance().registerCollectListener(this);
     }
 
-    private final HashMap<Long, RemoteViewPresentation> viewCache = new HashMap<>();
+    private final HashMap<Long, IRemoteView> viewCache = new HashMap<>();
 
     @BinderThread
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -59,8 +60,9 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
             public void run() {
                 try {
                     final long surfaceId = creationParams.getSurfaceId();
-                    LogUtil.logMsg("view factory", " createWithSurface  id " + surfaceId);
-                    WebViewPresentation presentation = RemoteWebViewFactory.singleton.generateWebViewPresentation(creationParams,surface);
+                    RemoteWebViewFactory.RemoteViewModel presentation = RemoteWebViewFactory
+                            .singleton
+                            .generateWebViewPresentation(creationParams,surface);
                     viewCache.put(surfaceId, presentation);
                     ViewTrigger trigger = ViewTrigger.obtain(surfaceId);
                     ViewTrigger.initView(trigger);
@@ -101,7 +103,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
                 HandlerUtil.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Objects.requireNonNull(viewCache.get(id)).dispose();
+                        Objects.requireNonNull(viewCache.get(id)).release();
                     }
                 });
             }catch (Exception e) {
@@ -118,8 +120,8 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
     @Override
     public void cleanAll() {
         try {
-            for(RemoteViewPresentation cache : viewCache.values()) {
-                cache.dispose();
+            for(IRemoteView cache : viewCache.values()) {
+                cache.release();
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -164,10 +166,7 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
             try {
                 RemoteViewFactoryProcessor
                         .getInstance()
-                        .viewCache.get(viewId).create();
-                RemoteViewFactoryProcessor
-                        .getInstance()
-                        .viewCache.get(viewId).show();
+                        .viewCache.get(viewId).init();
             }catch (NullPointerException e) {
                 //todo maybe need notify main-process
                 e.printStackTrace();
