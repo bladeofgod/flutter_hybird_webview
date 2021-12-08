@@ -17,8 +17,17 @@ public class InputToggleDelegate {
 
     private final Debounce debounce = new Debounce();
 
+    /**
+     * This is a way for toggle soft input.
+     *
+     * In the start i though hook {@linkplain android.view.inputmethod.InputMethodManager} to
+     * listen softInput status(show/hide), but in some High lvl api, system class is @hide
+     * or @guard.
+     *
+     */
     public void inputServiceCall() {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+        //todo dev code
         for(int i = 0; i < stackTraceElements.length; i++) {
             LogUtil.logMsg(TAG,
                     "getClassName   " + stackTraceElements[i].getClassName(),
@@ -38,7 +47,6 @@ public class InputToggleDelegate {
     }
 
     private void requestToggleSoftInput() {
-        //todo test id : 0
         try {
             MainServicePresenter.getInstance().getMainProcessBinder().showSoftInput();
         } catch (RemoteException e) {
@@ -47,9 +55,9 @@ public class InputToggleDelegate {
     }
 
     private boolean parse(StackTraceElement[] stackTraceElements) {
-        for(int i = 0; i < stackTraceElements.length; i++) {
-            if(stackTraceElements[i].getClassName().contains(targetClassName)
-                    && stackTraceElements[i].getMethodName().contains(targetMethod)) {
+        for (StackTraceElement stackTraceElement : stackTraceElements) {
+            if (stackTraceElement.getClassName().contains(targetClassName)
+                    && stackTraceElement.getMethodName().contains(targetMethod)) {
                 return true;
             }
         }
