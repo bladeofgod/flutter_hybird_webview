@@ -40,7 +40,7 @@ class ListBtnPageState extends State<ListBtnPage> {
             }),
             SizedBox(height: 30,),
             buildBnt('open meituan web', () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WebPage(url: zhihu)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WebPage(url: jd)));
             }),
           ],
         ),

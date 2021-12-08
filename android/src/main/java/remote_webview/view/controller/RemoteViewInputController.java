@@ -50,7 +50,6 @@ abstract public class RemoteViewInputController extends RemoteViewTouchControlle
         public void success(@Nullable Object o) {
             try {
                 consumeViewId = Long.valueOf((String)o);
-                LogUtil.logMsg(TAG,"top view id  : " + consumeViewId);
             }catch (Exception e) {
                 resetInputConsumer();
                 e.printStackTrace();
@@ -94,7 +93,9 @@ abstract public class RemoteViewInputController extends RemoteViewTouchControlle
     @Override
     public void hideSoftInput() {
         resetInputConsumer();
-        toggleSoftInput();
+        if(isSoftInputShow) {
+            toggleSoftInput();
+        }
     }
 
     private void toggleSoftInput() {
