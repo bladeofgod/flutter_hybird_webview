@@ -24,6 +24,16 @@ public class InputToggleDelegate {
      * listen softInput status(show/hide), but in some High lvl api, system class is @hide
      * or @guard.
      *
+     * As stated above, i chosen(temporary) override
+     * {@linkplain android.content.Context#getSystemService(String)}, and listen-parse the invoke
+     * to toggle soft-input. But in actual use, the performance is not goods.
+     *
+     * TODO : MAKE IT BETTER
+     *
+     * @see android.view.inputmethod.InputMethodManager
+     * 
+     * @see android.hardware.display.VirtualDisplay
+     *
      */
     public void inputServiceCall() {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
