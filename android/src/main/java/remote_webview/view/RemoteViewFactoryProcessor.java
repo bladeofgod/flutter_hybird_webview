@@ -64,8 +64,8 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
                             .singleton
                             .generateWebViewPresentation(creationParams,surface);
                     viewCache.put(surfaceId, presentation);
-                    ViewTrigger trigger = ViewTrigger.obtain(surfaceId);
-                    ViewTrigger.initView(trigger);
+                    ViewTrigger trigger = ViewTrigger.obtain(surfaceId, ViewTrigger.DO_INIT_VIEW);
+                    ViewTrigger.trigger(trigger);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -99,16 +99,8 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
     public void cleanGarbage(final long id) {
         //somehow clean notify will duplicate invoke
         if(viewCache.containsKey(id)) {
-            try {
-                HandlerUtil.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Objects.requireNonNull(viewCache.get(id)).release();
-                    }
-                });
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
+            ViewTrigger trigger = ViewTrigger.obtain(id, ViewTrigger.DO_RELEASE_VIEW);
+            ViewTrigger.trigger(trigger);
             LogUtil.logMsg(this.toString(), "remove cache view : " +id);
             viewCache.remove(id);
             LogUtil.logMsg(this.toString(),"after cleanGarbage ,viewCache size: "
@@ -132,15 +124,20 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
 
     static class ViewTrigger implements Runnable{
 
-        static long NULL_LONG = -9999;
+        static final long NULL_LONG = -9999;
+
+        static final int DO_INIT_VIEW = 8890;
+
+        static final int DO_RELEASE_VIEW = 8891;
 
         private static Pools.SynchronizedPool<ViewTrigger> mViewTriggerPool = new Pools.SynchronizedPool<>(10);
 
-        public static ViewTrigger obtain(long viewId) {
+        public static ViewTrigger obtain(long viewId, int signal) {
             ViewTrigger trigger = mViewTriggerPool.acquire();
             if(trigger == null) {
                 trigger = new ViewTrigger();
             }
+            trigger.signal = signal;
             trigger.viewId = viewId;
             return trigger;
         }
@@ -150,13 +147,14 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
             mViewTriggerPool.release(trigger);
         }
 
-        public static void initView(ViewTrigger trigger) {
+        public static void trigger(ViewTrigger trigger) {
             HandlerUtil.runOnUiThread(trigger);
         }
 
         ViewTrigger() {
         }
 
+        int signal = -200;
 
         long viewId;
 
@@ -164,9 +162,20 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
         @Override
         public void run() {
             try {
-                RemoteViewFactoryProcessor
-                        .getInstance()
-                        .viewCache.get(viewId).init();
+                switch (signal) {
+                    case DO_INIT_VIEW:
+                        Objects.requireNonNull(RemoteViewFactoryProcessor
+                                .getInstance()
+                                .viewCache.get(viewId)).init();
+                        break;
+                    case DO_RELEASE_VIEW:
+                        Objects.requireNonNull(RemoteViewFactoryProcessor
+                                .getInstance()
+                                .viewCache.get(viewId)).release();
+                        break;
+                    default:
+                        break;
+                }
             }catch (NullPointerException e) {
                 //todo maybe need notify main-process
                 e.printStackTrace();
