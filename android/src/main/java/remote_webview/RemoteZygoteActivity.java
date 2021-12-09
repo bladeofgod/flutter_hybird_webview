@@ -82,8 +82,6 @@ public class RemoteZygoteActivity extends FlutterActivity {
         super.onCreate(savedInstanceState);
         //InputMethodHolder.init(this);
         LogUtil.logMsg("RemoteZygoteActivity", "protected onCreate");
-        LogUtil.logMsg(getClass().getSimpleName(),"display id : " 
-                + getWindowManager().getDefaultDisplay().getDisplayId());
     }
 
     @Override

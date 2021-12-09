@@ -101,8 +101,6 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
         if(viewCache.containsKey(id)) {
             ViewTrigger trigger = ViewTrigger.obtain(id, ViewTrigger.DO_RELEASE_VIEW);
             ViewTrigger.trigger(trigger);
-            LogUtil.logMsg(this.toString(), "remove cache view : " +id);
-            viewCache.remove(id);
             LogUtil.logMsg(this.toString(),"after cleanGarbage ,viewCache size: "
                     + viewCache.size());
         }
@@ -172,11 +170,14 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
                         Objects.requireNonNull(RemoteViewFactoryProcessor
                                 .getInstance()
                                 .viewCache.get(viewId)).release();
+                        RemoteViewFactoryProcessor
+                                .getInstance()
+                                .viewCache.remove(viewId);
                         break;
                     default:
                         break;
                 }
-            }catch (NullPointerException e) {
+            }catch (Exception e) {
                 //todo maybe need notify main-process
                 e.printStackTrace();
             }

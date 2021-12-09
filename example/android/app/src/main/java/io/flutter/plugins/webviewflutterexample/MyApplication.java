@@ -12,7 +12,6 @@ public class MyApplication extends Application {
 
     @Override
     protected void attachBaseContext(Context base) {
-        InputMethodHolder.init(base);
         super.attachBaseContext(base);
         
     }
