@@ -49,6 +49,13 @@ android {
 
 For example:
 
+    ```java
+    class YourMainActivity extends RemoteWebActivity{
+        ...
+    }
+    
+    ```
+
     ```dart
     import 'dart:io';
     
