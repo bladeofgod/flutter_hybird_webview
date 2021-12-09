@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import remote_webview.utils.LogUtil;
+
 
 public class InputMethodListener {
 
@@ -46,6 +48,7 @@ public class InputMethodListener {
 
     public void onMethod(Object obj, Method method, Object result) {
         String name = method.getName();
+        LogUtil.logMsg("InputMethodListener", "hook : ", name);
         if ("showSoftInput".equals(name)) {
             notifyListeners(OnInputMethodListenerWrapper.METHOD_SHOW, (Boolean) result);
         } else if ("hideSoftInput".equals(name)){
