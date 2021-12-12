@@ -302,6 +302,7 @@ public abstract class RemoteViewPresentation extends Presentation {
         }
 
         public Object getSystemService(String name) {
+            LogUtil.logMsg(TAG, "get system service from imm context");
             return "input_method".equals(name) ? this.inputMethodManager : super.getSystemService(name);
         }
 
