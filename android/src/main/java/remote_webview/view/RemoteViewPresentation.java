@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.MainThread;
@@ -31,6 +32,7 @@ import java.lang.reflect.Proxy;
 import io.flutter.Log;
 
 import remote_webview.input_hook.InputMethodHolder;
+import remote_webview.input_hook.OnInputMethodListener;
 import remote_webview.input_hook.compat.IInputMethodManagerCompat;
 import remote_webview.input_hook.hook.InputMethodManagerHook;
 import remote_webview.utils.LogUtil;
@@ -308,7 +310,7 @@ public abstract class RemoteViewPresentation extends Presentation {
 
     private static class ImmContext extends ContextWrapper {
         @NonNull
-        private final InputMethodManager inputMethodManager;
+        private final Object inputMethodManager;
 
         //private final InputMethodManagerHandler proxy;
         InputMethodManagerHook hook;
@@ -317,18 +319,30 @@ public abstract class RemoteViewPresentation extends Presentation {
             this(base, (InputMethodManager)null);
         }
 
-        private ImmContext(Context base, @Nullable InputMethodManager inputMethodManager) {
+        private ImmContext(final Context base, @Nullable Object inputMethodManager) {
             super(base);
 
             //way 1
             //proxy = new InputMethodManagerHandler(this, inputMethodManager);
             //way 2
             InputMethodHolder.init(this);
+            InputMethodHolder.registerListener(new OnInputMethodListener() {
+                @Override
+                public void onShow(boolean result) {
+                    Toast.makeText(base, "on show", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onHide(boolean result) {
+                    Toast.makeText(base, "on hide", Toast.LENGTH_SHORT).show();
+                }
+            });
             hook = InputMethodHolder.inputMethodManagerHook;
 
             this.inputMethodManager = inputMethodManager != null ?
                     inputMethodManager
-                    : (InputMethodManager)base.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    : base.getSystemService(Context.INPUT_METHOD_SERVICE);
+            Toast.makeText(base, "on ImmContext", Toast.LENGTH_SHORT).show();
         }
 
         public Object getSystemService(String name) {
@@ -338,7 +352,7 @@ public abstract class RemoteViewPresentation extends Presentation {
 
         public Context createDisplayContext(Display display) {
             Context displayContext = super.createDisplayContext(display);
-            return new RemoteViewPresentation.ImmContext(displayContext, inputMethodManager);
+            return new RemoteViewPresentation.ImmContext(displayContext, this.hook.getProxyInputMethodInterface());
         }
     }
 
