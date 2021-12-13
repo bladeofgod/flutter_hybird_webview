@@ -296,7 +296,15 @@ public abstract class RemoteViewPresentation extends Presentation {
             originObj = delegate;
         }
 
+        /**
+         * Make a proxy, to watch soft input status.
+         *
+         * @see InputMethodManager
+         * @see IInputMethodManager
+         * @see InputMethodManager#createRealInstance
+         */
         InputMethodManager getIMM() {
+            //todo remove imm-context's input method holder to here, and return this.hook.getProxyInputMethodInterface()
             return (InputMethodManager) Proxy.newProxyInstance(context.getClassLoader(),
                     new Class[]{originObj.getClass()}, this);
         }
