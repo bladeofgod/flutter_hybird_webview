@@ -30,7 +30,9 @@ import java.lang.reflect.Proxy;
 
 import io.flutter.Log;
 
+import remote_webview.input_hook.InputMethodHolder;
 import remote_webview.input_hook.compat.IInputMethodManagerCompat;
+import remote_webview.input_hook.hook.InputMethodManagerHook;
 import remote_webview.utils.LogUtil;
 
 
@@ -286,7 +288,6 @@ public abstract class RemoteViewPresentation extends Presentation {
 
         private final Context context;
         private final Object originObj;
-        private Object delegate;
 
         InputMethodManagerHandler(Context context, InputMethodManager delegate) {
             this.context = context;
@@ -294,27 +295,14 @@ public abstract class RemoteViewPresentation extends Presentation {
         }
 
         InputMethodManager getIMM() {
-            if(delegate == null) {
-                try {
-                    delegate = IInputMethodManagerCompat.asInterface((IBinder) originObj);
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                }
-            }
             return (InputMethodManager) Proxy.newProxyInstance(context.getClassLoader(),
-                    new Class[]{delegate.getClass()}, this);
+                    new Class[]{originObj.getClass()}, this);
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             LogUtil.logMsg(TAG, "invoke call  ", method.getName());
-            return method.invoke(delegate, args);
+            return method.invoke(originObj, args);
         }
     }
 
@@ -322,7 +310,8 @@ public abstract class RemoteViewPresentation extends Presentation {
         @NonNull
         private final InputMethodManager inputMethodManager;
 
-        private final InputMethodManagerHandler proxy;
+        //private final InputMethodManagerHandler proxy;
+        InputMethodManagerHook hook;
 
         ImmContext(Context base) {
             this(base, (InputMethodManager)null);
@@ -330,20 +319,26 @@ public abstract class RemoteViewPresentation extends Presentation {
 
         private ImmContext(Context base, @Nullable InputMethodManager inputMethodManager) {
             super(base);
+
+            //way 1
+            //proxy = new InputMethodManagerHandler(this, inputMethodManager);
+            //way 2
+            InputMethodHolder.init(this);
+            hook = InputMethodHolder.inputMethodManagerHook;
+
             this.inputMethodManager = inputMethodManager != null ?
                     inputMethodManager
                     : (InputMethodManager)base.getSystemService(Context.INPUT_METHOD_SERVICE);
-            proxy = new InputMethodManagerHandler(this, inputMethodManager);
         }
 
         public Object getSystemService(String name) {
             LogUtil.logMsg(TAG, "get system service from imm context");
-            return "input_method".equals(name) ? this.proxy.getIMM() : super.getSystemService(name);
+            return "input_method".equals(name) ? this.hook.getProxyInputMethodInterface(): super.getSystemService(name);
         }
 
         public Context createDisplayContext(Display display) {
             Context displayContext = super.createDisplayContext(display);
-            return new RemoteViewPresentation.ImmContext(displayContext, this.proxy.getIMM());
+            return new RemoteViewPresentation.ImmContext(displayContext, inputMethodManager);
         }
     }
 

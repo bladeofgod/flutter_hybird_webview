@@ -13,7 +13,7 @@ public class InputMethodHolder {
 
     private static final String TAG = "InputMethodHolder";
 
-    private static InputMethodManagerHook inputMethodManagerHook;
+    public static InputMethodManagerHook inputMethodManagerHook;
 
     private static InputMethodListener mInputMethodListener;
 

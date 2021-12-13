@@ -3,7 +3,7 @@ package remote_webview.input_hook.hook;
 import android.content.Context;
 
 
-abstract class Hook {
+public abstract class Hook {
 
     Context mContext;
     Object mOriginObj;
@@ -12,7 +12,7 @@ abstract class Hook {
         mContext = context;
     }
 
-    Object getOriginObj() {
+    public Object getOriginObj() {
         return mOriginObj;
     }
 

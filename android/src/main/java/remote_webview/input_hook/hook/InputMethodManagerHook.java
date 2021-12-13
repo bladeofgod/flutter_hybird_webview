@@ -27,6 +27,12 @@ public class InputMethodManagerHook extends Hook implements InvocationHandler {
         this.methodInvokeListener = methodInvokeListener;
     }
 
+    Object proxyInputMethodInterface;
+
+    public Object getProxyInputMethodInterface() {
+        return proxyInputMethodInterface;
+    }
+
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         Object invoke = null;
@@ -43,17 +49,13 @@ public class InputMethodManagerHook extends Hook implements InvocationHandler {
 
     @Override
     public void onHook(ClassLoader classLoader) throws Throwable {
-        //其实有其他的hook点，比如InputMethodManager的sInstance，初始化的时候可以将代理的IInputMethodManager传进构造函数
-        //现在的这种方式是从获取Binder代理对象的唯一入口ServiceManager开始hook，方便以后hook其他服务
         ServiceManagerHook serviceManagerHook = new ServiceManagerHook(mContext, Context.INPUT_METHOD_SERVICE);
         serviceManagerHook.onHook(classLoader);
         Object originBinder = serviceManagerHook.getOriginObj();
         if (originBinder instanceof IBinder) {
             mOriginObj = IInputMethodManagerCompat.asInterface((IBinder) originBinder);
-            Object proxyInputMethodInterface = ReflectUtil.makeProxy(classLoader, mOriginObj.getClass(), this);
+            proxyInputMethodInterface = ReflectUtil.makeProxy(classLoader, mOriginObj.getClass(), this);
             serviceManagerHook.setProxyIInterface(proxyInputMethodInterface);
-            //若hook之前调用过 mContext.getSystemService(Context.INPUT_METHOD_SERVICE)
-            // 则在SystemServiceRegistry中会有缓存，清理缓存后重建才会拿到我们hook的代理
             clearCachedService();
             //rebuild cache
             mContext.getSystemService(Context.INPUT_METHOD_SERVICE);

@@ -110,9 +110,14 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
     @Override
     public void cleanAll() {
         try {
-            for(IRemoteView cache : viewCache.values()) {
-                cache.release();
-            }
+            HandlerUtil.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    for(IRemoteView cache : viewCache.values()) {
+                        cache.release();
+                    }
+                }
+            });
         }catch (Exception e) {
             e.printStackTrace();
         }
