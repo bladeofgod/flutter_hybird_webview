@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -29,6 +30,7 @@ import java.lang.reflect.Proxy;
 
 import io.flutter.Log;
 
+import remote_webview.input_hook.compat.IInputMethodManagerCompat;
 import remote_webview.utils.LogUtil;
 
 
@@ -282,15 +284,31 @@ public abstract class RemoteViewPresentation extends Presentation {
     static class InputMethodManagerHandler implements InvocationHandler{
         private static final String TAG = "InputMethodManagerHandler";
 
-        private final InputMethodManager delegate;
+        private final Context context;
+        private final Object originObj;
+        private Object delegate;
 
-        InputMethodManagerHandler(InputMethodManager delegate) {
-            this.delegate = delegate;
+        InputMethodManagerHandler(Context context, InputMethodManager delegate) {
+            this.context = context;
+            originObj = delegate;
         }
 
         InputMethodManager getIMM() {
-            return (InputMethodManager) Proxy.newProxyInstance(InputMethodManager.class.getClassLoader(),
-                    new Class[]{InputMethodManager.class}, this);
+            if(delegate == null) {
+                try {
+                    delegate = IInputMethodManagerCompat.asInterface((IBinder) originObj);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            return (InputMethodManager) Proxy.newProxyInstance(context.getClassLoader(),
+                    new Class[]{delegate.getClass()}, this);
         }
 
         @Override
@@ -315,7 +333,7 @@ public abstract class RemoteViewPresentation extends Presentation {
             this.inputMethodManager = inputMethodManager != null ?
                     inputMethodManager
                     : (InputMethodManager)base.getSystemService(Context.INPUT_METHOD_SERVICE);
-            proxy = new InputMethodManagerHandler(inputMethodManager);
+            proxy = new InputMethodManagerHandler(this, inputMethodManager);
         }
 
         public Object getSystemService(String name) {
