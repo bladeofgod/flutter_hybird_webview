@@ -333,19 +333,19 @@ public abstract class RemoteViewPresentation extends Presentation {
             //way 1
             //proxy = new InputMethodManagerHandler(this, inputMethodManager);
             //way 2
-            InputMethodHolder.init(this);
-            InputMethodHolder.registerListener(new OnInputMethodListener() {
-                @Override
-                public void onShow(boolean result) {
-                    Toast.makeText(base, "on show", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onHide(boolean result) {
-                    Toast.makeText(base, "on hide", Toast.LENGTH_SHORT).show();
-                }
-            });
-            hook = InputMethodHolder.inputMethodManagerHook;
+//            InputMethodHolder.init(this);
+//            InputMethodHolder.registerListener(new OnInputMethodListener() {
+//                @Override
+//                public void onShow(boolean result) {
+//                    Toast.makeText(base, "on show", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onHide(boolean result) {
+//                    Toast.makeText(base, "on hide", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//            hook = InputMethodHolder.inputMethodManagerHook;
 
             this.inputMethodManager = inputMethodManager != null ?
                     inputMethodManager
@@ -355,12 +355,12 @@ public abstract class RemoteViewPresentation extends Presentation {
 
         public Object getSystemService(String name) {
             LogUtil.logMsg(TAG, "get system service from imm context");
-            return "input_method".equals(name) ? this.hook.getProxyInputMethodInterface(): super.getSystemService(name);
+            return "input_method".equals(name) ? this.inputMethodManager : super.getSystemService(name);
         }
 
         public Context createDisplayContext(Display display) {
             Context displayContext = super.createDisplayContext(display);
-            return new RemoteViewPresentation.ImmContext(displayContext, this.hook.getProxyInputMethodInterface());
+            return new RemoteViewPresentation.ImmContext(displayContext, this.inputMethodManager);
         }
     }
 
