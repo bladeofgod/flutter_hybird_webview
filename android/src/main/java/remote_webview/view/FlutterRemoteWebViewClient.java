@@ -23,6 +23,7 @@ import java.util.Map;
 
 import io.flutter.plugin.common.MethodChannel;
 import remote_webview.mock.MockMethodChannel;
+import remote_webview.utils.LogUtil;
 
 /**
  * @author LiJiaqi
@@ -87,6 +88,7 @@ class FlutterRemoteWebViewClient {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+        LogUtil.logMsg(TAG,"shouldOverrideUrlLoading  : ", request.getUrl().toString());
         if (!hasNavigationDelegate) {
             return false;
         }
@@ -107,6 +109,7 @@ class FlutterRemoteWebViewClient {
     }
 
     boolean shouldOverrideUrlLoading(WebView view, String url) {
+        LogUtil.logMsg(TAG,"shouldOverrideUrlLoading  : ", url);
         if (!hasNavigationDelegate) {
             return false;
         }
@@ -123,6 +126,7 @@ class FlutterRemoteWebViewClient {
     }
 
     public void onPageStarted(WebView view, String url) {
+        LogUtil.logMsg(TAG, "onPageStarted : ", url);
         HashMap<String, Object> args = new HashMap<>();
         args.put("url", url);
         try {
@@ -133,6 +137,7 @@ class FlutterRemoteWebViewClient {
     }
 
     public void onPageFinished(WebView view, String url) {
+        LogUtil.logMsg(TAG, "onPageFinished : ", url);
         HashMap<String, Object> args = new HashMap<>();
         args.put("url", url);
         try {
@@ -143,6 +148,7 @@ class FlutterRemoteWebViewClient {
     }
 
     void onLoadingProgress(int progress) {
+        LogUtil.logMsg(TAG, "onLoadingProgress : "+progress);
         if (hasProgressTracking) {
             HashMap<String, Object> args = new HashMap<>();
             args.put("progress", progress);

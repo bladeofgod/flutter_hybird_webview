@@ -99,45 +99,30 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
                 final WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
             final WebViewClient webViewClient =
                     new WebViewClient() {
-//                        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-//                        @Override
-//                        public boolean shouldOverrideUrlLoading(
-//                                @NonNull WebView view, @NonNull WebResourceRequest request) {
-//                            final String url = request.getUrl().toString();
-//                            if (!flutterWebViewClient.shouldOverrideUrlLoading(
-//                                    getWebView(), request)) {
-//                                getWebView().loadUrl(url);
-//                            }
-//                            return true;
-//                        }
-//
-//                        @Override
-//                        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                            if (!flutterWebViewClient.shouldOverrideUrlLoading(
-//                                    getWebView(), url)) {
-//                                getWebView().loadUrl(url);
-//                            }
-//                            return true;
-//                        }
-
+                        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                         @Override
-                        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                            super.onPageStarted(view, url, favicon);
-                            Log.e("webview","onPageStarted  " + url);
-                            flutterWebViewClient.onPageStarted(view, url);
+                        public boolean shouldOverrideUrlLoading(
+                                @NonNull WebView view, @NonNull WebResourceRequest request) {
+                            final String url = request.getUrl().toString();
+                            if (!flutterWebViewClient.shouldOverrideUrlLoading(
+                                    getWebView(), request)) {
+                                getWebView().loadUrl(url);
+                            }
+                            return true;
                         }
 
                         @Override
-                        public void onPageFinished(WebView view, String url) {
-                            super.onPageFinished(view, url);
-                            Log.e("webview","onPageFinished  " + url);
-                            flutterWebViewClient.onPageFinished(view, url);
+                        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                            if (!flutterWebViewClient.shouldOverrideUrlLoading(
+                                    getWebView(), url)) {
+                                getWebView().loadUrl(url);
+                            }
+                            return true;
                         }
                     };
 
             final WebView newWebView = new WebView(view.getContext());
             newWebView.setWebViewClient(webViewClient);
-
             final WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
             transport.setWebView(newWebView);
             resultMsg.sendToTarget();
@@ -183,9 +168,9 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
     @Override
     public View createChildView(final View containerView) {
 
-        //return createTestWebView(containerView);
-        return createWebView(new RemoteWebViewBuilder(RemoteZygoteActivity.zygoteActivity),
-                new FlutterWebChromeClient());
+        return createTestWebView(containerView);
+//        return createWebView(new RemoteWebViewBuilder(RemoteZygoteActivity.zygoteActivity),
+//                new FlutterWebChromeClient());
     }
 
     //todo will cause a new window for H5, set it false for dev.
@@ -195,6 +180,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
+        settings.setSupportMultipleWindows(true);
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -208,6 +194,12 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
                 super.onPageFinished(view, url);
                 Log.e("webview","onPageFinished  " + url);
                 flutterWebViewClient.onPageFinished(view, url);
+            }
+        });
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                flutterWebViewClient.onLoadingProgress(newProgress);
             }
         });
         return webView;

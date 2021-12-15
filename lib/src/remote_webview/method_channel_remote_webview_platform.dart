@@ -1,6 +1,7 @@
 
 
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/platform_interface.dart';
 
@@ -25,6 +26,7 @@ class MethodChannelRemoteWebViewPlatform implements WebViewPlatformController{
   MethodChannel('plugins.flutter.io/cookie_manager');
 
   Future<bool?> _onMethodCall(MethodCall call) async {
+    debugPrint('_onMethodCall  $call');
     switch (call.method) {
       case 'javascriptChannelMessage':
         final String channel = call.arguments['channel']!;
