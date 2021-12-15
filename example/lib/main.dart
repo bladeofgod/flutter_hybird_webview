@@ -23,6 +23,7 @@ void main() {
   runApp(MaterialApp(home: WebViewExample()));
 }
 
+String test = 'https://design-h5-stage.meiwu365.com/app-pages/goods-detail/index.html?app-goodId=7967&app-originType=&native=true';
 String baidu = 'https://baidu.com';
 String jd = 'https://jd.com';
 String zhihu = 'https://zhuanlan.zhihu.com/founderchip2';
@@ -76,7 +77,7 @@ class _WebViewExampleState extends State<WebViewExample> {
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
         return WebView(
-          initialUrl: baidu,
+          initialUrl: test,
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             this.webViewController = webViewController;
