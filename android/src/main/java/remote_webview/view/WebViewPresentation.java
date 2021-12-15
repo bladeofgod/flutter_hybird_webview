@@ -169,8 +169,8 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
     @Override
     public View createChildView(final View containerView) {
 
-        return createTestWebView(containerView);
-        //return createWebView(new RemoteWebViewBuilder(RemoteZygoteActivity.zygoteActivity), new FlutterWebChromeClient());
+        //return createTestWebView(containerView);
+        return createWebView(new RemoteWebViewBuilder(RemoteZygoteActivity.zygoteActivity), new FlutterWebChromeClient());
     }
 
     //todo will cause a new window for H5, set it false for dev.
