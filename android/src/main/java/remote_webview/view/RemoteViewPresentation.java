@@ -350,7 +350,7 @@ public abstract class RemoteViewPresentation extends Presentation {
             this.inputMethodManager = inputMethodManager != null ?
                     inputMethodManager
                     : base.getSystemService(Context.INPUT_METHOD_SERVICE);
-            Toast.makeText(base, "on ImmContext", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(base, "on ImmContext", Toast.LENGTH_SHORT).show();
         }
 
         public Object getSystemService(String name) {
