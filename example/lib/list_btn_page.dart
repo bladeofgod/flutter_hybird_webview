@@ -34,6 +34,12 @@ class ListBtnPageState extends State<ListBtnPage> {
             buildBnt('open drawer', () {
               Scaffold.of(context).openDrawer();
             }),
+            buildBnt('open baidu', () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WebPage(url: baidu)));
+            }),
+            buildBnt('open juejin', () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WebPage(url: juejin)));
+            }),
             SizedBox(height: 30,),
             buildBnt('open zhihu web', () {
               Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WebPage(url: zhihu)));

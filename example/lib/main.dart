@@ -20,15 +20,16 @@ void main() {
   SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Brightness.light);
   SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
 
-  runApp(MaterialApp(home: WebViewExample()));
+  runApp(MaterialApp(home: FlutterPage()));
 }
 
-String test = 'https://www.dabanjia.com';
-String juejin = 'https://juejin.cn/';
-String beike = 'https://bj.ke.com/?utm_source=baidu&utm_medium=pinzhuan&utm_term=biaoti&utm_content=biaotimiaoshu&utm_campaign=wybeijing';
-String jd = 'https://jd.com';
-String zhihu = 'https://zhuanlan.zhihu.com/founderchip2';
-String meituan = 'https://bj.meituan.com/';
+const String test = 'https://www.dabanjia.com';
+const String juejin = 'https://juejin.cn/';
+const String baidu = 'https://baidu.cn/';
+const String beike = 'https://bj.ke.com/?utm_source=baidu&utm_medium=pinzhuan&utm_term=biaoti&utm_content=biaotimiaoshu&utm_campaign=wybeijing';
+const String jd = 'https://jd.com';
+const String zhihu = 'https://zhuanlan.zhihu.com/founderchip2';
+const String meituan = 'https://bj.meituan.com/';
 
 const String kNavigationExamplePage = '''
 <!DOCTYPE html><html>
@@ -44,6 +45,35 @@ The navigation delegate is set to block navigation to the youtube website.
 </body>
 </html>
 ''';
+
+
+class FlutterPage extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return FlutterPageState();
+  }
+
+}
+
+class FlutterPageState extends State<FlutterPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('hybird view', style: TextStyle(color: Colors.lightBlue, fontSize: 20),),
+          SizedBox(height: 40,),
+          ElevatedButton(onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WebViewExample()));
+          }, child: Text('show web'))
+        ],
+      ),
+    );
+  }
+}
+
 
 class WebViewExample extends StatefulWidget {
   @override
@@ -78,7 +108,7 @@ class _WebViewExampleState extends State<WebViewExample> {
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
         return WebView(
-          initialUrl: juejin,
+          initialUrl: jd,
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             this.webViewController = webViewController;
@@ -114,7 +144,7 @@ class _WebViewExampleState extends State<WebViewExample> {
       if(canBack) {
         webViewController?.goBack();
       }
-      return Future.value(false);
+      return Future.value(!canBack);
     });
   }
 
