@@ -39,7 +39,7 @@ class FlutterRemoteWebViewClient {
     private static final String TAG = "FlutterWebViewClient";
     private final MockMethodChannel methodChannel;
     private boolean hasNavigationDelegate;
-    boolean hasProgressTracking;
+    boolean hasProgressTracking = true;
 
     FlutterRemoteWebViewClient(MockMethodChannel methodChannel) {
         this.methodChannel = methodChannel;
