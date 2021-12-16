@@ -10,8 +10,11 @@ For now, it only supported on android.
 ## Branches Tip
 
 stable      : can use at product.
+
 main        : for development.
+
 dev/feat    : child branch of main.
+
 
 ## Usage
 
