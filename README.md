@@ -1,6 +1,6 @@
 # WebView for Flutter
 
-This is based on [webview_flutter](https://pub.dev/packages/webview_flutter) development.
+This plugin is based on [webview_flutter](https://pub.dev/packages/webview_flutter).
 
 And expanded a remote-hybird-webview, for avoid the impact of webview on the main process
 and decrease main-process's memory usage.
