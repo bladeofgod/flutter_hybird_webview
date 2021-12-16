@@ -173,7 +173,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
 //                new FlutterWebChromeClient());
     }
 
-    //todo will cause a new window for H5, set it false for dev.
+    //todo this code is just for dev.
     private WebView createTestWebView(View containerView) {
         WebView webView = new WebView(RemoteZygoteActivity.zygoteActivity);
         //todo update web view init params  see -> WebViewCreationParamsModel
