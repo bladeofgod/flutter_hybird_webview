@@ -16,6 +16,16 @@ main        : for development.
 dev/feat    : child branch of main.
 
 
+## TODO
+
+-> refine input module.
+
+-> view state recover.
+
+-> view resize adapter.
+
+...
+
 ## Usage
 
 Here just introduct remote usage, for common usage please check [webview_flutter](https://pub.dev/packages/webview_flutter). :)
