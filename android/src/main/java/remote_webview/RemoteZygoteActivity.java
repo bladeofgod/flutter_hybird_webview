@@ -70,9 +70,9 @@ public class RemoteZygoteActivity extends FlutterActivity {
     @Override
     public Object getSystemService(@NonNull String name) {
         LogUtil.logMsg("RemoteZygoteActivity","getSystemService ====  ",name);
-        if(name.equals(Context.INPUT_METHOD_SERVICE)) {
-            inputToggleDelegate.inputServiceCall();
-        }
+//        if(name.equals(Context.INPUT_METHOD_SERVICE)) {
+//            inputToggleDelegate.inputServiceCall();
+//        }
         return super.getSystemService(name);
     }
     
