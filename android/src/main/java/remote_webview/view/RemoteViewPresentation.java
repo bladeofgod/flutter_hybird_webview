@@ -317,8 +317,8 @@ public abstract class RemoteViewPresentation extends Presentation {
     }
 
     private static class ImmContext extends ContextWrapper {
-        @NonNull
-        private final Object inputMethodManager;
+        //@NonNull
+        //private final Object inputMethodManager;
 
         //private final InputMethodManagerHandler proxy;
         InputMethodManagerHook hook;
@@ -329,38 +329,39 @@ public abstract class RemoteViewPresentation extends Presentation {
 
         private ImmContext(final Context base, @Nullable Object inputMethodManager) {
             super(base);
-
-            //way 1
-            //proxy = new InputMethodManagerHandler(this, inputMethodManager);
             //way 2
-//            InputMethodHolder.init(this);
-//            InputMethodHolder.registerListener(new OnInputMethodListener() {
-//                @Override
-//                public void onShow(boolean result) {
-//                    Toast.makeText(base, "on show", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onHide(boolean result) {
-//                    Toast.makeText(base, "on hide", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//            hook = InputMethodHolder.inputMethodManagerHook;
+            LogUtil.logMsg(TAG,"---------------------------");
+            InputMethodHolder.init(this);
+            InputMethodHolder.registerListener(new OnInputMethodListener() {
+                @Override
+                public void onShow(boolean result) {
+                    Toast.makeText(base, "on show", Toast.LENGTH_SHORT).show();
+                }
 
-            this.inputMethodManager = inputMethodManager != null ?
-                    inputMethodManager
-                    : base.getSystemService(Context.INPUT_METHOD_SERVICE);
+                @Override
+                public void onHide(boolean result) {
+                    Toast.makeText(base, "on hide", Toast.LENGTH_SHORT).show();
+                }
+            });
+            hook = InputMethodHolder.inputMethodManagerHook;
+
+
+//            this.inputMethodManager = inputMethodManager != null ?
+//                    inputMethodManager
+//                    : base.getSystemService(Context.INPUT_METHOD_SERVICE);
             //Toast.makeText(base, "on ImmContext", Toast.LENGTH_SHORT).show();
         }
 
+        @Override
         public Object getSystemService(String name) {
-            LogUtil.logMsg(TAG, "get system service from imm context");
-            return "input_method".equals(name) ? this.inputMethodManager : super.getSystemService(name);
+            LogUtil.logMsg(TAG, "get system service from imm context   ", name);
+            return "input_method".equals(name) ? this.hook.immP.getImm() : super.getSystemService(name);
         }
 
+        @Override
         public Context createDisplayContext(Display display) {
             Context displayContext = super.createDisplayContext(display);
-            return new RemoteViewPresentation.ImmContext(displayContext, this.inputMethodManager);
+            return new RemoteViewPresentation.ImmContext(displayContext, this.hook.immP.getImm());
         }
     }
 

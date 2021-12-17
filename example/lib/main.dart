@@ -60,15 +60,18 @@ class FlutterPageState extends State<FlutterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('hybird view', style: TextStyle(color: Colors.lightBlue, fontSize: 20),),
-          SizedBox(height: 40,),
-          ElevatedButton(onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WebViewExample()));
-          }, child: Text('show web'))
-        ],
+      body: Container(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('hybird view', style: TextStyle(color: Colors.lightBlue, fontSize: 20),),
+            SizedBox(height: 40,),
+            ElevatedButton(onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WebViewExample()));
+            }, child: Text('show web'))
+          ],
+        ),
       ),
     );
   }
@@ -108,7 +111,7 @@ class _WebViewExampleState extends State<WebViewExample> {
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
         return WebView(
-          initialUrl: jd,
+          initialUrl: baidu,
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             this.webViewController = webViewController;
