@@ -35,6 +35,7 @@ import remote_webview.input_hook.InputMethodHolder;
 import remote_webview.input_hook.OnInputMethodListener;
 import remote_webview.input_hook.compat.IInputMethodManagerCompat;
 import remote_webview.input_hook.hook.InputMethodManagerHook;
+import remote_webview.service.MainServicePresenter;
 import remote_webview.utils.LogUtil;
 
 
@@ -97,6 +98,10 @@ public abstract class RemoteViewPresentation extends Presentation {
     @CallSuper
     public void dispose() {
         detachState();
+    }
+
+    protected void saveViewStateInstance(Bundle bundle) {
+        MainServicePresenter.getInstance().getMainProcessBinder().setSavedInstance(bundle);
     }
 
     protected View getContainerView() {

@@ -14,6 +14,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodChannel;
+import remote_webview.garbage_collect.MainGarbageCollector;
+import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.interfaces.IMainProcessBinderAction;
 import remote_webview.interfaces.ISoftInputCallback;
 import remote_webview.interfaces.IWindowTokenExtractor;
@@ -31,7 +33,7 @@ import remote_webview.utils.LogUtil;
  * @see RemoteViewModuleManager#linkPluginChannel(MethodChannel) 
  */
 
-public class RemoteViewModuleManager implements IMainProcessBinderAction {
+public class RemoteViewModuleManager implements IMainProcessBinderAction, IGarbageCleanListener {
 
     //check child-process is alive.
     public static final int PATROL_CP_ALIVE = 7000;
@@ -88,6 +90,7 @@ public class RemoteViewModuleManager implements IMainProcessBinderAction {
 
     private RemoteViewModuleManager() {
         handler = new Handler(callback);
+        MainGarbageCollector.getInstance().registerCollectListener(this);
     }
 
     public void linkPluginChannel(MethodChannel channel) {
@@ -196,6 +199,19 @@ public class RemoteViewModuleManager implements IMainProcessBinderAction {
         savedInstance.setSavedInstance(status);
     }
 
+    @Override
+    public void cleanGarbage(long id) {
+        //if disposed from flutter, we do invalid savedInstance if any.
+        savedInstance.invalid();
+    }
+
+    @Override
+    public void cleanAll() {
+        //if disposed from flutter, we do invalid savedInstance if any.
+        savedInstance.invalid();
+
+    }
+
 
     public class FlutterPluginProxy{
         @MainThread
@@ -216,6 +232,10 @@ public class RemoteViewModuleManager implements IMainProcessBinderAction {
 
         public boolean isValid() {
             return isValid.get();
+        }
+
+        public void invalid() {
+            isValid.compareAndSet(true, false);
         }
 
         public Bundle getSavedInstance() {

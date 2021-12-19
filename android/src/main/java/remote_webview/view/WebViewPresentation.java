@@ -194,6 +194,11 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
                 super.onPageFinished(view, url);
                 Log.e("webview","onPageFinished  " + url);
                 flutterWebViewClient.onPageFinished(view, url);
+                final Bundle bundle = new Bundle();
+                bundle.putString("url", url);
+                //when web page finished, we send a bundle to main process for save.
+                //in some exception case, we can restore by it.
+                saveViewStateInstance(bundle);
             }
         });
         webView.setWebChromeClient(new WebChromeClient() {
