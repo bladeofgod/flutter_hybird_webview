@@ -5,6 +5,7 @@ import android.os.RemoteException;
 
 import java.util.function.Function;
 
+import remote_webview.interfaces.IPresentationListener;
 import remote_webview.service.MainServicePresenter;
 import remote_webview.utils.LogUtil;
 
@@ -16,6 +17,16 @@ public class InputToggleDelegate {
     private String targetMethod = "updateState";
 
     private final Debounce debounce = new Debounce();
+
+    private IPresentationListener presentationListener;
+
+    public void setPresentationListener(IPresentationListener presentationListener) {
+        this.presentationListener = presentationListener;
+    }
+
+    public void removePresentationListener() {
+        this.presentationListener = null;
+    }
 
     /**
      * This is a way for toggle soft input.
@@ -38,18 +49,24 @@ public class InputToggleDelegate {
     public void inputServiceCall() {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
         //todo dev code
-//        for(int i = 0; i < stackTraceElements.length; i++) {
-//            LogUtil.logMsg(TAG,
-//                    "getClassName   " + stackTraceElements[i].getClassName(),
-//                    "getFileName   " + stackTraceElements[i].getFileName(),
-//                    "getMethodName   " + stackTraceElements[i].getMethodName(),
-//                    "getLineNumber   " + stackTraceElements[i].getLineNumber()
-//            );
-//        }
+        for(int i = 0; i < stackTraceElements.length; i++) {
+            LogUtil.logMsg(TAG,
+                    "getClassName   " + stackTraceElements[i].getClassName(),
+                    "getFileName   " + stackTraceElements[i].getFileName(),
+                    "getMethodName   " + stackTraceElements[i].getMethodName(),
+                    "getLineNumber   " + stackTraceElements[i].getLineNumber()
+            );
+        }
         boolean hit = parse(stackTraceElements);
         if(hit) {
             debounce.handle((a)->{
-                requestToggleSoftInput();
+                try {
+                    if(presentationListener.getPresentationRunningState() == PresentationRunningState.Idle) {
+                        requestToggleSoftInput();
+                    }
+                }catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
                 return null;
             });
 

@@ -21,19 +21,19 @@ public class RemoteApplication extends Application {
     protected void attachBaseContext(Context base) {
         int pid = android.os.Process.myPid();
         LogUtil.logMsg("RemoteApplication", "attachBaseContext  " + pid);
-        InputMethodHolder.init(base);
+//        InputMethodHolder.init(base);
         super.attachBaseContext(base);
-        onInputMethodListener = new OnInputMethodListener() {
-            @Override
-            public void onShow(boolean result) {
-                LogUtil.logMsg("RemoteApplication","Show input method! " + pid +"  " + result);
-            }
-
-            @Override
-            public void onHide(boolean result) {
-                LogUtil.logMsg("RemoteApplication","Hide input method! " + pid +"  "+ result);
-            }
-        };
-        InputMethodHolder.registerListener(onInputMethodListener);
+//        onInputMethodListener = new OnInputMethodListener() {
+//            @Override
+//            public void onShow(boolean result) {
+//                LogUtil.logMsg("RemoteApplication","Show input method! " + pid +"  " + result);
+//            }
+//
+//            @Override
+//            public void onHide(boolean result) {
+//                LogUtil.logMsg("RemoteApplication","Hide input method! " + pid +"  "+ result);
+//            }
+//        };
+//        InputMethodHolder.registerListener(onInputMethodListener);
     }
 }

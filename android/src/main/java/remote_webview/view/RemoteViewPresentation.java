@@ -290,6 +290,16 @@ public abstract class RemoteViewPresentation extends Presentation {
         }
     }
 
+    /**
+     * I try to hook the {@link InputMethodManager} and listen soft-input's state, but failed cause cache.
+     * Than i wanna extends {@link InputMethodManager} but also failed because final.
+     *
+     * I retry to hook {@link InputMethodManager} constructor or static method, and didn't work
+     * because system-hide api.
+     *
+     * So may be try native hook.
+     * TODO
+     */
     static class InputMethodManagerHandler implements InvocationHandler{
         private static final String TAG = "InputMethodManagerHandler";
 
@@ -323,46 +333,26 @@ public abstract class RemoteViewPresentation extends Presentation {
 
     private static class ImmContext extends ContextWrapper {
         @NonNull
-        private final Object inputMethodManager;
-
-        //private final InputMethodManagerHandler proxy;
-        InputMethodManagerHook hook;
+        private final InputMethodManager inputMethodManager;
 
         ImmContext(Context base) {
             this(base, (InputMethodManager)null);
         }
 
-        private ImmContext(final Context base, @Nullable Object inputMethodManager) {
+        private ImmContext(final Context base, @Nullable InputMethodManager inputMethodManager) {
             super(base);
-
-            //way 1
-            //proxy = new InputMethodManagerHandler(this, inputMethodManager);
-            //way 2
-//            InputMethodHolder.init(this);
-//            InputMethodHolder.registerListener(new OnInputMethodListener() {
-//                @Override
-//                public void onShow(boolean result) {
-//                    Toast.makeText(base, "on show", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onHide(boolean result) {
-//                    Toast.makeText(base, "on hide", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//            hook = InputMethodHolder.inputMethodManagerHook;
-
             this.inputMethodManager = inputMethodManager != null ?
                     inputMethodManager
-                    : base.getSystemService(Context.INPUT_METHOD_SERVICE);
-            //Toast.makeText(base, "on ImmContext", Toast.LENGTH_SHORT).show();
+                    : (InputMethodManager)base.getSystemService(Context.INPUT_METHOD_SERVICE);
         }
 
+        @Override
         public Object getSystemService(String name) {
-            LogUtil.logMsg(TAG, "get system service from imm context");
+            LogUtil.logMsg(TAG, "get system service from imm context   ", name);
             return "input_method".equals(name) ? this.inputMethodManager : super.getSystemService(name);
         }
 
+        @Override
         public Context createDisplayContext(Display display) {
             Context displayContext = super.createDisplayContext(display);
             return new RemoteViewPresentation.ImmContext(displayContext, this.inputMethodManager);
