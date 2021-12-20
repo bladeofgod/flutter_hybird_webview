@@ -26,6 +26,7 @@ import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import remote_webview.view.controller.PresentationRunningState;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,6 +37,7 @@ import io.flutter.plugins.webviewflutter.FlutterWebView;
 import remote_webview.RemoteZygoteActivity;
 import remote_webview.interfaces.IMockMethodHandler;
 import remote_webview.interfaces.IMockMethodResult;
+import remote_webview.interfaces.IPresentationListener;
 import remote_webview.mock.MockMethodCall;
 import remote_webview.mock.MockMethodChannel;
 import remote_webview.mock.RemoteJavaScriptChannel;
@@ -45,8 +47,10 @@ import remote_webview.service.decoder.WebViewPackageHandler;
 import remote_webview.service.hub.RemoteBinderCommHub;
 import remote_webview.utils.HandlerUtil;
 import remote_webview.utils.LogUtil;
+import remote_webview.view.controller.PresentationRunningState;
 
-public class WebViewPresentation extends RemoteViewPresentation implements IMockMethodHandler {
+public class WebViewPresentation extends RemoteViewPresentation implements IMockMethodHandler,
+        IPresentationListener {
     
     private final static String TAG = "WebViewPresentation";
 
@@ -60,6 +64,8 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
 
     private final FlutterRemoteWebViewClient flutterWebViewClient;
 
+    private PresentationRunningState runningState = PresentationRunningState.Idle;
+
     public WebViewPresentation(Context outerContext, WebViewCreationParamsModel creationParamsModel,
                                Display display, long surfaceId,
                                RemoteAccessibilityEventsDelegate accessibilityEventsDelegate) {
@@ -69,6 +75,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         platformThreadHandler = new Handler(outerContext.getMainLooper());
         flutterWebViewClient = new FlutterRemoteWebViewClient(methodChannel);
         plugInHub();
+        RemoteZygoteActivity.zygoteActivity.getInputToggleDelegate().setPresentationListener(this);
     }
 
     @Override
@@ -83,12 +90,18 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
 
     @Override
     public void dispose() {
+        RemoteZygoteActivity.zygoteActivity.getInputToggleDelegate().removePresentationListener();
         plugOutHub();
         cancel();
         detachState();
         getWebView().destroy();
         super.dispose();
         dismiss();
+    }
+
+    @Override
+    public PresentationRunningState getPresentationRunningState() {
+        return runningState;
     }
 
     // Verifies that a url opened by `Window.open` has a secure url.
@@ -186,6 +199,8 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 Log.e("webview","onPageStarted  " + url);
+                RemoteZygoteActivity.zygoteActivity.getInputToggleDelegate().setPresentationListener(WebViewPresentation.this);
+                runningState = PresentationRunningState.Loading;
                 flutterWebViewClient.onPageStarted(view, url);
             }
 
@@ -193,6 +208,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 Log.e("webview","onPageFinished  " + url);
+                runningState = PresentationRunningState.Idle;
                 flutterWebViewClient.onPageFinished(view, url);
             }
         });

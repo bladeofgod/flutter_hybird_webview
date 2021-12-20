@@ -67,6 +67,10 @@ public class RemoteZygoteActivity extends FlutterActivity {
         //InputMethodHolder.registerListener(onInputMethodListener);
     }
 
+    public InputToggleDelegate getInputToggleDelegate() {
+        return inputToggleDelegate;
+    }
+
     @Override
     public Object getSystemService(@NonNull String name) {
         LogUtil.logMsg("RemoteZygoteActivity","getSystemService ====  ",name);
