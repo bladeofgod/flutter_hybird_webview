@@ -285,6 +285,16 @@ public abstract class RemoteViewPresentation extends Presentation {
         }
     }
 
+    /**
+     * I try to hook the {@link InputMethodManager} and listen soft-input's state, but failed cause cache.
+     * Than i wanna extends {@link InputMethodManager} but also failed because final.
+     *
+     * I retry to hook {@link InputMethodManager} constructor or static method, and didn't work
+     * because system-hide api.
+     *
+     * So may be try native hook.
+     * TODO
+     */
     static class InputMethodManagerHandler implements InvocationHandler{
         private static final String TAG = "InputMethodManagerHandler";
 
