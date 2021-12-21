@@ -48,15 +48,6 @@ public class InputToggleDelegate {
      */
     public void inputServiceCall() {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        //todo dev code
-        for(int i = 0; i < stackTraceElements.length; i++) {
-            LogUtil.logMsg(TAG,
-                    "getClassName   " + stackTraceElements[i].getClassName(),
-                    "getFileName   " + stackTraceElements[i].getFileName(),
-                    "getMethodName   " + stackTraceElements[i].getMethodName(),
-                    "getLineNumber   " + stackTraceElements[i].getLineNumber()
-            );
-        }
         boolean hit = parse(stackTraceElements);
         if(hit) {
             debounce.handle((a)->{

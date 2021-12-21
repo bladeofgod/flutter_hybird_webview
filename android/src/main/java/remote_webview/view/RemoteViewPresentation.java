@@ -192,7 +192,13 @@ public abstract class RemoteViewPresentation extends Presentation {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            LogUtil.logMsg(TAG, "method  :  " + method.getName());
             switch (method.getName()) {
+                case "setLocalFocus":
+                    Log.d(TAG,"setLocalFocus===============");
+                    LogUtil.logAllThreadStackTree();
+                    Log.d(TAG,"setLocalFocus===============");
+                    break;
                 case "addView":
                     addView(args);
                     return null;
@@ -266,6 +272,7 @@ public abstract class RemoteViewPresentation extends Presentation {
             this.flutterAppWindowContext = flutterAppWindowContext;
         }
 
+        @Override
         public Object getSystemService(String name) {
             if ("window".equals(name)) {
                 return this.isCalledFromAlertDialog() ? this.flutterAppWindowContext.getSystemService(name) : this.getWindowManager();
