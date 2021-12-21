@@ -46,25 +46,11 @@ public class RemoteZygoteActivity extends FlutterActivity {
                 .startActivity(intent);
     }
 
-    static OnInputMethodListener onInputMethodListener = new OnInputMethodListener() {
-        @Override
-        public void onShow(boolean result) {
-            Toast.makeText(zygoteActivity, "Show input method! " + result, Toast.LENGTH_SHORT).show();
-            LogUtil.logMsg(zygoteActivity.toString(), "Show input method! ");
-        }
-
-        @Override
-        public void onHide(boolean result) {
-            Toast.makeText(zygoteActivity, "Hide input method! " + result, Toast.LENGTH_SHORT).show();
-        }
-    };
-
     private final InputToggleDelegate inputToggleDelegate = new InputToggleDelegate();
 
     public RemoteZygoteActivity() {
         zygoteActivity = this;
         RemoteWebViewFactory.singleton.initFactory(zygoteActivity);
-        //InputMethodHolder.registerListener(onInputMethodListener);
     }
 
     public InputToggleDelegate getInputToggleDelegate() {
