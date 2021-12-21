@@ -39,6 +39,10 @@ public class RemoteWebViewFactory {
         this.context = context;
     }
 
+    /**
+     * Remote view model that {@link RemoteWebViewFactory} created, and {@link remote_webview.view.RemoteViewFactoryProcessor}
+     * will cache it and manipulate it follow main-process's command.
+     */
     public static class RemoteViewModel implements IRemoteView {
         
         private final WebViewPresentation presentation;
