@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -101,7 +102,11 @@ public abstract class RemoteViewPresentation extends Presentation {
     }
 
     protected void saveViewStateInstance(Bundle bundle) {
-        MainServicePresenter.getInstance().getMainProcessBinder().setSavedInstance(bundle);
+        try {
+            MainServicePresenter.getInstance().getMainProcessBinder().setSavedInstance(bundle);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     protected View getContainerView() {
