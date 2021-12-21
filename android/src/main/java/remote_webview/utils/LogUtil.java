@@ -15,6 +15,19 @@ public class LogUtil {
         }
         logPattern();
     }
+
+    public static void logStackTree(String tag, StackTraceElement[] stackTraceElements) {
+        logPattern();
+        for(int i = 0; i < stackTraceElements.length; i++) {
+            LogUtil.logMsg(tag,
+                    "getClassName   " + stackTraceElements[i].getClassName(),
+                    "getFileName   " + stackTraceElements[i].getFileName(),
+                    "getMethodName   " + stackTraceElements[i].getMethodName(),
+                    "getLineNumber   " + stackTraceElements[i].getLineNumber()
+            );
+        }
+        logPattern();
+    }
     
     public static void logPattern() {
         Log.e("Remote View",PATTERN);
