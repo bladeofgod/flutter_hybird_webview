@@ -16,6 +16,11 @@ public class InputToggleDelegate {
 
     private String targetMethod = "updateState";
 
+    /**
+     *
+     */
+    private boolean canTrigger = false;
+
     private final Debounce debounce = new Debounce();
 
     private IPresentationListener presentationListener;
@@ -26,6 +31,14 @@ public class InputToggleDelegate {
 
     public void removePresentationListener() {
         this.presentationListener = null;
+    }
+
+    public void switchTrigger(boolean state) {
+        canTrigger = state;
+    }
+    
+    public boolean isTriggerOn() {
+        return canTrigger;
     }
 
     /**
@@ -49,18 +62,17 @@ public class InputToggleDelegate {
     public void inputServiceCall() {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
         boolean hit = parse(stackTraceElements);
-        if(hit) {
-            debounce.handle((a)->{
-                try {
-                    if(presentationListener.getPresentationRunningState() == PresentationRunningState.Idle) {
-                        requestToggleSoftInput();
-                    }
-                }catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            });
+        try {
+            if(hit && canTrigger && presentationListener.getPresentationRunningState() == PresentationRunningState.Idle) {
+                debounce.handle((a)->{
+                    switchTrigger(false);
+                    requestToggleSoftInput();
+                    return null;
+                });
 
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

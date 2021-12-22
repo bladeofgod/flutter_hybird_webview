@@ -13,6 +13,7 @@ import androidx.core.util.Pools;
 import java.util.HashMap;
 import java.util.Objects;
 
+import remote_webview.RemoteZygoteActivity;
 import remote_webview.garbage_collect.RemoteGarbageCollector;
 import remote_webview.interfaces.IGarbageCleanListener;
 import remote_webview.interfaces.IRemoteView;
@@ -75,8 +76,6 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
     }
 
     public void dispatchTouchEvent(String surfaceId, MotionEvent event) {
-        LogUtil.logMsg("view factory", " dispatchTouchEvent  id " + surfaceId
-                + "  cache size :" + viewCache.size());
         try {
             Objects.requireNonNull(viewCache.get(Long.decode(surfaceId))).dispatchTouchEvent(event);
         }catch (Exception e) {
@@ -86,7 +85,6 @@ public class RemoteViewFactoryProcessor implements IGarbageCleanListener {
     
     
     public void dispatchKeyEvent(String surfaceId, KeyEvent event) {
-        LogUtil.logMsg("view factory", " dispatchKeyEvent  id " + surfaceId);
         try {
             Objects.requireNonNull(viewCache.get(Long.parseLong(surfaceId))).dispatchKeyEvent(event);
         }catch (Exception e) {
