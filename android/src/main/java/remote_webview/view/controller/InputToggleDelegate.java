@@ -63,9 +63,8 @@ public class InputToggleDelegate {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
         boolean hit = parse(stackTraceElements);
         try {
-            if(hit && canTrigger && presentationListener.getPresentationRunningState() == PresentationRunningState.Idle) {
+            if(hit && presentationListener.getPresentationRunningState() == PresentationRunningState.Idle) {
                 debounce.handle((a)->{
-                    switchTrigger(false);
                     requestToggleSoftInput();
                     return null;
                 });
