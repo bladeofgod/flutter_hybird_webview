@@ -40,8 +40,6 @@ public class InputToggleDelegate {
 
     private String targetMethod = "updateState";
 
-    private boolean canTrigger = false;
-
     private final Debounce debounce = new Debounce();
 
     private final Handler.Callback lazyCall = new Handler.Callback() {
@@ -77,14 +75,6 @@ public class InputToggleDelegate {
 
     private IPresentationListener getTopListener() {
         return stateListener.peek();
-    }
-
-    public void switchTrigger(boolean state) {
-        canTrigger = state;
-    }
-
-    public boolean isTriggerOn() {
-        return canTrigger;
     }
 
     /**
@@ -129,9 +119,24 @@ public class InputToggleDelegate {
     }
 
     private boolean parse(StackTraceElement[] stackTraceElements) {
-        for (StackTraceElement stackTraceElement : stackTraceElements) {
-            if (stackTraceElement.getClassName().contains(targetClassName)
-                    && stackTraceElement.getMethodName().contains(targetMethod)) {
+        for (int i = 0; i < stackTraceElements.length; i++) {
+            if (stackTraceElements[i].getClassName().contains(targetClassName)
+                    && stackTraceElements[i].getMethodName().contains(targetMethod)) {
+                int c = i;
+                while(c >= 0) {
+                    if(stackTraceElements[c].getClassName().equals(stackTraceElements[c-1].getClassName())) {
+                        c--;
+                    } else {
+                        break;
+                    }
+                }
+                try {
+                    if(stackTraceElements[c-1].getClassName().contains(stackTraceElements[c-2].getClassName())) {
+                        return false;
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
                 return true;
             }
         }
