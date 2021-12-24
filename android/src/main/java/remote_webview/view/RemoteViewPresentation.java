@@ -302,47 +302,6 @@ public abstract class RemoteViewPresentation extends Presentation {
         }
     }
 
-    /**
-     * I try to hook the {@link InputMethodManager} and listen soft-input's state, but failed cause cache.
-     * Than i wanna extends {@link InputMethodManager} but also failed because final.
-     *
-     * I retry to hook {@link InputMethodManager} constructor or static method, and didn't work
-     * because system-hide api.
-     *
-     * So may be try native hook.
-     * TODO
-     */
-    static class InputMethodManagerHandler implements InvocationHandler{
-        private static final String TAG = "InputMethodManagerHandler";
-
-        private final Context context;
-        private final Object originObj;
-
-        InputMethodManagerHandler(Context context, InputMethodManager delegate) {
-            this.context = context;
-            originObj = delegate;
-        }
-
-        /**
-         * Make a proxy, to watch soft input status.
-         *
-         * @see InputMethodManager
-         * @see IInputMethodManager
-         * @see InputMethodManager#createRealInstance
-         */
-        InputMethodManager getIMM() {
-            //todo remove imm-context's input method holder to here, and return this.hook.getProxyInputMethodInterface()
-            return (InputMethodManager) Proxy.newProxyInstance(context.getClassLoader(),
-                    new Class[]{originObj.getClass()}, this);
-        }
-
-        @Override
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            LogUtil.logMsg(TAG, "invoke call  ", method.getName());
-            return method.invoke(originObj, args);
-        }
-    }
-
     private static class ImmContext extends ContextWrapper {
         @NonNull
         private final InputMethodManager inputMethodManager;

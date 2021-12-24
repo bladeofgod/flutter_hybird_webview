@@ -2,6 +2,7 @@ package remote_webview.view.controller;
 
 import android.os.Build;
 import android.os.RemoteException;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.function.Function;
 
@@ -9,6 +10,18 @@ import remote_webview.interfaces.IPresentationListener;
 import remote_webview.service.MainServicePresenter;
 import remote_webview.utils.LogUtil;
 
+
+/**
+ * I try to hook the {@link InputMethodManager} and listen soft-input's state, but failed cause cache.
+ * Than i wanna extends {@link InputMethodManager} but also failed because final.
+ *
+ * I retry to hook {@link InputMethodManager} constructor or static method, and didn't work
+ * because system-hide api.
+ *
+ * TODO So may be try native hook.
+ *
+ * This is plan B.
+ */
 public class InputToggleDelegate {
     private static final String TAG = "InputToggleDelegate";
 
