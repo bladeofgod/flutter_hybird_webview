@@ -4,6 +4,8 @@ import android.os.Build;
 import android.os.RemoteException;
 import android.view.inputmethod.InputMethodManager;
 
+import java.util.List;
+import java.util.Stack;
 import java.util.function.Function;
 
 import remote_webview.interfaces.IPresentationListener;
@@ -36,14 +38,18 @@ public class InputToggleDelegate {
 
     private final Debounce debounce = new Debounce();
 
-    private IPresentationListener presentationListener;
+    private Stack<IPresentationListener> stateListener;
 
-    public void setPresentationListener(IPresentationListener presentationListener) {
-        this.presentationListener = presentationListener;
+    public void registerPresentationListener(IPresentationListener presentationListener) {
+        stateListener.push(presentationListener);
     }
 
-    public void removePresentationListener() {
-        this.presentationListener = null;
+    public void removePresentationListener(IPresentationListener listener) {
+        stateListener.remove(listener);
+    }
+
+    private IPresentationListener getTopListener() {
+        return stateListener.peek();
     }
 
     public void switchTrigger(boolean state) {
@@ -74,11 +80,14 @@ public class InputToggleDelegate {
      */
     public void inputServiceCall() {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+        LogUtil.logStackTree(TAG, stackTraceElements);
         boolean hit = parse(stackTraceElements);
         try {
-            if(hit && presentationListener.getPresentationRunningState() == PresentationRunningState.Idle) {
+            if(hit) {
                 debounce.handle((a)->{
-                    requestToggleSoftInput();
+                    if(getTopListener().getPresentationRunningState() == PresentationRunningState.Idle) {
+                        requestToggleSoftInput();
+                    }
                     return null;
                 });
 

@@ -75,7 +75,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
         platformThreadHandler = new Handler(outerContext.getMainLooper());
         flutterWebViewClient = new FlutterRemoteWebViewClient(methodChannel);
         plugInHub();
-        RemoteZygoteActivity.zygoteActivity.getInputToggleDelegate().setPresentationListener(this);
+        RemoteZygoteActivity.zygoteActivity.getInputToggleDelegate().registerPresentationListener(this);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
 
     @Override
     public void dispose() {
-        RemoteZygoteActivity.zygoteActivity.getInputToggleDelegate().removePresentationListener();
+        RemoteZygoteActivity.zygoteActivity.getInputToggleDelegate().removePresentationListener(this);
         plugOutHub();
         cancel();
         detachState();
@@ -199,7 +199,6 @@ public class WebViewPresentation extends RemoteViewPresentation implements IMock
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 Log.e("webview","onPageStarted  " + url);
-                RemoteZygoteActivity.zygoteActivity.getInputToggleDelegate().setPresentationListener(WebViewPresentation.this);
                 runningState = PresentationRunningState.Loading;
                 flutterWebViewClient.onPageStarted(view, url);
             }
