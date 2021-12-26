@@ -31,9 +31,9 @@ class ListBtnPageState extends State<ListBtnPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            buildBnt('open drawer', () {
-              Scaffold.of(context).openDrawer();
-            }),
+            // buildBnt('open drawer', () {
+            //   Scaffold.of(context).openDrawer();
+            // }),
             buildBnt('open baidu', () {
               Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WebPage(url: baidu)));
             }),
