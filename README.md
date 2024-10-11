@@ -1,5 +1,7 @@
 # WebView for Flutter
 
+[跨进程渲染的实践技术分享](https://juejin.cn/post/7045970675328090149?searchId=20241011171818564CC27EF2C5CC2648DB)
+
 This plugin is based on [webview_flutter](https://pub.dev/packages/webview_flutter).
 
 And expanded a remote-hybird-webview, for avoid the impact of webview on the main process
